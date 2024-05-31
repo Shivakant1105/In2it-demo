@@ -1,0 +1,233 @@
+<nav class="py-2">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">My Task</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="row mt-2">
+  <div *ngFor="let item of items" class="col-md-3 p-2 mt-2">
+    <div class="card">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="card-title fw-light mb-0">{{ item.title }}</h5>
+          <p class="card-text fw-bold mb-0">{{ item.count }}</p>
+        </div>
+        <i-feather name="{{ item.icon }}"></i-feather>
+      </div>
+    </div>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col 6"><h2>Task List Data</h2></div>
+  <div class="col-6 d-flex justify-content-end mx-3">
+    <button class="btn btn-primary my-2" (click)="addTask()">
+      Add Data<i-feather name="plus"></i-feather>
+    </button>
+  </div>
+  <hr />
+</div>
+
+<div [ngClass]="addData ? 'row' : ''">
+  <div [ngClass]="addData ? 'col-lg-9' : ''">
+    <table class="table table-hover table-bordered">
+      <thead class="bg-primary">
+        <tr>
+          <th>Id</th>
+          <th>Solution Area</th>
+          <th>Workflow</th>
+          <th>Task Id</th>
+          <th>Task Name</th>
+          <th>Status</th>
+          <th>Start Due</th>
+          <th>Due Date</th>
+          <th>Priority</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of formData; let i = index">
+          <td > <input class="form-check-input mt-1" type="checkbox" value="" id="flexCheckDefault">{{ item.id }}</td>
+          <td>{{ item.solutionArea }}</td>
+          <td>{{ item.workflow }}</td>
+          <td>{{ item.taskId }}</td>
+          <td>{{ item.taskName }}</td>
+          <td [ngClass]="item.status === 'Active' ? 'yellow' : ''">
+            {{ item.status }}
+          </td>
+          <td>{{ item.startDue }}</td>
+          <td>{{ item.dueDate }}</td>
+          <td
+            [ngClass]="
+              item.priority === 'High'
+                ? 'red'
+                : item.priority === 'Medium'
+                ? 'green'
+                : 'blue'
+            "
+          >
+            {{ item.priority }}
+          </td>
+          <td>
+            <i-feather name="edit" style="color: green" (click)="onEdit(i)" (click)="addTask()"></i-feather>
+            <i-feather name="trash-2" class="delete" (click)="onDelete(i)"></i-feather>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div [ngClass]="addData ? 'col-lg-3' : 'hide'">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Panel Form</h5>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="fieldId">Field Id</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="fieldId"
+                  formControlName="id"
+                >
+                <div *ngIf="addForm.get('id')?.invalid && (addForm.get('id')?.dirty || addForm.get('id')?.touched)">
+                  <div *ngIf="addForm.get('id')?.errors?.['required']" class="text-danger">
+                      Field Id is required.
+                  </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="solutionArea">Solution Area</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="solutionArea"
+                  formControlName="solutionArea"
+                /> <div *ngIf="addForm.get('solutionArea')?.invalid && (addForm.get('solutionArea')?.dirty || addForm.get('solutionArea')?.touched)">
+                  <div *ngIf="addForm.get('solutionArea')?.errors?.['required']" class="text-danger">
+                    Solution Area is required.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="workflow">Workflow</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="workflow"
+                  formControlName="workflow"
+                
+                />
+                <div *ngIf="addForm.get('workflow')?.invalid && (addForm.get('workflow')?.dirty || addForm.get('workflow')?.touched)">
+                  <div *ngIf="addForm.get('workflow')?.errors?.['required']" class="text-danger">
+                    Workflow is required.
+                  </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="taskId">Task Id</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="taskId"
+                  formControlName="taskId"
+                />
+                <div *ngIf="addForm.get('workflow')?.invalid && (addForm.get('workflow')?.dirty || addForm.get('workflow')?.touched)">
+                  <div *ngIf="addForm.get('workflow')?.errors?.['required']" class="text-danger">
+                    Task Id is required.
+                  </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="taskformControlName">TaskName</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="taskName"
+                  formControlName="taskName"
+                />
+                <div *ngIf="addForm.get('workflow')?.invalid && (addForm.get('workflow')?.dirty || addForm.get('workflow')?.touched)">
+                  <div *ngIf="addForm.get('workflow')?.errors?.['required']" class="text-danger">
+                    TaskName is required.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select
+                  class="form-control"
+                  id="status"
+                  formControlName="status"
+                >
+                  <option>Active</option>
+                  <option>Inactive</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="startDue">Start Due</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="startDue"
+                  formControlName="startDue"
+                />
+              </div>
+              <div class="form-group">
+                <label for="dueDate">Due Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="dueDate"
+                  formControlName="dueDate"
+                />
+              </div>
+              <div class="form-group">
+                <label for="priority">Priority</label>
+                <select
+                  class="form-control"
+                  id="priority"
+                  formControlName="priority"
+                >
+                  <option>Low</option>
+                  <option>Medium</option>
+                  <option>High</option>
+                </select>
+              </div>
+              <div class="form-group py-2">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                 
+                  
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-block mx-2"
+                  (click)="onClear()"
+                >
+                  Clear
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-block mx-2"
+                  (click)="cancel()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

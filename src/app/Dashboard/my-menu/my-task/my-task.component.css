@@ -1,0 +1,17 @@
+.yellow{
+    background-color: blanchedalmond;
+}
+.red{
+    background-color: red;
+}
+.green{
+    background-color: yellow;
+
+}
+.blue{
+    background-color: aqua;
+}
+.hide{
+    display: none;
+}
+.delete{color: red;}
