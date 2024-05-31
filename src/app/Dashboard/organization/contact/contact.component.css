@@ -1,0 +1,46 @@
+.bg-grey{
+    background-color: #91b4e6;
+}
+.active {
+  background-color: white;
+  color: black; }
+
+.dropdown-toggle::after {
+    display: none;
+}
+.hide{
+    display: none;
+}
+/* .delete{color: red;
+    width: 60px;
+} */
+/* .phone-field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .phone-field label,
+  .phone-field select,
+  .phone-field input[type="text"],
+  .phone-field button {
+    margin-right: 10px;
+  }
+  
+  .phone-field button {
+    margin-left: auto;
+  } */
+  .active-tab {
+    background-color: white;
+  }
+  
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* input[type="number"] {
+  -moz-appearance: textfield;
+} */
+/* form .ng-touched.ng-invalid{
+  border: 1px solid red !important;
+} */

@@ -1,0 +1,17 @@
+.bg-light{
+    background-color: rgb(135, 132, 128);
+}
+
+.btn{
+    font-size: 50px;
+}
+.prev{
+    position:absolute;
+    top:30%;
+    left:300px;
+}
+.next{
+    position:absolute;
+    top:30%;
+    right:0%;
+}

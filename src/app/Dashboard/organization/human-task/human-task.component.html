@@ -1,0 +1,130 @@
+<!-- subheader.component.html -->
+<div class="subheader navbar navbar-expand-lg bg-grey">
+  <a class="px-3 text-white" href=""
+    ><i-feather name="plus"></i-feather>Add New Item</a
+  >
+  <a class="px-3 text-white"
+    ><i-feather name="briefcase"></i-feather>Add to Maarketing List</a
+  >
+  <a class="px-3 text-white"><i-feather name="share-2"></i-feather>Share</a>
+  <a class="px-3 text-white"><i-feather name="log-in"></i-feather>import</a>
+</div>
+
+<!-- <nav class="py-2">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="org">Organization</a>
+      </li>
+    </ul>
+  </nav> -->
+<!-- <nav class="py-2">
+    <ul class="nav nav-tabs ">
+        <li class="nav-item">
+            <a class="nav-link active" href="org">Organization</a>
+          </li>
+      <li class="nav-item" *ngFor="let tab of tabs; let i = index" >
+        <a class="nav-link ">{{ tab.title }}</a>
+      </li>
+    </ul>
+  </nav> -->
+  <!-- <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav nav-tabs">
+    <a class="nav-link" routerLink="/org/organization">Organization</a>
+    <li *ngFor="let id of navs; trackBy: trackById; let index = index" [ngbNavItem]="index">
+      <a ngbNavLink>
+        {{ id }}
+        <span class="btn-close ms-3 fw-light" (click)="close($event, id)">x</span>
+      </a>
+      <ng-template ngbNavContent>
+      
+        <p>{{ getOrganizationById(id).orgName }}</p>
+      </ng-template>
+    </li>
+    <li *ngFor="let org of organizations">
+      <a class="nav-link" (click)="showOrganizationDetails(org)">
+        {{ org.orgName }}
+      </a>
+    </li>
+  </ul>
+  
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+   -->
+
+
+
+
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav nav-tabs">
+<li>  <a class="nav-link  " routerLink="/org/organization">Organization</a></li>
+  <li
+    *ngFor="let id of navs; trackBy: trackById; let index = index"
+    [ngbNavItem]="index+1"
+  >
+    <a ngbNavLink>
+   {{ id }}
+      <span class="btn-close ms-3 fw-light" (click)="close($event, id)">x</span>
+    </a>
+    <ng-template ngbNavContent>
+  <!-- <app-workflows></app-workflows> -->
+    </ng-template>
+  </li>
+ 
+</ul>
+
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<!-- <pre> {{ active }}</pre> -->
+
+
+
+<div class="row">
+  <div class="col-md-2 bg-dark d-flex flex-column">
+    <nav class="py-2">
+      <ul class="nav flex-column">
+        <a class="nav-item" href="">List</a>
+        <li class="nav-item">
+          <a class="nav-link active">Organizations</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Customers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Non-Customers</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="col-md-10">
+    <div>
+      <!-- <h2>{{ tab.title }}</h2>  -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Organization</th>
+            <th>Type</th>
+            <th>Industry</th>
+            <th>Onboarding</th>
+            <th>Related Orgs</th>
+            <th>Products</th>
+            <th>Org SPOC</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let org of organizations; let i=index">
+            <td><a href="#" (click)="add($event, org.Id)">{{ org.orgName }}</a></td>
+            <td>{{ org.type }}</td>
+            <td>{{ org.industry }}</td>
+            <td>{{ org.onboarding }}</td>
+            <td>{{ org.relatedOrgs }}</td>
+            <td>{{ org.products }}</td>
+            <td>{{ org.orgSPOC }}</td>
+            <td>{{ org.email }}</td>
+            <td>{{ org.phone }}</td>
+          </tr>
+        </tbody>
+        
+      </table>
+    </div>
+  </div>
+</div>

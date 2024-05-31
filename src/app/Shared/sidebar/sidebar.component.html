@@ -1,0 +1,105 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-md-2 px-0 bg-primary">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <i-feather name="menu"></i-feather>
+                <a href="/" class="d-flex align-items-center pt-3  mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">My Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column  align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item" (click)="setHeader('My Menu','My Task')">
+                        <a routerLink="menu/mytask" class="nav-link align-middle px-0">
+                             <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="user"></i-feather> My task</span>
+                        </a>
+                    </li>
+                    <li (click)="setHeader('My Menu','Team Task')">
+                        <a routerLink="menu/myteam" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="users"></i-feather>Team Task</span> </a>
+                    </li>
+                 </ul>
+
+                 <!-- My Org -->
+                 <a href="org" class="d-flex align-items-center pt-3  mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">My Organization</span>
+                </a>
+                 <ul class="nav nav-pills flex-column  mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item"  (click)="setHeader('Organization','Org')">
+                        <a routerLink="org/organization" class="nav-link align-middle px-0">
+                             <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="user"></i-feather>Organization</span>
+                        </a>
+                    </li>
+                    <li  (click)="setHeader('Organization','Contact')">
+                        <a routerLink="org/contact" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="git-pull-request"></i-feather>Contact</span> </a>
+                    </li>    <li class="nav-item">
+                        <a routerLink="org/solution" class="nav-link align-middle px-0">
+                             <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="user"></i-feather>Solution Areas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="org/process" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="git-pull-request"></i-feather>Process</span> </a>
+                    </li>  
+                    <li>
+                        <a routerLink="org/workflows" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"><i-feather name="sliders"></i-feather>Workflows</span> </a>
+                    </li>  
+                    <li>
+                        <a routerLink="org/human" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="users"></i-feather>Human Task</span> </a>
+                    </li>
+                    <li>
+                        <a routerLink="org/execution" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="git-pull-request"></i-feather>Workflows Execution</span> </a>
+                    </li> 
+                    <li>
+                        <a routerLink="org/schedule" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="clock"></i-feather>Schedule List</span> </a>
+                    </li> 
+                 </ul>
+                 
+
+                 <!-- Designer -->
+
+                 <a href="designer" class="d-flex align-items-center pt-3  mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Designer</span>
+                </a>
+                 <ul class="nav nav-pills flex-column  mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a routerLink="/builder" class="nav-link align-middle px-0">
+                             <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="slack"></i-feather>Workflow Builder</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="menu/myteam" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="users"></i-feather>Form Builder</span> </a>
+                    </li>  
+                 
+                 </ul>
+
+                 <!-- Setting -->
+
+                 
+                 <a routerLink="set" class="d-flex align-items-center pt-3  mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Setting</span>
+                </a>
+                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a routerLink="set/setting" class="nav-link align-middle px-0">
+                             <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="tool"></i-feather>Custom Task</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="menu/myteam" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                           <span class="ms-1 d-none d-sm-inline text-white"> <i-feather name="settings"></i-feather>Organization Setting</span> </a>
+                    </li>  
+                 
+                 </ul>
+            </div>
+            
+        </div>
+        <div class="col ">
+          <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

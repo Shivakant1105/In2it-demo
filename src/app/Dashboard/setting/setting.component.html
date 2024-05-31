@@ -1,0 +1,121 @@
+
+
+<form>
+  <div class="mb-3 row">
+ 
+    <div class="col-xs-3 col-sm-auto  d-flex justify-content-between">
+      <h2>Contact</h2>
+      <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
+    </div>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" type="checkBox"></th>
+      <th scope="col">Organization</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Email</th>
+      <th scope="col">Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- <tr *ngFor="let contact of contactData$| async index as i">
+      <td>
+        <input type="checkbox" [id]="'checkbox-' + i" [(ngModel)]="contact.checked" />
+      </td>
+      <td>
+        <ngb-highlight [result]="contact.organization" [term]="filter.value"></ngb-highlight>
+      </td>
+
+      <td>
+        <ngb-highlight [result]="contact.name" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td>
+        <ngb-highlight [result]="contact.role" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td>
+        <ngb-highlight [result]="contact.email" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td>
+        <ngb-highlight [result]="contact.number" [term]="filter.value"></ngb-highlight>
+      </td>
+    </tr> -->
+
+    <ng-container *ngFor="let data of contactData$ | async; index as i">
+      <tr *ngFor="let contact of data.contact; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+        
+          <ngb-highlight
+            [result]="data.organization"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.name"
+            [term]="filter.value" 
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.role"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.email"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.number"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+      </tr>
+    </ng-container> 
+  </tbody>
+</table>
+
+<!-- <ng-container *ngFor="let country of contactData$ | async; index as i">
+      <tr *ngFor="let contact of country.contact; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+        
+          <ngb-highlight
+            [result]="country.organization"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.name"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.role"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.email"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="contact.number"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+      </tr>
+    </ng-container> -->
