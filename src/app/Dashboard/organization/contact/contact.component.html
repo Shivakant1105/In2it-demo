@@ -44,9 +44,9 @@
             >Directory Pages</span
           >
         </a>
-        <li class="list-unstyled">
+        <li class="list-unstyled active">
           <a
-            class="nav-link py-2 align-middle fw-semi-bold"
+            class="nav-link py-2 align-middle fw-semi-bold "
             style="cursor: pointer"
             (click)="getAllData()"
             >All Contacts</a
@@ -77,7 +77,7 @@
         </div>
         <li
           class="nav-item list-unstyled py-2"
-          *ngFor="let org of dataService.organizations"
+          *ngFor="let org of contactData"
           [class.active]="isActive(org.organization)"
         >
           <a

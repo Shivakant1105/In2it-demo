@@ -5,7 +5,6 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { DataService } from '../service/data.service';
-import { log } from 'console';
 
 @Component({
   selector: 'app-setting',
@@ -52,7 +51,7 @@ export class SettingComponent implements OnInit {
     });
   }
 
-  search(text: string, pipe: PipeTransform) {
+  search(text: string, _pipe: PipeTransform) {
     return this.contactData.map((country: any) => {
       return {
         ...country,

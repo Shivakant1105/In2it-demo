@@ -1,18 +1,8 @@
-import { Root, percent } from '@amcharts/amcharts5';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
-import * as am5 from '@amcharts/amcharts5';
 
-import * as am5xy from '@amcharts/amcharts5/xy';
+import {  Component } from '@angular/core';
+
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-interface Contact {
-  firstName: string;
-  lastName: string;
-  organization: string;
-  email: string;
-  phone: string;
-  role: string;
-}
+
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',

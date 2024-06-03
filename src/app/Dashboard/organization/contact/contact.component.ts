@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { DataService } from '../../service/data.service';
 
 import {
@@ -97,7 +97,7 @@ export class ContactComponent implements OnInit{
 
     this.getAllData();
   }
-  search(text: string, pipe: PipeTransform) {
+  search(text: string, _pipe: PipeTransform) {
     return this.contactData
       .map((country: any) => {
         return {
@@ -115,17 +115,31 @@ export class ContactComponent implements OnInit{
       })
       .filter((country: any) => country.contact.length > 0);
   }
-getAllData() {
-  // this.contactData$ = of(this.organizations); // Assuming contactData$ is an Observable
-  let totalCount = 0;
 
-  this.organizations.forEach((org: any) => {
-    if (org.contact) {
-      totalCount += org.contact.length;
-    }
-  });
-  this.totalContacts = totalCount;
-}
+  getAllData() {
+    let totalCount = 0;
+    this.contactData.forEach((org: any) => {
+      if (org.contact) {
+        totalCount += org.contact.length;
+      }
+    });
+    // Set totalContacts property to be accessible in the template
+    this.totalContacts = totalCount;
+  this.contactData$=of(this.contactData)
+
+  }
+  
+// getAllData() {
+//   // this.contactData$ = of(this.organizations); // Assuming contactData$ is an Observable
+//   let totalCount = 0;
+
+//   this.organizations.forEach((org: any) => {
+//     if (org.contact) {
+//       totalCount += org.contact.length;
+//     }
+//   });
+//   this.totalContacts = totalCount;
+// }
 
   // getAllData() {
   //   this.contactData = this.organizations;
@@ -139,14 +153,15 @@ getAllData() {
   //   this.totalContacts = totalCount;
   //   // console.log('gett all data', this.contactData);
   // }
+  filteredOrg:any
 filterContact(orgName: string) {
   this.showTable = true;
-  const filteredOrg = this.contactData.find(
+   this.filteredOrg = this.contactData.find(
     (org: any) => org.organization === orgName
   );
-  if (filteredOrg) {
-    this.contactData$ = of([filteredOrg]); // Assuming contactData$ is an Observable
-    console.log('Filtered organization data:', filteredOrg);
+  if (this.filteredOrg) {
+    this.contactData$ = of([this.filteredOrg]); // Assuming contactData$ is an Observable
+    console.log('Filtered organization data:', this.filteredOrg);
   } else {
     console.log(`Organization "${orgName}" not found.`);
   }
@@ -183,7 +198,7 @@ filterContact(orgName: string) {
     //  console.log("active org data", this.activeOrganization);
   }
 
-  onDelete(index: number) {
+  onDelete() {
     const msg = confirm('Are you sure you. want to delete this item?');
     if (msg) {
     }
@@ -249,54 +264,19 @@ console.log("sdfhgsalgdhf", this.selectedContactIndex);
     //   });
     // }
 
-    // addData() {
-    //   if (this.profileForm.valid) {
-    //     console.log(this.profileForm.value);
    
-    //     this.formData = this.profileForm.value;
-   
-    //     const abcOrganization = this.filtercontact.find(
-    //       (org: any) => org.organization === this.formData.organization
-    //     );
-   
-    //     if (abcOrganization) {
-    //       console.log(this.formData);
-    //       console.log(this.formData);
-    //       abcOrganization.contact.push(this.formData);
-    //     }
-    //   }
-    //   // this.loopCount = this.calculateTotalContacts();
-    // }
     console.log('Form data:', this.submittedData);
 this.contactData$=of(this.contactData)
-    // this.contactData.push({
-    //   organization: this.submittedData.organization,
-    //   contact: [
-    //     {
-    //       // name:
-    //       //   this.submittedData.name.firstName +
-    //       //   ' ' +
-    //       //   this.submittedData.name.lastName,
-    //         // organization: this.submittedData.organization,
-    //       role: this.submittedData.role,
-    //       email: this.submittedData.email,
-    //       number: this.submittedData.phone,
-    //     },
-    //   ],
-    // });
-
+   
     const abcOrganization = this.contactData.find(
             (org: any) => org.organization === this.submittedData.organization
           );
      
           if (abcOrganization) {
-            // console.log(this.formData);
-            // console.log(this.formData);
+         
             abcOrganization.contact.push(this.submittedData);
           }
-        // }
-        // this.contactData$=of(this.submittedData)
-        // this.loopCount = this.calculateTotalContacts();
+       
     
   }
 
@@ -369,115 +349,181 @@ this.contactData$=of(this.contactData)
       form.get('role')?.value;
   }
 
+//   checkBox(contact: any, data: any, index: number, event: any) {
+//     console.log('dfgsg6853g', contact);
+
+//     if (event.target.checked) {
+//       this.addData = false;
+//       this.showViewDeatils = false;
+//       this.indexData = data;
+//       this.contacts = contact;
+//       this.viewData=data
+// // this.selectAll=true
+//       this.contacts.org = this.indexData.organization;
+//       console.log('all data INDECCcheck', this.contacts.org);
+//       // console.log('All toggle data:', contact);
+
+//       this.checkedCount = this.contactData.reduce((count, data) => {
+//         return count + data.contact.filter((c: any) => c.checked).length;
+        
+//       }, 0);
+
+//       // console.log('checked count', this.checkedCount);
+//       this.checkboxarray.push(contact);
+//       // this.checkboxarray.push(this.indexData)
+//       // console.log('index data:', this.indexData);
+
+//       // console.log('ARRAY DTAA', this.checkboxarray);
+//     } else {
+//   this.selectAll = false;
+
+//       this.checkedCount = this.checkedCount - 1;
+//       // console.log('unchekchecked count', this.checkedCount);
+//       const indexArray = this.checkboxarray.indexOf(contact);
+
+//       if (indexArray !== -1) {
+//         this.checkboxarray.splice(indexArray, 1);
+
+//         // console.log('unchecked array', this.checkboxarray);
+//         this.contacts = this.checkboxarray[0];
+//       }
+//     }
+//     this.selectedContactIndex = index;
+  
+//     // this.indexData=this.checkboxarray[0]
+//   }
+  handleEditClick() {
+    this.contacts = false;
+    if (this.checkedCount !== 1) {
+      
+      // alert("Cannot edit. Please select exactly one contact.")
+      console.log('Cannot edit. Please select exactly one contact.');
+    } else {
+      
+      this.editContact1(this.checkboxarray[0]);
+    }
+  }
+
+// deleteContact() {
+  
+//   this.checkboxarray.forEach((checkbox:any) => {
+//     this.contactData = this.contactData.map(data => ({
+//       ...data,
+//       contact: data.contact.filter((contact:any) => contact.id !== checkbox.id)
+//     }));
+//   });
+//   this.getAllData()
+  
+//   // this.contactData$ = of(this.contactData); // or use your method to update observable
+// }
+deleteContact() {
+  this.checkboxarray.forEach((checkbox: any) => {
+    // Remove the deleted contacts from the filtered data
+    // this.filteredOrg = this.filteredOrg.map((data:any) => ({
+    //   ...data,
+    //   contact: data.contact.filter((contact: any) => contact.id !== checkbox.id)
+    // }));
+    // Also remove the deleted contacts from the original data
+    this.contactData = this.contactData.map(data => ({
+      ...data,
+      contact: data.contact.filter((contact: any) => contact.id !== checkbox.id)
+    }));
+  });
+  this.getAllData();
+  this.selectAll=false // Update the table with the modified data
+}
+
+  selectAll = false;
+
+ 
+  // selectAllChanged(event: any) {
+  //   console.log('select all', this.contactData);
+  //   if (event.target.checked) {
+  //     this.contactData.forEach((data) => {  
+  //       data.contact.forEach((contact: any) => {
+  //         this.checkboxarray.push(contact);
+  //         contact.checked = this.selectAll;
+  //       });
+  //     });
+  //   } else {
+  //     this.contactData.forEach((data) => {
+  //       data.contact.forEach((contact: any) => {
+  //         contact.checked = this.selectAll;
+  //       });
+  //     });
+  //     this.checkboxarray = []; // Clear checkboxarray when unselecting all
+  //   }
+  
+  //   // Update selectAll based on the current state of checkboxes
+  //   this.selectAll = this.isAllChecked();
+  // }
+  selectAllChanged(event: any) {
+    if (event.target.checked) {
+
+      const contacts = this.filteredOrg ? this.filteredOrg.contact : this.contactData.flatMap(data => data.contact);
+      contacts.forEach((contact: any) => {
+        this.checkboxarray.push(contact);
+        
+        contact.checked = this.selectAll;
+      });
+    } else {
+     
+      const contacts = this.filteredOrg ? this.filteredOrg.contact : this.contactData.flatMap(data => data.contact);
+      contacts.forEach((contact: any) => {
+        contact.checked = this.selectAll;
+      });
+      this.checkboxarray = []; // Clear checkboxarray when unselecting all
+    }
+  }
   checkBox(contact: any, data: any, index: number, event: any) {
     console.log('dfgsg6853g', contact);
-
+  
     if (event.target.checked) {
       this.addData = false;
       this.showViewDeatils = false;
       this.indexData = data;
       this.contacts = contact;
-      this.viewData=data
+      this.viewData = data;
+  
       this.contacts.org = this.indexData.organization;
       console.log('all data INDECCcheck', this.contacts.org);
-      // console.log('All toggle data:', contact);
-
+  
       this.checkedCount = this.contactData.reduce((count, data) => {
         return count + data.contact.filter((c: any) => c.checked).length;
       }, 0);
-
-      // console.log('checked count', this.checkedCount);
+  
       this.checkboxarray.push(contact);
-      // this.checkboxarray.push(this.indexData)
-      // console.log('index data:', this.indexData);
-
-      // console.log('ARRAY DTAA', this.checkboxarray);
     } else {
       this.checkedCount = this.checkedCount - 1;
-      // console.log('unchekchecked count', this.checkedCount);
       const indexArray = this.checkboxarray.indexOf(contact);
-
       if (indexArray !== -1) {
         this.checkboxarray.splice(indexArray, 1);
-
-        // console.log('unchecked array', this.checkboxarray);
         this.contacts = this.checkboxarray[0];
       }
     }
+  
     this.selectedContactIndex = index;
   
-    // this.indexData=this.checkboxarray[0]
+    // Update selectAll based on the current state of checkboxes
+    this.selectAll = this.isAllChecked();
   }
-  handleEditClick() {
-    this.contacts = false;
-    if (this.checkedCount !== 1) {
-      // alert("Cannot edit. Please select exactly one contact.")
-      console.log('Cannot edit. Please select exactly one contact.');
-    } else {
-      this.editContact1(this.checkboxarray[0]);
-    }
-  }
-  // deleteContact() {
-  //   console.log(this.checkboxarray)
-  //   for (let i = 0; i < this.checkboxarray.length; i++) {
-  //     for (let j = 0; j < this.contactData.length; j++) {
-  //       this.contactData[j].contact = this.contactData[j].contact.filter(
-  //         (contact: any) => contact.id !== this.checkboxarray[i].id
-  //       );
-  //     }
-  //     this.addData = false;
-  //   }
-  //   console.log("asdfsfadsads",this.contactData)
-
-    
-  // }
-//   deleteContact() {
-//     console.log(this.checkboxarray);
-//     for (let i = 0; i < this.checkboxarray.length; i++) {
-//         const checkboxId = this.checkboxarray[i].id;
-//         this.contactData = this.contactData.map(data => ({
-//             ...data,
-//             contact: data.contact.filter((contact:any) => contact.id !== checkboxId)
-//         }));
-//     }
-//     // Reset checkboxarray after deletion
-//     this.checkboxarray = [];
-//     console.log("Updated contactData:", this.contactData);
-// }
-deleteContact() {
-  this.checkboxarray.forEach((checkbox:any) => {
-    this.contactData = this.contactData.map(data => ({
-      ...data,
-      contact: data.contact.filter((contact:any) => contact.id !== checkbox.id)
-    }));
-  });
-  // Emit the updated data by assigning it to the observable
-  this.contactData$ = of(this.contactData); // or use your method to update observable
-}
-
-  selectAll = false;
-
-  selectAllChanged(event:any) {
-    console.log('select all', this.contactData);
-    if(event.target.checked){
+  
+  isAllChecked() {
+    let totalChecked = 0;
+    let totalContacts = 0;
+  
     this.contactData.forEach((data) => {
       data.contact.forEach((contact: any) => {
-        this.checkboxarray.push(contact);
-        contact.checked = this.selectAll;
+        totalContacts++;
+        if (contact.checked) {
+          totalChecked++;
+        }
       });
-    });}
-    else{
-      this.contactData.forEach((data) => {
-        data.contact.forEach((contact: any) => {
-          
-          contact.checked = this.selectAll;
-          this.checkboxarray.splice(0 ,this.checkboxarray.length)
-        });
-      });
-      
-    }
+    });
+  
+    return totalChecked === totalContacts;
   }
-
+  
   onClear() {
     this.form.reset();
     this.form.patchValue({

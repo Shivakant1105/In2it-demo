@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DataService } from '../../service/data.service';
+import { Component,  OnInit, } from '@angular/core';
+
 interface Item {
   id: number;
   name: string;
@@ -11,7 +11,7 @@ interface Item {
   styleUrls: ['./human-task.component.css'],
 })
 export class HumanTaskComponent implements OnInit {
-  constructor( private dataService:DataService) {}
+  constructor() {}
   organizationDetails: any;
   ngOnInit(): void {
 
@@ -69,7 +69,7 @@ export class HumanTaskComponent implements OnInit {
   showDetails(item: Item) {
     this.selectedItem = item;
   }
-  trackById(index: number, item: any): number {
+  trackById(index: number) {
     return index;
 }
 

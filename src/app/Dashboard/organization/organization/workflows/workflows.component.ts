@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
-import { log } from 'console';
 import { DataService } from 'src/app/Dashboard/service/data.service';
 
 @Component({
@@ -25,7 +23,7 @@ export class WorkflowsComponent implements OnInit {
   ngOnInit() {
     // this.organizations = this.workflowData;
     console.log(this.workflowData);
-    this.dataService.allData.subscribe((data: any) => {
+    this.dataService.allData.subscribe(() => {
       // this.contactData = data;
       this.organizations = this.workflowData;
     });

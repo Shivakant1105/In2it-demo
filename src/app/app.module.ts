@@ -8,7 +8,7 @@ import { SidebarComponent } from './Shared/sidebar/sidebar.component';
 import { HeaderComponent } from './Shared/header/header.component';
 
 
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {  ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';

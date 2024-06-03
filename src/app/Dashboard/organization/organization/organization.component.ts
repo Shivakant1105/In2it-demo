@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,  OnInit, Output } from '@angular/core';
 import { DataService } from '../../service/data.service';
-import { log } from 'console';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-organization',
@@ -83,7 +82,7 @@ export class OrganizationComponent implements OnInit {
   //   this.navsData.emit(org);
   //   console.log('Send Data', org);
   // }
-  add(event: MouseEvent, org: any) {
+  add(_event: MouseEvent, org: any) {
     this.checkExisitingTab(org.id);
     this.active = org.id;
     if (!this.flag) {

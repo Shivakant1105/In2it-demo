@@ -16,7 +16,7 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
   private root2: Root | any;
   private pieChart2: PieChart | any;
   private root3: Root | any;
-  private root4: Root | any;
+
   private funnelChart: SlicedChart | any;
 
   constructor() {}
@@ -718,9 +718,9 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
       })
     );
 
-    yseries.columns.template.adapters.add('fill', function (fill, target) {
-      return ychart.get('colors')?.getIndex(yseries.columns.indexOf(target));
-    });
+    // yseries.columns.template.adapters.add('fill', function (fill, target) {
+    //   return ychart.get('colors')?.getIndex(yseries.columns.indexOf(target));
+    // });
 
     yseries.columns.template.setAll({
       height: 20,

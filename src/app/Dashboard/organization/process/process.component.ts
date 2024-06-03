@@ -1,13 +1,10 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
-
-
-// amCharts imports
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import { FunnelSeries, SlicedChart } from '@amcharts/amcharts5/percent';
 import { Root } from '@amcharts/amcharts5';
-// import am5percent from "@amcharts/amcharts5/percent";
-import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+
+
 @Component({
   selector: 'app-process',
   templateUrl: './process.component.html',
@@ -16,10 +13,8 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 export class ProcessComponent implements AfterViewInit, OnDestroy {
   private root: Root | any;
  
-  private root3: Root | any;
   private root4: Root | any;
-  private funnelChart: SlicedChart | any;
-
+  
   constructor(
     
   ) {}
@@ -185,11 +180,11 @@ ngAfterViewInit() {
     );
     series1.columns.template.setAll({ width: am5.percent(50) });
     series1.data.setAll(filteredData);
-    let index = 0
+   
     let add =0;
     let remove =0
     let gap=sales_ticket_per_owner.length-filteredData.length
-    let lastAddedIndex = filteredData.length - 1; // Initialize with the index of the last element in filteredData
+    // let lastAddedIndex = filteredData.length - 1; // Initialize with the index of the last element in filteredData
 
     // let addButton = document.getElementById('addButton');
     // addButton!.addEventListener('click', () => {
@@ -224,7 +219,7 @@ addButton!.addEventListener('click', () => {
         xAxis.data.setAll(filteredData);
         series1.data.setAll(filteredData);
         add++;
-        lastAddedIndex = filteredData.length - 1; // Update lastAddedIndex
+        // lastAddedIndex = filteredData.length - 1; // Update lastAddedIndex
         remove++; // Update remove count
         
         // Scroll chart to the latest data
@@ -243,7 +238,7 @@ addButton!.addEventListener('click', () => {
             filteredData.pop();
             xAxis.data.setAll(filteredData);
             series1.data.setAll(filteredData);
-            lastAddedIndex--; // Update lastAddedIndex
+            // lastAddedIndex--; // Update lastAddedIndex
             remove--; // Update remove count
         }
         console.log("Remove the data", filteredData);
@@ -384,17 +379,7 @@ addButton!.addEventListener('click', () => {
        
       })
     );
-    // let series = chart.series.push(
-    //   am5xy.ColumnSeries.new(this.root4, {
-    //     name: "Series",
-    //     xAxis: xAxis,
-    //     yAxis: yAxis,
-    //     valueYField: "value",
-    //     // valueXField: "name",
-    //     fill: am5.color(0x095256),
-    //     stroke: am5.color(0x095256)
-    //   })
-    // );
+    
     series.bullets.push(() => {
       return am5.Bullet.new(this.root4, {
         locationX: 1,
