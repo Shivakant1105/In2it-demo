@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChildComponent } from '../child/child.component';
-import { DataService } from '../../service/data.service';
+
 
 
 @Component({
@@ -10,7 +10,7 @@ import { DataService } from '../../service/data.service';
 })
 export class MyTeamComponent implements OnInit {
 
-  constructor(private dataService:DataService) { }
+  constructor() { }
 
   ngOnInit(): void {
    

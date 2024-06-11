@@ -1,0 +1,44 @@
+<!-- <p>ag-grid works!</p>9* -->
+<!-- <ag-grid-angular
+  style=" height: 500px;width: 100%;"
+  class="ag-theme-alpine"
+>
+  
+</ag-grid-angular> -->
+<ag-grid-angular
+  style=" height: 500px;"
+  class="ag-theme-alpine"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  [pagination]="true"
+  [defaultColDef]="defaultColumnDefs"
+ (selectionChanged)="onCheckBoxChange()"
+ 
+  [rowSelection]="rowSelection"
+  [gridOptions]="gridOptions"
+
+  [paginationPageSize]="14">
+  
+</ag-grid-angular>
+<!-- <div class="example-wrapper">
+  <div>
+    <div class="button-group">
+      <button (click)="saveFilterModel()">Save Filter Model</button>
+      <button (click)="restoreFilterModel()">
+        Restore Saved Filter Model
+      </button>
+      <button
+        (click)="restoreFromHardCoded()"
+       
+      >
+        Set Custom Filter Model
+      </button>
+      <button (click)="clearFilters()">Reset Filters</button>
+      <button (click)="destroyFilter()">Destroy Filter</button>
+    </div>
+  </div>
+  <div>
+    <div class="button-group">
+      Saved Filters: <span id="savedFilters">(none)</span>
+    </div>
+  </div> -->

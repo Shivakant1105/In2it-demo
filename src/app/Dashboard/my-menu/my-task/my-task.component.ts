@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../../service/data.service';
+import { ColDef } from 'ag-grid-community';
+import { CustomCellComponent } from 'src/app/Shared/custom-cell/custom-cell.component';
 
 
 @Component({
@@ -32,12 +34,41 @@ export class MyTaskComponent implements OnInit {
     },
   ];
  
-   formData: any[] = [];
+  formData: any[] = [];
   addForm!: FormGroup;
   addData: boolean = false;
   editMode: boolean = false;
   editIndex: number = -1;
 
+
+  columnDefs: ColDef[] = [
+    
+    {headerCheckboxSelection: true, 
+      checkboxSelection: true, 
+     
+    },
+    { headerName: 'Solution Area', field: 'solutionArea',   
+      cellRenderer: (params: any) => {
+      const linkElement = document.createElement('a');
+
+      linkElement.innerText = params.value;
+      linkElement.addEventListener('click', (event) => {
+        event.preventDefault();
+      ;
+
+        console.log("ajkhfjhdjkshfd")
+      });
+      return linkElement;
+    }, },
+    { headerName: 'Workflow', field: 'workflow' },
+    { headerName: 'TaskId', field: 'taskId' },
+    { headerName: 'Task Name', field: 'taskName' },
+    { headerName: 'Status', field: 'status' },
+    { headerName: 'StartDate', field: 'startDue' },
+    { headerName: 'DueDate', field: 'dueDate' },
+    { headerName: 'Priority', field: 'priority' },
+    { headerName: 'Action', field: 'action' , cellRenderer:CustomCellComponent}
+  ];
   constructor(public fb: FormBuilder, private service: DataService) {}
 
   ngOnInit(): void {
@@ -63,7 +94,7 @@ export class MyTaskComponent implements OnInit {
   
   onSubmit() {
    if(this.addForm.valid){
-    const alert=confirm("Are you sure add the data.?")
+    // const alert=confirm("Are you sure add the data.?")
     if (this.editMode) {
       this.formData[this.editIndex] = this.addForm.value;
       this.editMode = false;
@@ -115,201 +146,3 @@ export class MyTaskComponent implements OnInit {
     this.addForm.reset();
   }
 }
-
-//   formData: any[] = [];
-//   addForm!: FormGroup;
-//   addData: boolean = false;
-
-//   constructor(public fb: FormBuilder, private service: DataService) {}
-
-//   ngOnInit(): void {
-//     this.addFormInit();
-//     this.formData = JSON.parse(localStorage.getItem('data') || '[]');
-//   }
-//   addFormInit() {
-//     this.addForm = this.fb.group({
-//       id: [''],
-//       solutionArea: [''],
-//       workflow: [''],
-//       taskId: [''],
-//       taskName: [''],
-//       status: [''],
-//       startDue: [''],
-//       dueDate: [''],
-//       priority: [''],
-//     });
-//   }
-
-//   onSubmit() {
-//     this.service.addTask(this.addForm.value);
-//     this.formData.push(this.addForm.value);
-//     console.log(this.formData);
-//   }
-//   onClear() {
-//     this.addForm.reset();
-//   }
-
-//   onDelete(id: any) {
-//     this.service.deleteTask(id);
-//     this.formData.splice(id, 1);
-//   }
-//   onEdit(){}
-//   addTask() {
-//     this.addData = !this.addData;
-//   }
-//   cancel() {
-//     this.addData = !this.addData;
-//   }
-// }
-
-
-// *ngIf ='!firzt nasme ?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-
-
-// addForm!: FormGroup;
-//   formData: any[] = [];
-//   addData: boolean = false;
-
-//   constructor(
-//     private formBuilder: FormBuilder,
-//     private dataService: DataService
-//   ) { }
-
-//   ngOnInit(): void {
-//     this.addForm = this.formBuilder.group({
-//       id: [''],
-//       solutionArea: [''],
-//       workflow: [''],
-//       taskId: [''],
-//       taskName: [''],
-//       status: [''],
-//       startDue: [''],
-//       dueDate: [''],
-//       priority: ['']
-//     });
-//     this.loaddata();
-//   }
-
-//   loaddata() {
-//     this.formData = this.dataService.getdata();
-//   }
-
-//   onSubmit() {
-//     if (this.addForm.valid) {
-//       this.dataService.addTask(this.addForm.value);
-//       this.loaddata();
-//       this.addForm.reset();
-//     }
-//   }
-
-//   onEdit(index: number) {
-
-//     const updatedTask = this.addForm.value;
-//     this.dataService.updateTask(index, updatedTask);
-//     this.loaddata();
-   
-//     this.addForm.reset();
-//   }
-
-//   onDelete(index: number) {
-//     this.dataService.deleteTask(index);
-//     this.loaddata();
-//   }
-
-//   addTask() {
-//         this.addData =! this.addData;
-//         console.log(this.addData);
-//       }
-
-
-
-//   onClear(){this.addForm.reset();}
-
-
-
-// cancel() {
-//     this.addData =! this.addData;
-//     console.log(this.addData);
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   addData: boolean = false;
-
-//   formData: any[] = [];
-// addForm!: FormGroup;
-// data: any;
-//   constructor(private fb: FormBuilder) { }
-
-//   ngOnInit(): void {
-// this.addForm = this.fb.group({
-//   id: ['' ],
-//   solutionArea: ['' ],
-//   workflow: ['' ],
-//   taskId: ['' ],
-//   taskName: ['' ],
-//   status: ['' ],
-//   startDue: ['' ],
-//   dueDate: ['' ],
-//   priority: [''   ]
-// });
-
-// const storedFormData = localStorage.getItem('formData');
-// if (storedFormData) {
-//   this.data.push(JSON.parse(storedFormData));
-// }
-// this.loadDataFromLocalStorage();
-// this.data =JSON.parse( localStorage.getItem('formData')!)
-// console.log(this.data)
-// }
-
-// loadDataFromLocalStorage() {
-//   const data = JSON.parse(localStorage.getItem('formData') || '[]');
-//   this.formData = data;
-// }
-// onSubmit() {
-
-//   const oldData =JSON.parse( localStorage.getItem('formData')!)||[];
-//   console.log(oldData)
-//   oldData.push(this.addForm.value);
-//   localStorage.setItem('formData', JSON.stringify(oldData));
-// console.log(this.addForm.value);
-
-//   this.formData.push(this.addForm.value);
-//   localStorage.setItem('formData', JSON.stringify(this.formData));
-// }
-
-// onClear() {
-//   this.addForm.reset();
-// localStorage.removeItem('formData');
-// this.data = [];
-//   }
-//   onDelete(){
-//     localStorage.removeItem('formData');
-//     this.data = [];
-//   }
-
-//   addTask() {
-//     this.addData =! this.addData;
-//     console.log(this.addData);
-//   }
-//

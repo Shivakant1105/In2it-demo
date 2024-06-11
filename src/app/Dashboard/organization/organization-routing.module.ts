@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SolutionComponent } from './solution/solution.component';
 import { ProcessComponent } from './process/process.component';
-import { WorkflowsComponent } from './organization/workflows/workflows.component';
+
 import { HumanTaskComponent } from './human-task/human-task.component';
 import { WorkflowsExecutionComponent } from './workflows-execution/workflows-execution.component';
 import { ScheduleComponent } from './schedule/schedule.component';

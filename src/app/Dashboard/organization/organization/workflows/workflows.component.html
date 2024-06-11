@@ -1,36 +1,19 @@
-<div class="row py-3" >
-  <div class="col-3" >
-    <!-- In the other component's template -->
-<div>
-
-
-    <!-- <p> {{ organizations.email}}</p> -->
-    <!-- <p>Organization: {{ organizations.organization  }}</p> -->
-    <!-- Display other properties as needed -->
-  </div>
-  
-    <ul >
-      <div>
-        <!-- {{ receivedOrg.id }} - {{ receivedOrg.organization }} -->
-        <!-- Display other properties as needed -->
-      </div>
-      <div >
-        <!-- {{ receivedNavs.id }} - {{ receivedNavs.organization }} -->
-        <!-- Display other properties as needed -->
-      </div>
-      
+<div class="row py-3">
+  <div class="col-3">
+    <ul>
       <h5>
-        <!-- {{organizations.organization}} -->
+        {{ organizations.orgName }}
       </h5>
       <li>
-        <strong>Parent Organization </strong> with 2 Related Organization(s)
+        <strong>Parent Organization </strong> with
+        {{ organizations.relatedOrgs }}
         Registration Number :AB-123456
       </li>
     </ul>
   </div>
   <div class="col-2">
     <ul>
-      <li><strong>Industry:</strong>IT/Communication</li>
+      <li><strong>Industry:</strong> {{ organizations.industry }}</li>
       <li><strong>Description:</strong>This is a test site</li>
     </ul>
   </div>
@@ -44,8 +27,11 @@
     <p>Near Arth Mart, Tech Zone 4, Vizag,Uttar Pradesh, India, 201308</p>
   </div>
   <div class="col-3">
-    <h5>Shiva Kant Mishra <span>SPOC</span></h5>
-    <p>Email: Shivakant@gmail.com Phone: +91 9721870492</p>
+    <h5>
+      Shiva Kant Mishra <span>{{ organizations.orgSPOC }}</span>
+    </h5>
+    <p>Email: {{ organizations.email }}</p>
+    <p>Phone: {{ organizations.phone }}</p>
   </div>
 </div>
 
@@ -64,22 +50,50 @@
       </p>
       <div class="">
         <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class=" bg-light p-2">
-                 
-                    <h5 class="card-title">Quarterly Revenue</h5>
-                    <div class="quarterly-revenue">
-                      <p>Ro <strong>(Q2)</strong></p>
-                      <p>R <strong>(Q1)</strong></p>
-                    </div>
-                    <p class="card-text">CAST Score</p>
-                    <img src="https://via.placeholder.com/50" alt="Star Icon" class="float-right">
-                  </div>
-             
+          <div class="col-lg-4 col-md-6">
+            <div class="d-flex bg-light p-2">
+              <div class="quarterly-revenue p-3">
+                <h5 class="">Quarterly Revenue</h5>
+                <h2>R O</h2>
+                <p>
+                  <span style="color: rgb(45, 223, 0)">0%</span>compared to last
+                  quarter
+                </p>
+                <p class="pt-2">Customer Lifetime Value</p>
+                <h5>R O</h5>
+                <p class="">CAST Score</p>
+                <p>***** 0</p>
               </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="bg-light">
-              <div class="card-body">Card 2</div>
+              <div>
+                <img class="img-fluid" src="/assets/img/hero.png" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5>Billing and Payments</h5>
+                  <i-feather name="external-link"></i-feather>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between">
+                  <p class="card-text">Upcoming Payments</p>
+                  <p>Due Date:</p>
+                </div>
+                <h5>R O</h5>
+                <hr />
+
+                <p class="card-text">Pending Payments</p>
+                <h5>No Pending Payments</h5>
+                <hr />
+                <div class="d-flex justify-content-between">
+                  <p class="card-text">Last Payments</p>
+                  <p>Paid:</p>
+                </div>
+
+                <h5>R O</h5>
+              </div>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -99,17 +113,76 @@
   <li [ngbNavItem]="2">
     <a ngbNavLink>Invoice & Reports</a>
     <ng-template ngbNavContent>
-      <p>
-        Exercitation +1 labore velit, blog sartorial PBR leggings next level wes
-        anderson artisan four loko farm-to-table craft beer twee. Qui photo
-        booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
-        ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore
-        aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
-        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
-        anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry
-        richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
-        sint qui sapiente accusamus tattooed echo park.
-      </p>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h5 class="card-title">Quarterly Revenue</h5>
+                  <h1>R O</h1>
+                  <p class="card-text">0% campared to last quarter</p>
+                  <p class="card-text">Customer lifeTime Value</p>
+                  <h4>R O</h4>
+                  <p class="card-text">CSAT Score</p>
+                </div>
+                <div class="img">
+                  <img
+                    src="https://img.freepik.com/free-vector/design-tools-concept-illustration_114360-1227.jpg?w=740&t=st=1715319940~exp=1715320540~hmac=30ce673b41af2d84fba633cd43c7282e83d0267b23a461e644590b3013faa99a"
+                    alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5>Billing and Payments</h5>
+                <i-feather name="external-link"></i-feather>
+              </div>
+              <hr />
+              <div class="d-flex justify-content-between">
+                <p class="card-text">Upcoming Payments</p>
+                <p>Due Date</p>
+              </div>
+              <h5>R O</h5>
+              <hr />
+              <p class="card-text">Pending Payments</p>
+              <h5>No Pending Payments</h5>
+              <hr />
+              <p class="card-text">Last Payments</p>
+              <h5>R O</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <div class="card">
+            <div class="card-body">
+              <h5>In Operations Requests</h5>
+              <div class="box">
+                <p>no Records found</p>
+              </div>
+              <h4>Sales Requests</h4>
+              <p>Product:Managed SDWAN</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h5>Contacts</h5>
+              <div class="search-container">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search..." />
+              </div>
+              <h6>Gautam Yadav</h6>
+              <p>Org Role :</p>
+              <p>Preference Contact</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </ng-template>
   </li>
   <li [ngbNavItem]="3">
@@ -149,28 +222,109 @@
     </ng-template>
   </li>
   <li [ngbNavItem]="5">
+    
     <a ngbNavLink>Contacts</a>
+    
     <ng-template ngbNavContent>
-      <p>
-        Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget
-        sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula vitae
-        odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu,
-        congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus
-        pulvinar arcu, et molestie lectus ultrices et. Sed diam urna, egestas ut
-        ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu.
-        Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis. Morbi
-        ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-        magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet
-        odio ac lorem aliquet ultricies in eget neque. Phasellus nec tortor vel
-        tellus pulvinar feugiat.
-      </p>
+      
+     
+    
+      <div [ngClass]="addCard ? 'row' : ''">
+        <div [ngClass]="addCard ? 'col-lg-9' : ''">
+          
+          <app-ag-grid [rowData]="contactTable" 
+          [columnDefs]="columnDefs"></app-ag-grid>
+          <!-- <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="row"><input type="checkbox" /></th>
+               
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+              </tr>
+            </thead>
+            <tbody>
+          
+          
+              <tr *ngFor="let contact of organizations.contact;let i = index" (click)="getDataCard(contact)">
+                <th scope="row"><input type="checkbox" /></th>
+               
+                <td>
+                  <a> {{ contact.name }} </a>
+                </td>
+                <td>{{ contact.role }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.number }}</td>
+              </tr>
+              
+              
+            </tbody>
+          </table>  -->
+          
+        </div>
+        <div [ngClass]="addCard ? 'col-lg-3' : 'hide'">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex">
+                    <i-feather name="user"></i-feather>
+                    <div class="justify-center">
+                      <h5 class="pt-1">{{ cardData?.name }}</h5>
+                      <p>Email:{{ cardData?.email }}</p>
+                      <p>Phone no:{{ cardData?.number }}</p>
+                      <!-- <p>{{.organization}}</p> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <button class="btn btn-secondary" (click)="close()">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </ng-template>
   </li>
 </ul>
 
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
-<pre>Active: {{ active }}</pre>
+<!-- <pre>Active: {{ active }}</pre> -->
 
 <!-- <p (click)="showData()">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut ad, unde ullam autem ea beatae atque mollitia aliquam quasi minus illo tempore hic. Culpa iste quasi odio illum natus vel.</p> -->
 <!-- <p>ygfhg{{organizations[0]?.email}}</p> -->
+
+<!-- <table class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th scope="row"><input type="checkbox" /></th>
+     
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone Number</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <tr *ngFor="let contact of organizations.contact;let i = index" (click)="getDataCard(contact)">
+      <th scope="row"><input type="checkbox" /></th>
+     
+      <td>
+        <a> {{ contact.name }} </a>
+      </td>
+      <td>{{ contact.role }}</td>
+      <td>{{ contact.email }}</td>
+      <td>{{ contact.number }}</td>
+    </tr>
+    
+    
+  </tbody>
+</table> -->

@@ -1,7 +1,12 @@
 .bg-grey{
-    background-color: rgb(92, 86, 63);
+    background-color: #91b4e6;
 }
-a{
-    text-decoration: none;
-    cursor: pointer;
+
+.close {
+    font-size: 1.4rem;
+    opacity: 0.1;
+    transition: opacity 0.3s;
+}
+.nav-link:hover > .close {
+    opacity: 0.8;
 }

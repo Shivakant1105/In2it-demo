@@ -1,1 +1,22 @@
-<p>solution works!</p>
+<form [formGroup]="outerForm" (ngSubmit)="onSubmit()">
+  <div formArrayName="outerArray" class="border">
+    <div *ngFor="let outerGroup of outerArray?.controls; let i=index" [formGroupName]="i">
+      <label>Outer Field</label>
+      <input type="text" formControlName="outerField">
+      
+      <div formArrayName="innerArray">
+        <div *ngFor="let innerGroup of innerArray(i).controls; let j=index" [formGroupName]="j">
+          <label>Inner Field</label>
+          <input type="text" formControlName="innerField">
+          <button type="btn" class="btn btn-danger btn-sm" (click)="removeInnerField(i, j)">Remove Inner Field</button>
+        </div>
+      </div>
+      
+      <button type="button"  class="btn btn-priamary btn-sm"  (click)="addInnerField(i)">Add Inner Field</button>
+      <button type="button"  class="btn btn-danger btn-sm"  (click)="removeOuterItem(i)">Remove Outer Field</button>
+    </div>
+  </div>
+  
+  <button type="button"  class="btn btn-priamary btn-sm"  (click)="addOuterItem()">Add Outer Field</button>
+  <button type="submit">Submit</button>
+</form>

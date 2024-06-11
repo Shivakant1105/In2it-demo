@@ -5,11 +5,13 @@ import { MyMenuRoutingModule } from './my-menu-routing.module';
 
 import { MyTaskComponent } from './my-task/my-task.component';
 import { MyTeamComponent } from './my-team/my-team.component';
-import { IconsModule } from 'src/app/icons/icons.module';
+
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChildComponent } from './child/child.component';
-
+import { FeatherModule } from 'angular-feather';
+import { allIcons } from 'angular-feather/icons';
+import { SharedModule } from 'src/app/Shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,8 +23,9 @@ import { ChildComponent } from './child/child.component';
   ],
   imports: [
     CommonModule,
-    MyMenuRoutingModule, IconsModule   ,
-    ReactiveFormsModule, 
+    MyMenuRoutingModule, 
+    ReactiveFormsModule, SharedModule,
+    FeatherModule.pick( allIcons)
   ]
 })
 export class MyMenuModule { }

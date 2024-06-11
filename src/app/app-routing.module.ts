@@ -18,7 +18,16 @@ const routes: Routes = [
       return x.OrganizationModule
     })
   },
-  
+  {
+    path: 'designer',
+    loadChildren: () =>import("../app/Dashboard/designer/designer.module").then((x)=>{
+      return x.DesignerModule    })
+  },
+  {
+    path: 'set',
+    loadChildren: () =>import("../app/Dashboard/setting/setting.module").then((x)=>{
+      return x.SettingModule    })
+  },
 ];
 
 @NgModule({

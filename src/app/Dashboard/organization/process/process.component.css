@@ -1,19 +1,6 @@
-ul {
-    list-style-type: none;
-}
-.bg-grey{
-    background-color: gray;
-    
-    }
-    a{
-        text-decoration: none;
-        cursor: pointer;
-    }
-    .close {
-        font-size: 1.4rem;
-        opacity: 0.1;
-        transition: opacity 0.3s;
-    }
-    .nav-link:hover > .close {
-        opacity: 0.8;
-    }
+/* org-grid.component.css */
+.ag-theme-alpine {
+    height: 100%;
+    width: 100%;
+  }
+  

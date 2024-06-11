@@ -1,63 +1,49 @@
 <!-- <app-human-task></app-human-task> -->
 
-
 <nav class="subheader navbar navbar-expand-lg bg-grey">
-    <a class="px-3 text-white " href=""
-      ><i-feather name="plus"></i-feather>Add New Item</a
-    >
-    <a class="px-3 text-white "
-      ><i-feather name="briefcase  "></i-feather>Add to Marketing List</a>
-    <a class="px-3 text-white  "><i-feather name="share-2"></i-feather>Share</a>
-    <a class="px-3 text-white "><i-feather name="log-in"></i-feather>import</a>
-  </nav>
-  
-  <div class="py-3">
+  <a class="px-3 text-white"><i-feather name="plus"></i-feather>Add New Item</a>
+  <a class="px-3 text-white"><i-feather name="briefcase"></i-feather>Add to Marketing List</a>
+  <a class="px-3 text-white"><i-feather name="share-2"></i-feather>Share</a>
+  <a class="px-3 text-white"><i-feather name="log-in"></i-feather>import</a>
+</nav>
+
+<div class="py-3">
   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-    <li *ngFor="let tab of navs; let i = index" [ngbNavItem]="tab.id">
+    <li *ngFor="let tab of navs; let i = index" [ngbNavItem]="tab?.id">
       <a ngbNavLink>
-        {{ tab.organization }}
-        <span
-          *ngIf="i > 0"
-          class="btn-close ms-3 fw-light"
-          (click)="i > 0 ? close($event, i) : ''"
-        ></span>
+        {{ tab?.orgName }}
+        <span *ngIf="i > 0" class="btn-close ms-3 fw-light" (click)="i > 0 ? close($event, i) : ''"></span>
       </a>
-      <ng-template *ngIf="i === 0; elseBlock" ngbNavContent >
+      <ng-template *ngIf="i === 0; elseBlock" ngbNavContent>
         <div class="container-fluid p-0">
           <div class="row flex-nowrap">
             <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 bg-grey">
-              <div
-                class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
-              >
+              <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2  min-vh-100">
                 <a routerLink="" class="nav-link px-0 align-middle">
-                  <span class="ms-1 d-none d-sm-inline">List</span>
+                  <span class="ms-1 d-none d-sm-inline fs-3">List</span>
                 </a>
-                <a class="nav-link px-0 align-middle">
-                  <span
-                    class="ms-1 d-none d-sm-inline active"
-                    (click)="getAllTable()"
-                    >All Organization</span
-                  >
+                <a class="nav-link py-2 align-middleiioiu">
+                  <span class="ms-1 d-none d-sm-inline active" style="cursor: pointer" (click)="getAllTable()">All
+                    Organization</span>
                 </a>
-                <a class="nav-link px-0 align-middle">
-                  <span
-                    class="ms-1 d-none d-sm-inline"
-                    (click)="filterData('Customer')"
-                    >Customer</span
-                  >
+                <!-- <li class="nav-item" *ngFor="let org of dataService.organizations">
+                  <a (click)="filterData(org.type)" style="cursor: pointer" class="nav-link align-middle px-0 black-color">
+                    <span class="ms-1 d-none d-sm-inline">{{ org.type }}</span>
+                  </a>
+                </li> -->
+                <a class="nav-link py-2 align-middle" style="cursor: pointer">
+                  <span class="ms-1 d-none d-sm-inline" (click)="filterData('Customer')">Customer</span>
                 </a>
-                <a class="nav-link px-0 align-middle">
-                  <span
-                    class="ms-1 d-none d-sm-inline"
-                    (click)="filterData('Non-Customer')"
-                    >Non-Customers</span
-                  >
+                <a class="nav-link py-2 align-middle" style="cursor: pointer">
+                  <span class="ms-1 d-none d-sm-inline" (click)="filterData('Non-Customer')">Non-Customers</span>
                 </a>
               </div>
             </div>
             <div class="col py-3">
-              <div class="container">
-                <table class="table table-hover table-bordered">
+              <app-ag-grid [rowData]="rowData"
+            [columnDefs]="columnDefs"></app-ag-grid>
+             
+                <!-- <table class="table table-hover table-bordered">
                   <thead>
                     <tr>
                       <th>Organization</th>
@@ -73,7 +59,9 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let org of showTable">
-                      <td (click)="add($event, org) " ><a>{{ org.organization }}</a></td>
+                      <td (click)="add( org)">
+                        <a class=" text-primary" style="cursor: pointer">{{ org.orgName }}</a>
+                      </td>
                       <td>{{ org.type }}</td>
                       <td>{{ org.industry }}</td>
                       <td>{{ org.onboarding }}</td>
@@ -84,27 +72,20 @@
                       <td>{{ org.phone }}</td>
                     </tr>
                   </tbody>
-                </table>
-              </div>
+                </table> -->
+       
             </div>
           </div>
+          
         </div>
+        
       </ng-template>
+      
       <ng-template #else ngbNavContent>
-        <!-- <p>Tab {{ id.organization }},{{ id?.onboarding }} content</p> -->
-        <!-- <p>array 1</p> -->
-        <!-- FGDF -->
-          <app-workflows></app-workflows>
-
-          <!-- <app-sender-component ></app-sender-component>
-// <app-receiver-component [receivedOrg]="receivedOrg"></app-receiver-component> -->
-
+        <app-workflows [workflowData]="tab"></app-workflows>
       </ng-template>
     </li>
-    <li class="nav-item" role="presentation">
-      <!-- <button type="button" class="nav-link" (click)="add($event)"></button> -->
-    </li>
+    <li class="nav-item" role="presentation"></li>
   </ul>
 </div>
-  <div [ngbNavOutlet]="nav" class="mt-2"></div>
-  
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
