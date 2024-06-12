@@ -5,6 +5,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { CustomCellComponent } from './custom-cell/custom-cell.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,7 @@ const declared = [
 @NgModule({
   declarations:[...declared, ],
   imports: [
-    CommonModule,AgGridModule,FeatherModule.pick( allIcons)
+    CommonModule,AgGridModule, FormsModule,FeatherModule.pick( allIcons)
   ],
   exports: [...declared],
 })

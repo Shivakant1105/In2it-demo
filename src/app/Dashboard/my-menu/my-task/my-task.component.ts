@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../../service/data.service';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions } from 'ag-grid-community';
 import { CustomCellComponent } from 'src/app/Shared/custom-cell/custom-cell.component';
 
 
@@ -40,26 +40,28 @@ export class MyTaskComponent implements OnInit {
   editMode: boolean = false;
   editIndex: number = -1;
 
-
+  gridOptions!: GridOptions;
   columnDefs: ColDef[] = [
     
     {headerCheckboxSelection: true, 
       checkboxSelection: true, 
      
     },
-    { headerName: 'Solution Area', field: 'solutionArea',   
-      cellRenderer: (params: any) => {
-      const linkElement = document.createElement('a');
+    { headerName: 'Solution Area', field: 'solutionArea', 
+      // cellRenderer:CustomCellComponent  
+    //   cellRenderer: (params: any) => {
+    //   const linkElement = document.createElement('a');
 
-      linkElement.innerText = params.value;
-      linkElement.addEventListener('click', (event) => {
-        event.preventDefault();
-      ;
+    //   linkElement.innerText = params.value;
+    //   linkElement.addEventListener('click', (event) => {
+    //     event.preventDefault();
+    //   ;
 
-        console.log("ajkhfjhdjkshfd")
-      });
-      return linkElement;
-    }, },
+    //     console.log("ajkhfjhdjkshfd")
+    //   });
+    //   return linkElement;
+    // }, 
+  },
     { headerName: 'Workflow', field: 'workflow' },
     { headerName: 'TaskId', field: 'taskId' },
     { headerName: 'Task Name', field: 'taskName' },
@@ -89,6 +91,14 @@ export class MyTaskComponent implements OnInit {
       dueDate: ['', Validators.required], 
       priority: ['', Validators.required], 
     });
+
+
+    this.gridOptions = {
+      context: {
+        parentComponent: this,
+        parent: 'task',
+      },
+    };
   }
   
   
@@ -114,6 +124,7 @@ export class MyTaskComponent implements OnInit {
       }
   });
   }
+  this.addData=false
   }
   onClear() {
     this.addForm.reset();
@@ -129,10 +140,18 @@ export class MyTaskComponent implements OnInit {
     this.formData.splice(index, 1); 
     localStorage.setItem('data', JSON.stringify(this.formData)); }
   }
-  onEdit(index: number) {
+  onEdit(index: any) {
+    this.addData = true;
     this.editIndex = index;
     this.editMode = true;
+    console.log(this.formData[index]);
+    console.log(index);
+    
     this.addForm.patchValue(this.formData[index]);
+    this.addForm.patchValue(index);
+    
+
+    
   }
 
   addTask() {

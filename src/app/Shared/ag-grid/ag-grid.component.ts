@@ -10,12 +10,13 @@ import { ColDef, GridApi, GridOptions,  } from 'ag-grid-community';
   styleUrls: ['./ag-grid.component.css']
 })
 export class AgGridComponent implements OnInit {
+  gridApiActive: any;
 
 
-
+  searchValue:any
   constructor() { }
   
-  public gridApi!: GridApi
+  //  gridApi!: GridApi
   defaultColumnDefs: ColDef={
     sortable:true,
     filter:true,
@@ -24,6 +25,7 @@ export class AgGridComponent implements OnInit {
   public rowSelection: "single" | "multiple" = "multiple";
   @Input() rowData: any;
   @Output() checkBoxChange: EventEmitter <any> =new EventEmitter();
+  @Output() GridReady: EventEmitter <any> =new EventEmitter<GridApi>();
   @Input() columnDefs!: ColDef[];
 
   @Input() gridOptions!: GridOptions 
@@ -42,6 +44,16 @@ export class AgGridComponent implements OnInit {
     }, 0)
     
   }
+
+  onGridReady(params:any){
+    this.gridApiActive=params.api
+  this.GridReady.emit(this.gridApiActive)
+// this.rowData
+// console.log("search data" ,this.rowData);
+console.log("grid ready");
+
+  }
+
 
 onCheckBoxChange()
  {

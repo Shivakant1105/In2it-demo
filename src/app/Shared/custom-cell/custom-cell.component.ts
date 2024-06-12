@@ -11,7 +11,7 @@ import {  ICellRendererParams } from 'ag-grid-community';
 export class CustomCellComponent implements OnInit,  ICellRendererAngularComp {
  orgName:string=''
  params: any;
-fliedName:string | undefined=''
+ fieldName:string | undefined=''
  contactName:string=""
   constructor(
     // private contactComponent:ContactComponent
@@ -21,7 +21,7 @@ fliedName:string | undefined=''
     this.contactName=params.data.name
     this.orgName=params.data.orgName
     this.params=params
-    this.fliedName=params.colDef?.field
+    this.fieldName=params.colDef?.field
     // console.log('para',params)
   }
   refresh(params: ICellRendererParams) {
@@ -32,9 +32,11 @@ fliedName:string | undefined=''
   ngOnInit(): void {
   }
   nameClicked () {
-    alert("clicked");
+    // alert("clicked");addTask
+    this.params.context.parentComponent.onEdit(this.params.data)
+    this.params.context.parentComponent.addTask()
     // this.params.onClick(this.params)
-    console.log("saf;flj",this.orgName);
+    console.log("saf;flj",this.params.data);
     
   }
 
@@ -51,7 +53,7 @@ fliedName:string | undefined=''
       // this.openForm(params.data, 'checkBox');
       // this.viewDetails(params.data.id);
     }
-    // console.log(this.params);
+    console.log(this.params);
 
     // this.contactComponent.editGrid(this.params);
   }

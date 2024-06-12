@@ -30,12 +30,12 @@
       <li class="list-unstyled px-3 my-2 rounded" [ngClass]="{ 'active-tab': activeOrganization === 'All Contacts' }">
         <a class="nav-link py-2 align-middle fw-semi-bold" style="cursor: pointer" (click)="getAllData()">All
           Contacts</a>
-        <span class="ms-1 d-none d-sm-inline fw-light">{{ totalContacts }} Contacts</span>
+        <span class="ms-1 d-none d-sm-inline fw-light">{{ totalCount }} Contacts</span>
       </li>
       <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
         <div class="input-group">
           <input id="table-filtering-search" placeholder="Search" class="form-control bg-light rounded rounded-pill"
-            type="text" [formControl]="filter" />
+            type="text"  [(ngModel)]="searchValue"  (ngModelChange)="onSearchData()"/>
           <div class="input-group-append">
             <button id="button-addon1" type="submit" class="btn btn-link text-primary">
               <i-feather name="search"></i-feather>
@@ -44,15 +44,15 @@
         </div>
       </div>
       <li class="nav-item list-unstyled py-2 px-4 rounded" *ngFor="let org of contactData"
-      [ngClass]="{ 'active-tab': isActive(org.orgName) }">
-    <a (click)="filterContact(org.orgName)" style="cursor: pointer"
-      class="nav-link align-middle px-0 black-color fw-semi-bold">
-      {{ org.orgName }}
-    </a>
-    <p class="ms-1 d-none d-sm-inline fw-light">
-      {{ org.contact.length }} Contacts
-    </p>
-  </li>
+        [ngClass]="{ 'active-tab': isActive(org.orgName) }">
+        <a (click)="filterContact(org.orgName)" style="cursor: pointer"
+          class="nav-link align-middle px-0 black-color fw-semi-bold">
+          {{ org.orgName }}
+        </a>
+        <p class="ms-1 d-none d-sm-inline fw-light">
+          {{ org.contact.length }} Contacts
+        </p>
+      </li>
       <!-- <li class="nav-item list-unstyled py-2 px-4 rounded" *ngFor="let org of contactData"
         [ngClass]="{ 'active-tab': isActive(org.orgName) }">
         <a (click)="filterContact( $event ,org.orgName)" style="cursor: pointer"
@@ -67,14 +67,13 @@
   </div>
 
   <!-- Table -->
-  <div class="col ">
-
+  <div class="col">
     <div class="d-flex justify-content-between">
       <h4>All Contact Lists</h4>
       <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
         <div class="input-group">
           <input id="table-filtering-search" placeholder="Search" class="form-control bg-light rounded rounded-pill"
-            type="text" [formControl]="filter" (keyup)="quickSearch" [(ngModel)]="searchValue">
+            type="text"  [(ngModel)]="searchValue"  (ngModelChange)="onSearchData()"/>
           <div class="input-group-append">
             <button id="button-addon1" type="submit" class="btn btn-link text-primary">
               <i-feather name="search"></i-feather>
@@ -85,9 +84,10 @@
 
       <!-- </div><input type="search" placeholder="search"> -->
     </div>
-    <app-ag-grid
-    rowSelection= "multiple"  [rowData]="rowData" [columnDefs]="columnDefs"  [gridOptions]="gridOptions" (checkBoxChange)="checkBox($event)">
-  </app-ag-grid>
+    <app-ag-grid rowSelection="multiple" [rowData]="rowData" [columnDefs]="columnDefs" [gridOptions]="gridOptions" 
+    (GridReady)="onGridReady($event)"
+      (checkBoxChange)="checkBox($event)">
+    </app-ag-grid>
   </div>
 
   <div *ngIf="showViewDetails" class="card1 col-md-3">
@@ -97,16 +97,10 @@
       <div class="d-flex">
         <i-feather name="user"></i-feather>
         <div class="justify-center">
-          <p class="fs-5">
-            orgName : {{ viewData.orgName }}
-          </p>
+          <p class="fs-5">orgName : {{ viewData.orgName }}</p>
           <h5>{{ viewData.name }}</h5>
-          <p>
-            Email: {{ viewData.email }}
-          </p>
-          <p>
-            Phone no:{{ viewData.number }}
-          </p>
+          <p>Email: {{ viewData.email }}</p>
+          <p>Phone no:{{ viewData.number }}</p>
           <p>Role: {{ viewData.role }}</p>
         </div>
       </div>
@@ -134,9 +128,9 @@
             </div>
           </div>
           <div *ngIf="
-            form.get('name')?.invalid &&
-            (form.get('name')?.dirty || form.get('name')?.touched)
-          ">
+              form.get('name')?.invalid &&
+              (form.get('name')?.dirty || form.get('name')?.touched)
+            ">
             <div *ngIf="form.get('name')?.errors?.['required']" class="text-danger">
               Name is required.
             </div>
@@ -150,10 +144,9 @@
             </select>
           </div>
           <div *ngIf="
-            form.get('orgName')?.invalid &&
-            (form.get('orgName')?.dirty ||
-              form.get('orgName')?.touched)
-          ">
+              form.get('orgName')?.invalid &&
+              (form.get('orgName')?.dirty || form.get('orgName')?.touched)
+            ">
             <div *ngIf="form.get('orgName')?.errors?.['required']" class="text-danger">
               orgName is required.
             </div>
@@ -163,9 +156,9 @@
             <input type="email" class="form-control" formControlName="email" placeholder="Email" />
           </div>
           <div *ngIf="
-            form.get('email')?.invalid &&
-            (form.get('email')?.dirty || form.get('email')?.touched)
-          ">
+              form.get('email')?.invalid &&
+              (form.get('email')?.dirty || form.get('email')?.touched)
+            ">
             <div *ngIf="form.get('email')?.errors?.['required']" class="text-danger">
               Email is required.
             </div>
@@ -183,19 +176,17 @@
             </div>
           </div>
           <div *ngIf="
-            form.get('phone')?.invalid &&
-            (form.get('phone')?.dirty || form.get('phone')?.touched)
-          ">
+              form.get('phone')?.invalid &&
+              (form.get('phone')?.dirty || form.get('phone')?.touched)
+            ">
             <div *ngIf="form.get('phone')?.errors?.['required']" class="text-danger">
               Please, Enter 10 digit Mobile Number.
             </div>
           </div>
 
           <div formArrayName="another">
-            <div *ngFor="
-              let another of mediumFormArray.controls;
-              let i = index
-            " [formGroupName]="i" class="d-flex phone-field py-2">
+            <div *ngFor="let another of mediumFormArray.controls; let i = index" [formGroupName]="i"
+              class="d-flex phone-field py-2">
               <label class="mr">Another:</label>
               <select formControlName="type" class="form-select px-2 mx-2">
                 <!-- <option value="Field" selected>Field</option> -->
@@ -204,11 +195,10 @@
               </select>
 
               <!-- Change input type based on selected value -->
-              <input [type]="
-                getTypeControl(i).value === 'Email' ? 'email' : 'tel'
-              " formControlName="number" placeholder=" {{
-                getTypeControl(i).value === 'Email' ? 'email' : ''
-              }}" class="form-control" required />
+              <input [type]="getTypeControl(i).value === 'Email' ? 'email' : 'tel'" formControlName="number"
+                placeholder=" {{
+                  getTypeControl(i).value === 'Email' ? 'email' : ''
+                }}" class="form-control" required />
               <i-feather name="trash-2" class="delete btn btn-danger btn-sm" (click)="removePhone(i)">X</i-feather>
             </div>
           </div>
@@ -220,9 +210,7 @@
             <label>Roles:</label>
             <select class="form-select px-2 mx-2" formControlName="role" aria-label="Default select example">
               <ng-container *ngFor="let data of contactData">
-                <ng-container *ngIf="
-                  form.get('orgName')?.value === data.orgName
-                ">
+                <ng-container *ngIf="form.get('orgName')?.value === data.orgName">
                   <ng-container *ngFor="let contact of data.contact; let i = index">
                     <ng-container *ngIf="formHeading === 'ADD CONTACT'">
                       <option *ngIf="contact.role !== 'OrgSPOC'" [value]="contact.role">
@@ -240,9 +228,9 @@
             </select>
           </div>
           <div *ngIf="
-            form.get('role')?.invalid &&
-            (form.get('role')?.dirty || form.get('role')?.touched)
-          ">
+              form.get('role')?.invalid &&
+              (form.get('role')?.dirty || form.get('role')?.touched)
+            ">
             <div *ngIf="form.get('role')?.errors?.['required']" class="text-danger">
               Role is required.
             </div>
@@ -277,3 +265,4 @@
       </div>
     </div>
   </div>
+</div>

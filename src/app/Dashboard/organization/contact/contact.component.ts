@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../service/data.service';
 
 import {
@@ -30,11 +30,11 @@ export class ContactComponent implements OnInit {
   contactData!: any[];
 
   addData: boolean = false;
-searchValue!:string
+  searchValue: any;
   totalContacts!: number;
   form!: FormGroup;
   submittedData: any;
-  
+
   activeOrganization: string = '';
 
   showViewDetails: boolean = false;
@@ -43,10 +43,10 @@ searchValue!:string
   formHeading!: string;
 
   checkedCount: number = 0;
-  
+
   checkBoxData: any;
   selectAll = false;
- 
+
   uniqueOrgs!: string[];
   activeOrg: string | null = null;
   filterdata: any;
@@ -83,7 +83,6 @@ searchValue!:string
       //   });
       //   return linkElement;
       // },
-  
     },
     {
       headerName: 'Name',
@@ -94,13 +93,13 @@ searchValue!:string
       //     onClick:this.linkElement.bind(this),
       // },
 
-    //  cellRendererParams: {
-        
-    //     context: {
-       
-    //       componentParent: {contactComponent :this}
-    //     }
-    //   },
+      //  cellRendererParams: {
+
+      //     context: {
+
+      //       componentParent: {contactComponent :this}
+      //     }
+      //   },
       // cellRenderer: (params: any) => {
       //   const linkElement = document.createElement('a');
 
@@ -120,7 +119,8 @@ searchValue!:string
     { headerName: 'Phone Number', field: 'number' },
   ];
   rowData: any[] = [];
-  gridOptions!:GridOptions
+  gridOptions!: GridOptions;
+  gridApiActive:any
   filter = new FormControl('');
   constructor(
     public dataService: DataService,
@@ -160,58 +160,67 @@ searchValue!:string
       console.log('service data', data);
       this.rowData = this.contactData.flatMap((org: any) =>
         org.contact.map((contact: any) => ({
-          orgID:org.id,
+          orgID: org.id,
           ...contact,
           orgName: org.orgName,
-      
         }))
       );
     });
- 
-    this.gridOptions={context:{
-      parentComponent:this,parent:"Contact"
-    }}
 
+    this.gridOptions = {
+      context: {
+        parentComponent: this,
+        parent: 'Contact',
+      },
+    };
 
     console.log('rowdatasfsa', this.rowData);
     this.filterdata = this.rowData;
     this.getAllData();
   }
 
-  editGrid(params:any){
-    console.log(params);
-    this.openForm(params.data, "checkBox")
-    this.viewDetails(params.data.id)
+  // editGrid(params:any){
+  //   console.log(params);
+  //   this.openForm(params.data, "checkBox")
+  //   this.viewDetails(params.data.id)
+
+  // }
+
+  onGridReady(params:any){
+    this.gridApiActive=params
+console.log("grid ready" , params);
+
+console.log("search data", this.contactData);
+  }
+
+  onSearchData(){
+    console.log("search data", this.gridApiActive); 
+    this.gridApiActive?.setQuickFilter(this.searchValue)
     
   }
 
-  quickSearch(){
-
-  }
-totalCount = 0;
+  totalCount = 0;
+  
   getAllData() {
- 
-    this.contactData.forEach((org: any) => {
-      if (org.contact) {
-        this.totalCount += org.contact.length;
-      }
-    });
+    this.totalCount=this.rowData.length
+    // this.contactData.forEach((org: any) => {
+    //   if (org.contact) {
+    //     this.totalCount += org.contact.length;
+    //   }
+    // });
     this.activeOrganization = 'All Contacts';
-
-    // Set totalContacts property to be accessible in the template
     this.totalContacts = this.totalCount;
     this.rowData = this.filterdata;
   }
 
-  
   openTab(data: any, id: any) {
-    console.log('logg===>',this.contactData,id);
+    console.log('logg===>', this.contactData, id);
     // const nextData=this.contactData.filter((data:any)=>{
     //   return data.id===id
     //   })
-      // console.log(nextData)
-      // console.log(data)
-      this.router.navigate(['/org/organization'], { state: {data ,id} });
+    // console.log(nextData)
+    // console.log(data)
+    this.router.navigate(['/org/organization'], { state: { data, id } });
   }
 
   filterContact(orgName: string) {
@@ -229,7 +238,6 @@ totalCount = 0;
     return this.activeOrg === orgName;
   }
 
-  
   filteredOrg: any;
 
   createFormGroup(): FormGroup {
@@ -327,7 +335,7 @@ totalCount = 0;
     );
 
     this.showEditForm = false;
-    this.getAllData()
+    this.getAllData();
   }
 
   viewDetails(id: any) {
@@ -357,7 +365,6 @@ totalCount = 0;
     console.log('checkbox', data);
     this.viewData = data;
     this.openForm(data, 'boxData');
-   
   }
 
   updataData(form: FormGroup) {
@@ -405,7 +412,6 @@ totalCount = 0;
       this.editContact1(this.checkBoxData[0]);
     }
   }
-  
 
   checkBox(event: any) {
     console.log('dfgsg6853g', event);
@@ -422,30 +428,25 @@ totalCount = 0;
   }
 
   deleteContact() {
-    console.log("delete data");
+    console.log('delete data');
     this.showViewDetails = false;
-    
+
     // Filter out rows from rowData based on viewData (which contains the selected checkboxes)
     if (this.selectedRowsData.length > 0) {
-      this.rowData = this.rowData.filter(row => 
-        !this.selectedRowsData.includes(row)
+      this.rowData = this.rowData.filter(
+        (row) => !this.selectedRowsData.includes(row)
       );
       // Reset the selected rows' data
       this.selectedRowsData = [];
       this.checkedCount = 0;
       this.totalContacts = this.rowData.length;
+
       console.log('Selected rows deleted successfully.');
     } else {
       console.log('No rows selected for deletion.');
     }
-    // this.rowData.forEach(() => {
-    //   if (this.rowData.length) {
-    //     this.totalCount += this.rowData.length;
-    //   }
-    // });
-    
+  this.totalCount=this.rowData.length
   }
-  
 
   onClear() {
     this.form.reset();
@@ -456,7 +457,6 @@ totalCount = 0;
   }
   cancel() {
     this.form.reset();
-    // this.selectedContactIndex = -1; // Reset selected index when cancelling
 
     this.showEditForm = false;
   }
