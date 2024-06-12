@@ -41,38 +41,10 @@
             </div>
             <div class="col py-3">
               <app-ag-grid [rowData]="rowData"
-            [columnDefs]="columnDefs"></app-ag-grid>
-             
-                <!-- <table class="table table-hover table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Organization</th>
-                      <th>Type</th>
-                      <th>Industry</th>
-                      <th>Onboarding</th>
-                      <th>Related Orgs</th>
-                      <th>Products</th>
-                      <th>Org SPOC</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let org of showTable">
-                      <td (click)="add( org)">
-                        <a class=" text-primary" style="cursor: pointer">{{ org.orgName }}</a>
-                      </td>
-                      <td>{{ org.type }}</td>
-                      <td>{{ org.industry }}</td>
-                      <td>{{ org.onboarding }}</td>
-                      <td>{{ org.relatedOrgs }}</td>
-                      <td>{{ org.products }}</td>
-                      <td>{{ org.orgSPOC }}</td>
-                      <td>{{ org.email }}</td>
-                      <td>{{ org.phone }}</td>
-                    </tr>
-                  </tbody>
-                </table> -->
+            [columnDefs]="columnDefs"
+            [gridOptions]="gridOptions"></app-ag-grid>
+
+                
        
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DataService } from '../../service/data.service';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions } from 'ag-grid-community';
+import { CustomCellComponent } from 'src/app/Shared/custom-cell/custom-cell.component';
 
 @Component({
   selector: 'app-organization',
@@ -30,7 +31,7 @@ export class OrganizationComponent implements OnInit {
   active!: number;
   showTable!: any;
   flag!: boolean;
-
+  gridOptions!:GridOptions
   columnDefs: ColDef[] = [
     {
       headerCheckboxSelection: true,
@@ -40,15 +41,17 @@ export class OrganizationComponent implements OnInit {
       headerName: 'Org Name',
       field: 'orgName',
       cellStyle: { color: 'blue' },
-      cellRenderer: (params: any) => {
-        const linkElement = document.createElement('a');
-        linkElement.innerText = params.value;
-        linkElement.addEventListener('click', (event: Event) => {
-          event.preventDefault();
-          this.add(params.data);
-        });
-        return linkElement;
-      },
+
+      cellRenderer:CustomCellComponent
+      // cellRenderer: (params: any) => {
+      //   const linkElement = document.createElement('a');
+      //   linkElement.innerText = params.value;
+      //   linkElement.addEventListener('click', (event: Event) => {
+      //     event.preventDefault();
+      //     this.add(params.data);
+      //   });
+      //   return linkElement;
+      // },
     },
     { headerName: 'Type', field: 'type' },
     { headerName: 'Industry', field: 'industry' },
@@ -70,7 +73,22 @@ export class OrganizationComponent implements OnInit {
     this.getAllTable();
     const navigation = history.state;
     console.log('contacdat from fd=ata come0', navigation.ne);
+    if (navigation.id && navigation.data ) {
+      console.log(navigation.id);
+      console.log("navigation data:", navigation);
 
+      // Assuming `add` method processes and sets the data to your component's state
+      console.log(navigation.data);
+      this.add(navigation.data[0]);
+
+      // Assuming `organizations` is a property on your component that needs to be updated
+      // this.organizations = navigation.nextData;
+      
+  }
+
+this.gridOptions={context:{
+  parentComponent:this,parent:"Org"
+}}
     // if (navigation.data && navigation.id) {
     //   // this.datasource = navigation.data;
     //   console.log(navigation.id);
@@ -83,18 +101,7 @@ export class OrganizationComponent implements OnInit {
     //   console.log();
     // }
 
-    if (navigation.data && navigation.id) {
-      console.log(navigation.id);
-      console.log("navigation data:", navigation);
-
-      // Assuming `add` method processes and sets the data to your component's state
-      this.add(navigation.data);
-
-      // Assuming `organizations` is a property on your component that needs to be updated
-      this.organizations = navigation.nextData;
-      
-      console.log(this.organizations);
-  }
+    
   }
 
   close(event: MouseEvent, toRemove: number) {

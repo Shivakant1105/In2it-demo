@@ -1,15 +1,15 @@
 
  
-<p class="text-primary" (click)="onActionClick()">
-    {{value}}
+<p *ngIf="fliedName=='orgName'" class="text-primary" (click)="orgNameClick()">
+    {{orgName}}
+ </p>
+ 
+ <p *ngIf="fliedName=='name'" class="text-primary" (click)="contactClick()">
+    {{contactName}}
  </p>
 
 
- <div class="list-unstyled" (click)="nameClicked()">
-
-    
-
+ <!-- <div class="list-unstyled" (click)="nameClicked()">
      <i-feather name="edit" style="color: green" ></i-feather>
      <i-feather name="trash-2" class="delete" style="color: red" ></i-feather>
-
- </div>
+ </div> -->

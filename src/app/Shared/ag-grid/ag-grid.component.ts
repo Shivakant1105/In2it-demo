@@ -25,7 +25,8 @@ export class AgGridComponent implements OnInit {
   @Input() rowData: any;
   @Output() checkBoxChange: EventEmitter <any> =new EventEmitter();
   @Input() columnDefs!: ColDef[];
-  gridOptions: GridOptions = {}
+
+  @Input() gridOptions!: GridOptions 
 
   onCellClicked(event: any) {
     console.log(event);

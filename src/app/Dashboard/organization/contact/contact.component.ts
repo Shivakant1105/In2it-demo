@@ -11,7 +11,7 @@ import {
 
 // import { Observable, map, of, startWith } from 'rxjs';
 import { DecimalPipe } from '@angular/common';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions } from 'ag-grid-community';
 import { Router } from '@angular/router';
 import { CustomCellComponent } from 'src/app/Shared/custom-cell/custom-cell.component';
 
@@ -30,7 +30,7 @@ export class ContactComponent implements OnInit {
   contactData!: any[];
 
   addData: boolean = false;
-
+searchValue!:string
   totalContacts!: number;
   form!: FormGroup;
   submittedData: any;
@@ -70,21 +70,20 @@ export class ContactComponent implements OnInit {
       headerName: 'Org Name',
       field: 'orgName',
       cellStyle: { color: 'blue' },
-      cellRenderer: (params: any) => {
-        const linkElement = document.createElement('a');
+      cellRenderer: CustomCellComponent,
+      // cellRenderer: (params: any) => {
+      //   const linkElement = document.createElement('a');
 
-        linkElement.innerText = params.value;
-        linkElement.addEventListener('click', (event) => {
-          event.preventDefault();
-          this.openTab(params.data,params.data.orgID);
+      //   linkElement.innerText = params.value;
+      //   linkElement.addEventListener('click', (event) => {
+      //     event.preventDefault();
+      //     this.openTab(params.data,params.data.orgID);
 
-          console.log("ajkhfjhdjkshfd" , params)
-        });
-        return linkElement;
-      },
-      sortable:true,
-      filter:true,
-      editable: true,
+      //     console.log("ajkhfjhdjkshfd" , params)
+      //   });
+      //   return linkElement;
+      // },
+  
     },
     {
       headerName: 'Name',
@@ -95,13 +94,13 @@ export class ContactComponent implements OnInit {
       //     onClick:this.linkElement.bind(this),
       // },
 
-     cellRendererParams: {
+    //  cellRendererParams: {
         
-        context: {
+    //     context: {
        
-          componentParent: {contactComponent :this}
-        }
-      },
+    //       componentParent: {contactComponent :this}
+    //     }
+    //   },
       // cellRenderer: (params: any) => {
       //   const linkElement = document.createElement('a');
 
@@ -121,7 +120,7 @@ export class ContactComponent implements OnInit {
     { headerName: 'Phone Number', field: 'number' },
   ];
   rowData: any[] = [];
-
+  gridOptions!:GridOptions
   filter = new FormControl('');
   constructor(
     public dataService: DataService,
@@ -168,13 +167,11 @@ export class ContactComponent implements OnInit {
         }))
       );
     });
-    // this.dataService.allData.subscribe((data: any) => {
+ 
+    this.gridOptions={context:{
+      parentComponent:this,parent:"Contact"
+    }}
 
-    //   this.rowData =data.flatMap((org:any) =>
-    //         org.contact.map((contact:any) => ({ ...contact, orgName: org.orgName, ...data }))
-    //       );
-
-    // });
 
     console.log('rowdatasfsa', this.rowData);
     this.filterdata = this.rowData;
@@ -188,33 +185,9 @@ export class ContactComponent implements OnInit {
     
   }
 
-//   linkElement(data:any){
-//     this.openForm(data.data,"checkBox")
-//     this.viewDetails(data.data.id)
-// console.log(data);
+  quickSearch(){
 
-//   }
-  // search(text: string, _pipe: PipeTransform) {
-  //   return this.contactData
-  //     .map((contact: any) => {
-  //       return {
-  //         ...contact,
-  //         contact: contact.contact.filter((contact: any) => {
-  //           const term = text.toLowerCase();
-  //           return (
-  //             (contact.name && contact.name.toLowerCase().includes(term)) ||
-  //             (contact.role && contact.role.toLowerCase().includes(term)) ||
-  //             (contact.email && contact.email.toLowerCase().includes(term)) ||
-  //             (contact.number && contact.number.toLowerCase().includes(term))
-  //           );
-  //         }),
-  //       };
-  //     })
-  //     .filter((country: any) => country.contact.length > 0);
-  // }
-  // isActive(orgName: string): boolean {
-  //   return this.activeOrganization === orgName; // Replace with your logic to determine the active organization
-  // }
+  }
 totalCount = 0;
   getAllData() {
  
@@ -233,11 +206,12 @@ totalCount = 0;
   
   openTab(data: any, id: any) {
     console.log('logg===>',this.contactData,id);
-    const nextData=this.contactData.filter((data:any)=>{
-      return data.id===id
-      })
-      console.log(nextData)
-      this.router.navigate(['/org/organization'], { state: {data, id, nextData} });
+    // const nextData=this.contactData.filter((data:any)=>{
+    //   return data.id===id
+    //   })
+      // console.log(nextData)
+      // console.log(data)
+      this.router.navigate(['/org/organization'], { state: {data ,id} });
   }
 
   filterContact(orgName: string) {

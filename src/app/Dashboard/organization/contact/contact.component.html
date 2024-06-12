@@ -74,7 +74,7 @@
       <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
         <div class="input-group">
           <input id="table-filtering-search" placeholder="Search" class="form-control bg-light rounded rounded-pill"
-            type="text" [formControl]="filter" />
+            type="text" [formControl]="filter" (keyup)="quickSearch" [(ngModel)]="searchValue">
           <div class="input-group-append">
             <button id="button-addon1" type="submit" class="btn btn-link text-primary">
               <i-feather name="search"></i-feather>
@@ -86,7 +86,7 @@
       <!-- </div><input type="search" placeholder="search"> -->
     </div>
     <app-ag-grid
-    rowSelection= "multiple"  [rowData]="rowData" [columnDefs]="columnDefs" (checkBoxChange)="checkBox($event)">
+    rowSelection= "multiple"  [rowData]="rowData" [columnDefs]="columnDefs"  [gridOptions]="gridOptions" (checkBoxChange)="checkBox($event)">
   </app-ag-grid>
   </div>
 
