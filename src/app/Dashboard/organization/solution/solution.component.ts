@@ -4,17 +4,16 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-solution',
   templateUrl: './solution.component.html',
-  styleUrls: ['./solution.component.css']
+  styleUrls: ['./solution.component.css'],
 })
 export class SolutionComponent implements OnInit {
-
   outerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.outerForm = this.fb.group({
-      outerArray: this.fb.array([])
+      outerArray: this.fb.array([]),
     });
   }
 
@@ -25,7 +24,7 @@ export class SolutionComponent implements OnInit {
   get outerArray(): FormArray {
     return this.outerForm.get('outerArray') as FormArray;
   }
-  innerArray(ind:any): FormArray {
+  innerArray(ind: any): FormArray {
     return this.outerArray.at(ind).get('innerArray') as FormArray;
   }
   addOuterItem() {
@@ -41,25 +40,22 @@ export class SolutionComponent implements OnInit {
     const innerArray = k.get('innerArray') as FormArray;
     innerArray.push(this.createInnerGroup());
   }
-
-
-
   removeInnerField(outerIndex: number, innerIndex: number) {
     const outerGroup = this.outerArray.at(outerIndex) as FormGroup;
     const innerArray = outerGroup.get('innerArray') as FormArray;
     innerArray.removeAt(innerIndex);
   }
 
- createOuterGroup() {
+  createOuterGroup() {
     return this.fb.group({
       outerField: [''],
-      innerArray: this.fb.array([])
+      innerArray: this.fb.array([]),
     });
   }
 
-createInnerGroup() {
+  createInnerGroup() {
     return this.fb.group({
-      innerField: ['']
+      innerField: [''],
     });
   }
 }

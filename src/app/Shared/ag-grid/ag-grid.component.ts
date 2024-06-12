@@ -42,12 +42,12 @@ export class AgGridComponent implements OnInit {
     
   }
 
-  onCheckBoxChange()
-{
+onCheckBoxChange()
+ {
   const selectedRow=this.gridOptions.api?.getSelectedRows()
   // console.log(selectedRow)
  this.checkBoxChange.emit(selectedRow) 
-}
+ }
 
  
 }
