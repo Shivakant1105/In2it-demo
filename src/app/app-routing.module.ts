@@ -18,6 +18,12 @@ const routes: Routes = [
       return x.OrganizationModule
     })
   },
+
+  {
+    path: 'products',
+    loadChildren: () =>import("../app/Dashboard/products/products.module").then((x)=>{
+      return x.ProductsModule    })
+  },
   {
     path: 'designer',
     loadChildren: () =>import("../app/Dashboard/designer/designer.module").then((x)=>{
