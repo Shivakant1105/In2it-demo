@@ -1,17 +1,18 @@
-.yellow{
-    background-color: blanchedalmond;
-}
-.red{
+.priority-high {
     background-color: red;
-}
-.green{
+    color: white; /* Optional: to ensure text is readable */
+  }
+  
+  .priority-medium {
+    background-color: green;
+    color: white; /* Optional: to ensure text is readable */
+  }
+  
+  .priority-low {
     background-color: yellow;
-
-}
-.blue{
-    background-color: aqua;
-}
+    color: black; /* Optional: to ensure text is readable */
+  }
+  
 .hide{
     display: none;
 }
-.delete{color: red;}

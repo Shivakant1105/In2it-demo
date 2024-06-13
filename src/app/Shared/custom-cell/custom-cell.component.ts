@@ -31,7 +31,7 @@ export class CustomCellComponent implements OnInit,  ICellRendererAngularComp {
 
   ngOnInit(): void {
   }
-  nameClicked () {
+  editTask () {
     // alert("clicked");addTask
     this.params.context.parentComponent.onEdit(this.params.data)
     this.params.context.parentComponent.addTask()
@@ -39,7 +39,9 @@ export class CustomCellComponent implements OnInit,  ICellRendererAngularComp {
     console.log("saf;flj",this.params.data);
     
   }
-
+  deleteTask(){
+    this.params.context.parentComponent.onDelete(this.params.data)
+  }
   orgNameClick() {
     if(this.params.context.parent=='Org'){
       this.params.context.parentComponent.add(this.params.data)
