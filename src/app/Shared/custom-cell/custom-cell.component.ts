@@ -22,7 +22,7 @@ export class CustomCellComponent implements OnInit,  ICellRendererAngularComp {
     this.orgName=params.data.orgName
     this.params=params
     this.fieldName=params.colDef?.field
-    // console.log('para',params)
+    // console.log('params data',params)
   }
   refresh(params: ICellRendererParams) {
     this.params=params

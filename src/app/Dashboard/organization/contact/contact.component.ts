@@ -238,7 +238,7 @@ console.log("search data", this.contactData);
     return this.activeOrg === orgName;
   }
 
-  filteredOrg: any;
+  // filteredOrg: any;
 
   createFormGroup(): FormGroup {
     return this.fb.group({
@@ -320,7 +320,7 @@ console.log("search data", this.contactData);
     this.submittedData.name =
       form.value.name.firstName + ' ' + form.value.name.lastName;
     console.log('Form data:', this.submittedData);
-    console.log('Namaefas', form.value.name.firstName);
+
 
     const abcOrganization = this.contactData.find(
       (org: any) => org.orgName === this.submittedData.orgName
@@ -329,13 +329,13 @@ console.log("search data", this.contactData);
     if (abcOrganization) {
       abcOrganization.contact.push(this.submittedData);
     }
-    console.log(this.rowData);
+
     this.rowData = this.contactData.flatMap((org: any) =>
       org.contact.map((contact: any) => ({ ...contact, orgName: org.orgName }))
     );
 
     this.showEditForm = false;
-    this.getAllData();
+    this.totalCount=this.rowData.length
   }
 
   viewDetails(id: any) {
@@ -446,6 +446,7 @@ console.log("search data", this.contactData);
       console.log('No rows selected for deletion.');
     }
   this.totalCount=this.rowData.length
+  
   }
 
   onClear() {

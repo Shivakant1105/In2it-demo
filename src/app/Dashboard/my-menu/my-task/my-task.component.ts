@@ -136,6 +136,7 @@ export class MyTaskComponent implements OnInit {
         this.formData.push(this.addForm.value);
       }
       localStorage.setItem('data', JSON.stringify(this.formData));
+      this.formData = JSON.parse(localStorage.getItem('data') || '[]');
       this.addForm.reset();
     } else {
       console.log("Form is invalid");
