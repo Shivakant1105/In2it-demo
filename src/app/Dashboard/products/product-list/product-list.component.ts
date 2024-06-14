@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions ,  
+
+ } from 'ag-grid-community';
+
+import { ProductsListService } from '../../service/products-list.service';
 
 @Component({
   selector: 'app-product-list',
@@ -8,100 +12,60 @@ import { ColDef } from 'ag-grid-community';
 })
 export class ProductListComponent implements OnInit {
 
-
-  rowData: any[] = [
-    {
-      "table_id": {
-          "value": 838,
-          "is_edit": false,
-          "type": "integer"
-      },
-      "table_type": {
-          "value": "is_standard",
-          "is_edit": false,
-          "type": "boolean"
-      },
-      "table_name": {
-          "value": "Service Component Config Option",
-          "is_edit": true,
-          "type": "char"
-      },
-      "description": {
-          "value": "Service Component Config Option",
-          "is_edit": true,
-          "type": "char"
-      },
-      "attribute_count": {
-          "value": 7,
-          "is_edit": false,
-          "type": "integer"
-      },
-      "rows_count": {
-          "value": 0,
-          "is_edit": false,
-          "type": "integer"
-      },
-      "created_on": {
-          "value": "26/08/2023",
-          "is_edit": false,
-          "type": "datetime"
-      },
-      "created_by": {
-          "value": "Gaurav Rautela",
-          "is_edit": false,
-          "type": "many2one"
-      },
-      "updated_on": {
-          "value": "26/08/2023",
-          "is_edit": false,
-          "type": "datetime"
-      },
-      "updated_by": {
-          "value": "Gaurav Rautela",
-          "is_edit": false,
-          "type": "many2one"
-      },
-      "is_standard": {
-          "value": true,
-          "is_edit": false,
-          "type": "boolean"
-      },
-      "is_active": {
-          "value": true,
-          "is_edit": false,
-          "type": "boolean"
-      },
-      "property": {
-          "is_edit": true,
-          "is_delete": true
-      },
-      "related_table": [
-          {
-              "id": 96,
-              "name": "Users"
-          },
-          {
-              "id": 96,
-              "name": "Users"
-          }
-      ]
-    }
-  ];
+  gridOptions: GridOptions={
+    // rowSelection: 'multiple',
+    isRowSelectable: (params) => {
+      return !params.data.is_table_exist;
+    },
+    // rowClassRules: {
+    //   'bgcolor': (params) => {
+    //     console.log('Row data:', params.data);  // Debugging line
+    //     return params.data.is_table_exist;
+    //   }
+    // }
+    getRowClass(params) {
+      console.log('Row data:', params.data); // Debugging line
+      return params.data.is_table_exist ? 'bgcolor' : '';
+    },
+  
+  }
+  rowData: any[] = [];
   columnDefs: ColDef[] = [
     {
       headerCheckboxSelection: true,
       checkboxSelection: true,
-    
+      showDisabledCheckboxes: true,
+      
     },
-    { headerName: 'Table Name', field: 'table_name.value' },
+    // { headerName: 'Table id', field: 'table_id.value',  },
+    { headerName: 'Table Name', field: 'table_name.value',  },
     { headerName: 'Table Description', field: 'description.value' },
-    { headerName: 'Existing in Products List', field: 'existing' }
+    { headerName: 'Existing in Products List', field: 'is_table_exist',  valueFormatter: this.booleanValueFormatter  }
   ]
-  constructor() { }
+  
+  constructor(private productService:ProductsListService) { }
 
 
 
   ngOnInit(): void {
+    
+    this.productService.getProductsList().subscribe(
+      data => {
+        this.rowData = data.resData.data;
+        
+        console.log(this.rowData);
+        
+      },
+      error => {
+        console.error('Error fetching products', error);
+      }
+    );
+  }
+   booleanValueFormatter(params: any): string {
+    return params.value ? 'Yes' : 'No';
   }
 
+  isRowSelectable = (params: any): boolean => {
+    return !params.data.is_table_exist;
+  };
 }

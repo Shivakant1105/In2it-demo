@@ -8,6 +8,7 @@ import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 
 
+
 @NgModule({
   declarations: [
     ProductListComponent

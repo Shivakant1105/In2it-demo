@@ -16,10 +16,14 @@ export class AgGridComponent implements OnInit {
   searchValue:any
   constructor() { }
   
-  //  gridApi!: GridApi
+ gridApi!: GridApi
   defaultColumnDefs: ColDef={
     sortable:true,
     filter:true,
+    resizable:true,
+    suppressMovable:true,
+    flex: 1,
+    minWidth: 100,
   };
 
   public rowSelection: "single" | "multiple" = "multiple";
@@ -41,6 +45,7 @@ export class AgGridComponent implements OnInit {
 
     setTimeout(() => {
       this.gridOptions.api?.sizeColumnsToFit()
+   
     }, 0)
     
   }

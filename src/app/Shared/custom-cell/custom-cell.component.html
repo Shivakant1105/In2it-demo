@@ -13,3 +13,4 @@
      <i-feather name="edit" style="color: green" (click)="editTask()"></i-feather>
      <i-feather name="trash-2" class="delete" style="color: red" (click)="deleteTask()"  ></i-feather>
  </div>
+ <input type="checkbox" [checked]="params.value" [disabled]="params.data.is_table_exist"/>

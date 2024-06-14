@@ -12,6 +12,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -27,7 +28,7 @@ import { allIcons } from 'angular-feather/icons';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-  
+  HttpClientModule,
     ReactiveFormsModule,
     NgbModule,
     FeatherModule.pick( allIcons), 
