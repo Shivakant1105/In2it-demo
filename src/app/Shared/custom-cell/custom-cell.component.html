@@ -9,8 +9,19 @@
  </p>
 
 
- <div class="list-unstyled" >
-     <i-feather name="edit" style="color: green" (click)="editTask()"></i-feather>
-     <i-feather name="trash-2" class="delete" style="color: red" (click)="deleteTask()"  ></i-feather>
- </div>
- <input type="checkbox" [checked]="params.value" [disabled]="params.data.is_table_exist"/>
+ <div *ngIf="fieldName=='action'" class="list-unstyled">
+    <i-feather name="edit" style="color: green" (click)="editTask()"></i-feather>
+    <i-feather name="trash-2" class="delete" style="color: red" (click)="deleteTask()"></i-feather>
+  </div>
+  
+  
+  <div *ngIf="!isEditing" class="list-unstyled">
+    <i-feather name="edit"  (click)="startEdit()"></i-feather>
+    <i-feather name="trash-2" class="delete"
+     (click)="deleteRow()"></i-feather>
+  </div>
+  <div *ngIf="isEditing" class="list-unstyled">
+    <i-feather name="check-circle" style="color: green" (click)="confirmEdit()"></i-feather>
+    <i-feather name="x-circle" style="color: red" (click)="cancelEdit()"></i-feather>
+  </div>
+ <!-- <input *ngIf="fieldName==''"  type="checkbox" [checked]="params.value" [disabled]="params.data.is_table_exist"/> -->

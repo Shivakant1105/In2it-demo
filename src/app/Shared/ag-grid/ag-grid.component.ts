@@ -12,18 +12,20 @@ import { ColDef, GridApi, GridOptions,  } from 'ag-grid-community';
 export class AgGridComponent implements OnInit {
   gridApiActive: any;
 
-
+  paginationGetPageSize: number[] | boolean = [10, 20, 50, 100];
   searchValue:any
   constructor() { }
-  
+
  gridApi!: GridApi
   defaultColumnDefs: ColDef={
     sortable:true,
     filter:true,
     resizable:true,
     suppressMovable:true,
+    
     flex: 1,
-    minWidth: 100,
+    minWidth: 80,
+    
   };
 
   public rowSelection: "single" | "multiple" = "multiple";
@@ -43,10 +45,10 @@ export class AgGridComponent implements OnInit {
     // console.log('rowdata',this.rowData)
     // console.log('coldef',this.columnDefs)
 
-    setTimeout(() => {
-      this.gridOptions.api?.sizeColumnsToFit()
+    // setTimeout(() => {
+    //   this.gridOptions.api?.sizeColumnsToFit()
    
-    }, 0)
+    // }, 0)
     
   }
 

@@ -13,6 +13,7 @@ export class CustomCellComponent implements OnInit,  ICellRendererAngularComp {
  params: any;
  fieldName:string | undefined=''
  contactName:string=""
+ isEditing: boolean = false;
   constructor(
     // private contactComponent:ContactComponent
     
@@ -37,7 +38,27 @@ export class CustomCellComponent implements OnInit,  ICellRendererAngularComp {
     this.params.context.parentComponent.addTask()
     // this.params.onClick(this.params)
     console.log("saf;flj",this.params.data);
-    
+
+  }
+
+  startEdit() {
+    this.isEditing = true;
+    this.params.context.parentComponent.editRow(this.params)
+    // Your logic to handle the start of editing
+  }
+
+  confirmEdit() {
+    this.isEditing = false;
+    // Your logic to handle the confirmation of editing
+  }
+
+  cancelEdit() {
+    this.isEditing = false;
+    // Your logic to handle the cancellation of editing
+  }
+
+  deleteRow() {
+    // Your logic to handle task deletion
   }
   deleteTask(){
     this.params.context.parentComponent.onDelete(this.params.data)

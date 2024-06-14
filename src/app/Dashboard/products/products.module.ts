@@ -6,12 +6,14 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { SharedModule } from 'src/app/Shared/shared.module';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
+import { ProductTableListComponent } from './product-table-list/product-table-list.component';
 
 
 
 @NgModule({
   declarations: [
-    ProductListComponent
+    ProductListComponent,
+    ProductTableListComponent
   ],
   imports: [
     CommonModule,

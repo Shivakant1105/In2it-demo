@@ -54,65 +54,21 @@ export class ContactComponent implements OnInit {
     {
       headerCheckboxSelection: true,
       checkboxSelection: true,
-      width: 80,
-      // cellRenderer: (params: any) => {
-      //   const linkElement = document.createElement('a');
 
-      //   linkElement.innerText = params.value;
-      //   linkElement.addEventListener('click', (_event) => {
-      //     // event.preventDefault();
-      //     this.editContact1(params.data.id);
-      //     console.log("ajkhfjhdjkshfd")
-      //   });
-      //   return linkElement;},
     },
     {
       headerName: 'Org Name',
       field: 'orgName',
       cellStyle: { color: 'blue' },
       cellRenderer: CustomCellComponent,
-      // cellRenderer: (params: any) => {
-      //   const linkElement = document.createElement('a');
 
-      //   linkElement.innerText = params.value;
-      //   linkElement.addEventListener('click', (event) => {
-      //     event.preventDefault();
-      //     this.openTab(params.data,params.data.orgID);
-
-      //     console.log("ajkhfjhdjkshfd" , params)
-      //   });
-      //   return linkElement;
-      // },
     },
     {
       headerName: 'Name',
       field: 'name',
       // cellStyle: { color: 'blue' },
       cellRenderer: CustomCellComponent,
-      // cellRendererParams: {
-      //     onClick:this.linkElement.bind(this),
-      // },
-
-      //  cellRendererParams: {
-
-      //     context: {
-
-      //       componentParent: {contactComponent :this}
-      //     }
-      //   },
-      // cellRenderer: (params: any) => {
-      //   const linkElement = document.createElement('a');
-
-      //   linkElement.innerText = params.value;
-      //   linkElement.addEventListener('click', (event) => {
-      //     event.preventDefault();
-      //     this.openForm(params.data, 'checkBox');
-
-      //     this.viewDetails(params.data.id);
-      //     console.log('id dataa', params.data);
-      //   });
-      //   return linkElement;
-      // },
+     
     },
     { headerName: 'Role', field: 'role' },
     { headerName: 'Email', field: 'email' },
