@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsListService } from '../../service/products-list.service';
+// import { ProductsListService } from '../../service/products-list.service';
 
 import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { ActionButtonComponent } from 'src/app/Shared/action-button/action-button.component';
@@ -32,20 +32,20 @@ export class ProductTableListComponent implements OnInit {
     },
   ];
 
-  constructor(private productService: ProductsListService) {}
+  // constructor(private productService: ProductsListService) {}
 
   ngOnInit(): void {
     this.rowData = window.history.state.tables;
     const stateData = window.history.state.tables;
     if (!stateData) {
-      this.productService.getProductsList().subscribe(
-        (data) => {
-          this.rowData = data.resData.data.filter(row => row.is_table_exist);
-        },
-        (error) => {
-          console.error('Error fetching products', error);
-        }
-      );
+      // this.productService.getProductsList().subscribe(
+      //   (data) => {
+      //     this.rowData = data.resData.data.filter(row => row.is_table_exist);
+      //   },
+      //   (error) => {
+      //     console.error('Error fetching products', error);
+      //   }
+      // );
     }
     // console.log(this.isCurrentRowEditing);
     console.log(this.gridApi);
@@ -76,7 +76,7 @@ export class ProductTableListComponent implements OnInit {
     
 //   })
 
-  startEditing(rowIndex: any, _field: any) {
+  startEditing(rowIndex: any, rowData: any) {
     this.gridApi.setFocusedCell(rowIndex, 'table_name.value');
     this.gridApi.startEditingCell({
       rowIndex: rowIndex,
@@ -84,6 +84,7 @@ export class ProductTableListComponent implements OnInit {
     });
 
     console.log("edit row index",rowIndex);
+    console.log("edit  data",rowData);
     
   }
 
@@ -91,8 +92,18 @@ export class ProductTableListComponent implements OnInit {
     this.gridApi.stopEditing(cancel);
   }
 
-  // deleteRow(rowIndex: any) {
-  //   const rowNode = this.gridApi.getDisplayedRowAtIndex(rowIndex);
-  //   this.gridApi.applyTransaction({ remove: [rowNode.data] });
+  delete(rowIndex: any) {
+
+    this.gridApi.applyTransaction({ remove: [rowIndex] });
+  }
+  // saveData(rowData: any) {
+  //   this.productService.updateProduct(rowData).subscribe(
+  //     (response) => {
+  //       console.log('Data saved successfully', response);
+  //     },
+  //     (error) => {
+  //       console.error('Error saving data', error);
+  //     }
+  //   );
   // }
 }

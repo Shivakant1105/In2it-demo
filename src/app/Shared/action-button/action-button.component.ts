@@ -39,15 +39,32 @@ export class ActionButtonComponent implements OnInit,  ICellRendererAngularComp 
      // console.log("saf;flj",this.params.data);
  
    }
+   editedRowIndex: number | null = null;
    onEditClick() {
      this.isEditing = true;
-     this.params.context.parentComponent.startEditing(this.params.rowIndex, this.params.colDef.field);
- 
+     this.params.context.parentComponent.startEditing(this.params.rowIndex, this.params);
+    //  if (this.editedRowIndex !== null) {
+    //   this.params.api.stopEditing();
+    // }
+  
+    // Start editing the selected row
+    // this.editedRowIndex = this.params.rowIndex;
+    // this.params.api.startEditingCell({
+    //   rowIndex: this.params.rowIndex,
+    //   colKey: 'table_name.value',
+    // });
+    //   const selectedRow = this.params.api.getSelectedNodes();
+    //   selectedRow.forEach((node:any) => {
+    //   this.params.api.startEditingCell({
+    //     rowIndex: node.rowIndex,
+    //     colKey: 'table_name.value',
+    //   });
+    // });
      // this.params.api.startEditingCell({
      //       rowIndex: this.params.rowIndex,
      //     colKey:"table_name.value"})
      // // this.params.context.parentComponent.startEditingCell(this.params.node.field)
-     this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
+    //  this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
      
    }
  
@@ -55,15 +72,16 @@ export class ActionButtonComponent implements OnInit,  ICellRendererAngularComp 
      // const rowData = this.params.data;
      // this.params.api.applyTransaction({ remove: [rowData] });
      this.isEditing = true;
-     this.params.context.parentComponent.delete()
+     this.params.context.parentComponent.delete(this.params.data)
  
-     console.log(this.params.rowIndex);
+     console.log(this.params);
      
    }
    confirmEdit(): void {
      this.isEditing = false;
      this.params.api.stopEditing(false);
      this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
+     this.params.context.parentComponent.saveData(this.params.node.data);
    }
  
    cancelEdit(): void {

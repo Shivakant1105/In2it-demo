@@ -1,6 +1,6 @@
 export interface TableData {
-    resData: {
-      data: Array<{
+  
+      data: {
         is_table_exist: unknown;
         table_id: { value: number; is_edit: boolean; type: string };
         table_type: { value: string; is_edit: boolean; type: string };
@@ -16,9 +16,9 @@ export interface TableData {
         is_active: { value: boolean; is_edit: boolean; type: string };
         property: { is_edit: boolean; is_delete: boolean };
         related_table: Array<{ id: number; name: string }>;
-      }>;
+      }[];
       total_record: number;
-    };
+  
     status: boolean;
     message: string;
   }

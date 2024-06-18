@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductsListService } from '../../service/products-list.service';
 import { ColDef, GridOptions } from 'ag-grid-community';
+// import { TableData } from '../../Models/products-list';
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +22,7 @@ export class ProductListComponent implements OnInit {
     },
   };
 
-  rowData: any[] = [];
+  rowData!: any[] ;
   columnDefs: ColDef[] = [
     { headerCheckboxSelection: true, checkboxSelection: true, showDisabledCheckboxes: true },
     { headerName: 'Table Name', field: 'table_name.value' },
@@ -36,10 +37,26 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: ProductsListService, private router: Router) {}
 
   ngOnInit(): void {
+    // this.productService.getProductsList().subscribe(
+    //   (response) => {
+    //     if (response && response.data && Array.isArray(response.data)) {
+    //       const dataArray = response.data.map(item => item.table_name);
+    //       console.log(dataArray); // This will log an array of table_name values
+    //     } else {
+    //       console.log('Data format is incorrect or data array is missing');
+    //     }
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching products', error);
+    //   }
+    // );
+    
     this.productService.getProductsList().subscribe(
-      (data) => {
-        this.rowData = data.resData.data;
-        console.log(this.rowData);
+      (res) => {
+        this.rowData =res.data;
+        console.log(res);
+  //  console.log(JSON.parse(data));
+
       },
       (error) => {
         console.error('Error fetching products', error);
