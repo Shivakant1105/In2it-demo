@@ -12,7 +12,6 @@ import { ColDef, GridApi, GridOptions,  } from 'ag-grid-community';
 export class AgGridComponent implements OnInit {
   gridApiActive: any;
 
-  paginationGetPageSize: number[] | boolean = [10, 20, 50, 100];
   searchValue:any
   constructor() { }
 
@@ -22,18 +21,19 @@ export class AgGridComponent implements OnInit {
     filter:true,
     resizable:true,
     suppressMovable:true,
-    
+  
     flex: 1,
     minWidth: 80,
     
+    
   };
-
+  editType:'fullRow'='fullRow'
   public rowSelection: "single" | "multiple" = "multiple";
   @Input() rowData: any;
   @Output() checkBoxChange: EventEmitter <any> =new EventEmitter();
   @Output() GridReady: EventEmitter <any> =new EventEmitter<GridApi>();
   @Input() columnDefs!: ColDef[];
-
+// @Input()editType:any
   @Input() gridOptions!: GridOptions 
 
   onCellClicked(event: any) {
@@ -57,7 +57,7 @@ export class AgGridComponent implements OnInit {
   this.GridReady.emit(this.gridApiActive)
 // this.rowData
 // console.log("search data" ,this.rowData);
-console.log("grid ready");
+// console.log("grid ready");
 
   }
 

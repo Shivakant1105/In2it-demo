@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef, GridOptions } from 'ag-grid-community';
-
+import { Router } from '@angular/router';
 import { ProductsListService } from '../../service/products-list.service';
+import { ColDef, GridOptions } from 'ag-grid-community';
 
 @Component({
   selector: 'app-product-list',
@@ -10,28 +10,20 @@ import { ProductsListService } from '../../service/products-list.service';
 })
 export class ProductListComponent implements OnInit {
   gridOptions: GridOptions = {
-    // rowSelection: 'multiple',
     isRowSelectable: (params) => {
       return !params.data.is_table_exist;
     },
     getRowStyle: (params) => {
       if (params.data.is_table_exist) {
-        return{ background: '#c1c1c1' };
+        return { background: '#c1c1c1' };
       }
       return;
     },
-    
   };
 
   rowData: any[] = [];
   columnDefs: ColDef[] = [
-    {
-      headerCheckboxSelection: true,
-      checkboxSelection: true,
-
-      showDisabledCheckboxes: true,
-    },
-    // { headerName: 'Table id', field: 'table_id.value',  },
+    { headerCheckboxSelection: true, checkboxSelection: true, showDisabledCheckboxes: true },
     { headerName: 'Table Name', field: 'table_name.value' },
     { headerName: 'Table Description', field: 'description.value' },
     {
@@ -39,16 +31,14 @@ export class ProductListComponent implements OnInit {
       field: 'is_table_exist',
       valueFormatter: this.booleanValueFormatter,
     },
-  
   ];
 
-  constructor(private productService: ProductsListService) {}
+  constructor(private productService: ProductsListService, private router: Router) {}
 
   ngOnInit(): void {
     this.productService.getProductsList().subscribe(
       (data) => {
         this.rowData = data.resData.data;
-
         console.log(this.rowData);
       },
       (error) => {
@@ -56,11 +46,57 @@ export class ProductListComponent implements OnInit {
       }
     );
   }
+
   booleanValueFormatter(params: any): string {
     return params.value ? 'Yes' : 'No';
   }
 
-  isRowSelectable = (params: any): boolean => {
-    return !params.data.is_table_exist;
-  };
+  addToList(): void {
+    const selectedNodes =
+     this.gridOptions.api?.getSelectedNodes();
+    const selectedData = selectedNodes?.map(node => node.data);
+    console.log('Selected nodes:', selectedNodes);
+    console.log('Selected data:', selectedData);
+    // this.productService.getProductsList().subscribe(
+    //   (data) => {
+    //     this.rowData = data.resData.data.filter(row => row.is_table_exist);
+
+
+    //     console.log("123",this.rowData);
+    //   },)
+      console.log("existingTables",this.rowData);
+    const existingTables = this.rowData?.filter(data => data.is_table_exist) || [];
+    console.log("existingTables",this.rowData);
+
+    const nonExistingTables = selectedData?.filter(data => !data.is_table_exist) || [];
+
+    const createdBy = 'Shiva Kant'; // Assuming 'created_by' is a string
+
+    function formatDate(date: Date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+      const year = date.getFullYear();
+      
+      return `${day}/${month}/${year}`;
+    }
+    
+    nonExistingTables.forEach(table => {
+      table.table_id = { value: Math.floor(Math.random() * 1000), is_edit: false, type: 'integer' };
+      table.is_table_exist = true;
+      table.created_on = { value: formatDate(new Date()), is_edit: false, type: 'datetime' };
+    // Assigns current date in dd/mm/yyyy format
+      table.created_by = { value: createdBy, is_edit: false, type: 'many2one' };
+    });
+    
+
+    const allTables = [...existingTables, ...nonExistingTables];
+    console.log('Existing tables:', existingTables);
+    console.log('All tables:', allTables);
+
+    this.router.navigate(['/products/product-table'], { state: { tables: allTables } });
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/']);
+  }
 }

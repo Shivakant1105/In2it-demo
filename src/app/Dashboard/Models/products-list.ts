@@ -8,7 +8,7 @@ export interface TableData {
         description: { value: string; is_edit: boolean; type: string };
         attribute_count: { value: number; is_edit: boolean; type: string };
         rows_count: { value: number; is_edit: boolean; type: string };
-        created_on: { value: string; is_edit: boolean; type: string };
+        created_on: { value: Date; is_edit: boolean; type: string };
         created_by: { value: string; is_edit: boolean; type: string };
         updated_on: { value: string; is_edit: boolean; type: string };
         updated_by: { value: string; is_edit: boolean; type: string };

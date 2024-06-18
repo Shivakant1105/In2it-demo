@@ -32,37 +32,7 @@ export class CustomCellComponent implements OnInit,  ICellRendererAngularComp {
 
   ngOnInit(): void {
   }
-  editTask () {
-    // alert("clicked");addTask
-    this.params.context.parentComponent.onEdit(this.params.data)
-    this.params.context.parentComponent.addTask()
-    // this.params.onClick(this.params)
-    console.log("saf;flj",this.params.data);
-
-  }
-
-  startEdit() {
-    this.isEditing = true;
-    this.params.context.parentComponent.editRow(this.params)
-    // Your logic to handle the start of editing
-  }
-
-  confirmEdit() {
-    this.isEditing = false;
-    // Your logic to handle the confirmation of editing
-  }
-
-  cancelEdit() {
-    this.isEditing = false;
-    // Your logic to handle the cancellation of editing
-  }
-
-  deleteRow() {
-    // Your logic to handle task deletion
-  }
-  deleteTask(){
-    this.params.context.parentComponent.onDelete(this.params.data)
-  }
+  
   orgNameClick() {
     if(this.params.context.parent=='Org'){
       this.params.context.parentComponent.add(this.params.data)

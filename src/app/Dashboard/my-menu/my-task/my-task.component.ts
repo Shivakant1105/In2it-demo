@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../../service/data.service';
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { CustomCellComponent } from 'src/app/Shared/custom-cell/custom-cell.component';
+import { ActionButtonComponent } from 'src/app/Shared/action-button/action-button.component';
 
 
 @Component({
@@ -93,7 +93,7 @@ export class MyTaskComponent implements OnInit {
         return style;
       }
     },
-    { headerName: 'Action', field: 'action', cellRenderer: CustomCellComponent }
+    { headerName: 'Action', field: 'action', cellRenderer: ActionButtonComponent }
   ];
 
   constructor(public fb: FormBuilder, private service: DataService) {}

@@ -6,6 +6,7 @@ import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { CustomCellComponent } from './custom-cell/custom-cell.component';
 import { FormsModule } from '@angular/forms';
+import { ActionButtonComponent } from './action-button/action-button.component';
 
 
 
@@ -14,7 +15,7 @@ const declared = [
   
 ];
 @NgModule({
-  declarations:[...declared, ],
+  declarations:[...declared, ActionButtonComponent, ],
   imports: [
     CommonModule,AgGridModule, FormsModule,FeatherModule.pick( allIcons)
   ],
