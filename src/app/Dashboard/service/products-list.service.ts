@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TableData } from '../Models/products-list';
+// import { ICellRendererParams } from 'ag-grid-community';
+// import { Subject } from 'rxjs';
+
+// import { TableData } from '../Models/products-list';
+
 // import { Observable } from 'rxjs';
 
 
@@ -10,18 +14,21 @@ import { TableData } from '../Models/products-list';
 })
 export class ProductsListService {
   private dbUrl = 'http://localhost:3000/resData';
+  // private dbUrl1 = "http://localhost:3000/resData/{table_id}"
 
   constructor(private http: HttpClient) {}
-  // getProductsList(): Observable<TableData[]> {
-  //   return this.http.get<TableData[]>(this.dbUrl);
-  // }
+  
   getProductsList() {
-   const data=this.http.get<TableData>(this.dbUrl);
-  //  console.log(JSON.parse(data));
-   
-console.log(data);
-return this.http.get<TableData>(this.dbUrl);
+return this.http.get<any>(this.dbUrl,{ headers: { Accept: 'application/json' } });
   }
- 
+
+  //  editStateSubject = new Subject<ICellRendererParams>()
+
+
+  // setEditState(data:any) {
+  //   this.editStateSubject.next(data);
+  // }
+
+
   }
 

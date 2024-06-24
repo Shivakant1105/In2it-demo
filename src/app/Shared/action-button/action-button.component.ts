@@ -1,172 +1,86 @@
-import { Component, OnInit } from '@angular/core';
-import { ICellRendererAngularComp } from 'ag-grid-angular';
-import { ICellRendererParams } from 'ag-grid-community';
+import { Component, OnInit } from "@angular/core";
+import { ICellRendererAngularComp } from "ag-grid-angular";
+import { ICellRendererParams } from "ag-grid-community";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-action-button',
-  templateUrl: './action-button.component.html',
-  styleUrls: ['./action-button.component.css']
+  selector: "app-action-button",
+  templateUrl: "./action-button.component.html",
+  styleUrls: ["./action-button.component.css"],
 })
-export class ActionButtonComponent implements OnInit,  ICellRendererAngularComp {
-
+export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
   params: any;
-  fieldName:string | undefined=''
-  editedRowNode: any;
-  isEditing: boolean = false;
-   constructor(
-     // private contactComponent:ContactComponent
-     
-   ) { }
-   agInit(params: ICellRendererParams): void {
-  
-     this.params=params
-     this.fieldName=params.colDef?.field
-     // console.log('params data',params)
+  fieldName: string | undefined = "";
+  editStateSubscription!: Subscription;
 
-   }
-   refresh(params: ICellRendererParams) {
-     this.params=params
-     return true;
-   }
- 
-   ngOnInit(): void {
+  constructor() {}
+  agInit(params: ICellRendererParams): void {
+    this.params = params;
+    this.fieldName = params.colDef?.field;
+    //  console.log('params data',params)
+  }
+  refresh(params: ICellRendererParams) {
+    this.params = params;
+    return true;
+  }
+
+  ngOnInit(): void {}
+
+  //   My Task component
+  onEditClick() {
+    if(this.params.context.parentComponent==='task'){
+      this.params.context.parentComponent.onEdit(this.params.data);
+      this.params.context.parentComponent.addTask();
+    }
+  else{
+  console.log("dtaa",this.params.data);
+  this.params.data.edit_mode = true;
+    let updatedData = JSON.parse(JSON.stringify(this.params.data));
+    console.log(updatedData);
+    
+    updatedData.edit_mode=false
+    this.params.data.updateData=updatedData
    
-   }
-   editTask () {
-     // alert("clicked");addTask
-     
-     this.params.context.parentComponent.onEdit(this.params.data)
-     this.params.context.parentComponent.addTask()
-     // this.params.onClick(this.params)
-     // console.log("saf;flj",this.params.data);
- 
-   }
-
-   deleteTask(){
-    this.params.context.parentComponent.onDelete(this.params.data)
+    // console.log(updatedData);
+  
   }
-  
-// product table
-onEditClick() {
-  this.isEditing = true;
-  this.params.api.stopEditing(false);
-  this.params.context.parentComponent.startEditing(this.params.rowIndex, this.params);
-  this.editedRowNode = this.params.node;
-  console.log(this.params);
-  
-}
-
-deleteRow(): void {
-  this.isEditing = true;
-  this.params.context.parentComponent.delete(this.params.data);
-}
-
-confirmEdit(): void {
-  this.isEditing = false;
-  this.params.api.stopEditing(false);
-  this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
-  this.params.context.parentComponent.saveData(this.params.node.data);
-}
-
-cancelEdit(): void {
-  this.isEditing = false;
-  this.params.api.stopEditing(true);
-  this.params.api.refreshCells({ rowNodes: [this.editedRowNode], force: true });
-}
-rowClicked(event: MouseEvent) {
-  if (this.isEditing) {
-      this.cancelEdit();
-      event.stopPropagation();
   }
- console.log("sad;jghlk");
+
+  deleteRow() {
+    if(this.params.context.parentComponent==='task'){
+    this.params.context.parentComponent.onDelete(this.params.data);}
+    else{
+      this.params.context.parentComponent.deleteRow(this.params.node.rowIndex);
+
+      delete this.params.data.updateData
+    
+
+    }
+
+  }
+
+  confirmEdit() {
+
+  //   if (this.params.data.updateData) {
+  //     Object.assign(this.params.data, this.params.data.updateData);
+  //     // delete this.params.data.updateData; 
+  //     console.log(this.params.data);
+      
+  // }
+  this.params.data.edit_mode = false; 
+ this.params.data.table_name.value=this.params.data.updateData.table_name.value
+ this.params.data.description.value=this.params.data.updateData.description.value
+ console.log(this.params.data);
  
-  
+   delete this.params.data.updateData
+  }
+
+  cancelEdit() {
+    this.params.data.edit_mode = false;
+    
+    delete this.params.data.updateData
+
+    // this.params.api.stopEditing(true);
+    // this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
+  }
 }
-
-}
-
-// onEditClick() {
-//   this.isEditing = true;
-//   this.params.api.stopEditing(false);
-//   this.params.context.parentComponent.startEditing(this.params.rowIndex, this.params);
-//  //  if (this.editedRowIndex !== null) {
-//  //   this.params.api.stopEditing();
-//  // }
-
-//  // Start editing the selected row
-//  // this.editedRowIndex = this.params.rowIndex;
-//  // this.params.api.startEditingCell({
-//  //   rowIndex: this.params.rowIndex,
-//  //   colKey: 'table_name.value',
-//  // });
-//  //   const selectedRow = this.params.api.getSelectedNodes();
-//  //   selectedRow.forEach((node:any) => {
-//  //   this.params.api.startEditingCell({
-//  //     rowIndex: node.rowIndex,
-//  //     colKey: 'table_name.value',
-//  //   });
-//  // });
-//   // this.params.api.startEditingCell({
-//   //       rowIndex: this.params.rowIndex,
-//   //     colKey:"table_name.value"})
-//   // // this.params.context.parentComponent.startEditingCell(this.params.node.field)
-//   this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
-  
-// }
-
-// deleteRow(): void {
-//   // const rowData = this.params.data;
-//   // this.params.api.applyTransaction({ remove: [rowData] });
-//   this.isEditing = true;
-//   this.params.context.parentComponent.delete(this.params.data)
-
-//   console.log(this.params);
-  
-// }
-// confirmEdit(): void {
-//   this.isEditing = false;
-//   this.params.api.stopEditing(false);
-//   this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
-//   this.params.context.parentComponent.saveData(this.params.node.data);
-// }
-
-// cancelEdit(): void {
-//   this.isEditing = false;
-//   this.params.api.stopEditing(true);
-//   this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });
-// }
-
-// // // startEdit() {
-// // //   this.isEditing = true;
-// // //   this.params.context.parentComponent.editRow(this.params)
-// // //   // Your logic to handle the start of editing
-// // // }
-// // onEditClick(): void {
-// //   this.isEditing = true;
-// //   // const value = this.params.api.getValue(this.params.node, this.params.data.table_name.value);
-// //   // console.log( this.params.data.table_name.value);
-// //   // console.log(value);
-// //   this.params.context.parentComponent.startEditingCell(this.params.rowIndex, this.params.data.table_name.value); 
-// //   console.log(this.params.rowIndex);
-// // }
-
-
-// // confirmEdit() {
-// //   this.isEditing = false;
-// //   // Your logic to handle the confirmation of editing onBtStopEditing
-// // }
-
-// // cancelEdit() {
-// //   this.isEditing = false;
-// //   this.params.context.parentComponent.onBtStopEditing(); 
-
-// //   // Your logic to handle the cancellation of editing
-// // }
-
-// // deleteRow() {
-// //   // Your logic to handle task deletion
-// // }
-
-
-
-// }

@@ -1,16 +1,15 @@
 
 <div *ngIf="fieldName=='action'" class="list-unstyled" >
-    <i-feather name="edit" style="color: green" (click)="editTask()"></i-feather>
-    <i-feather name="trash-2" class="delete" style="color: red" (click)="deleteTask()"></i-feather>
+    <i-feather name="edit" style="color: green" (click)="onEditClick()"></i-feather>
+    <i-feather name="trash-2" class="delete" style="color: red" (click)="deleteRow()"></i-feather>
   </div>
   
   
-  <div *ngIf="!isEditing" class="list-unstyled" >
-    <i-feather name="edit" (click)="onEditClick()"></i-feather>
-    <i-feather name="trash-2" class="delete" (click)="deleteRow()"></i-feather>
-  </div>
-  <div *ngIf="isEditing" class="list-unstyled">
-    <i-feather name="check-circle" style="color: green" (click)="confirmEdit()"></i-feather>
-    <i-feather name="x-circle" style="color: red" (click)="cancelEdit()"></i-feather>
-  </div>
-  
+ <div *ngIf="!params.data.edit_mode" class="list-unstyled">
+  <i-feather name="edit" (click)="onEditClick()"></i-feather>
+  <i-feather name="trash-2" class="delete" (click)="deleteRow()"></i-feather>
+</div>
+<div *ngIf="params.data.edit_mode" class="list-unstyled">
+  <i-feather name="check-circle" style="color: green" (click)="confirmEdit()"></i-feather>
+  <i-feather name="x-circle" style="color: red" (click)="cancelEdit()"></i-feather>
+</div>
