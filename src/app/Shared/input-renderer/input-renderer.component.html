@@ -1,11 +1,11 @@
-<div *ngIf="!params.data.edit_mode">
+<div *ngIf="!params.data.edit_mode && !params.data.addMode ">
   <p *ngIf="fieldName === 'table_name.value'">{{ params.data.table_name.value }}</p>
   <p *ngIf="fieldName === 'description.value'">{{  params.data.description.value }}</p>
 </div>
-<div *ngIf="params.data.edit_mode">
+<div *ngIf="params.data.edit_mode || params.data.addMode">
 
-  <input *ngIf="fieldName === 'table_name.value'" [(ngModel)]=" params.data.updateData.table_name.value" />
-  <input *ngIf="fieldName === 'description.value'" [(ngModel)]=" params.data.updateData.description.value" />
+  <input class="mt-1 form-control form-control-sm" *ngIf="fieldName === 'table_name.value'" [(ngModel)]=" params.data.updateData.table_name.value" />
+  <input class=" mt-1 form-control form-control-sm"  *ngIf="fieldName === 'description.value'" [(ngModel)]=" params.data.updateData.description.value" />
 </div>
 <!-- <div *ngIf="params.data.edit_mode" class="mt-1">
   

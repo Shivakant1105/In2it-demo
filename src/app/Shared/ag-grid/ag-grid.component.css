@@ -1,0 +1,8 @@
+.panel{ color: white;
+    background: grey;
+    margin-left: 800px;
+z-index: 5;
+position: absolute;
+overflow-y: scroll;
+flex-direction: column;
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductsListService } from '../../service/products-list.service';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 // import { TableData } from '../../Models/products-list';
 
 @Component({
@@ -10,6 +10,11 @@ import { ColDef, GridOptions } from 'ag-grid-community';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
+ 
+  searchValue: any;
+  heading ="Product-List"
+  showColumnList: boolean = false;
+  gridApi!: GridApi;
   gridOptions: GridOptions = {
     isRowSelectable: (params) => {
       return !params.data.is_table_exist;
@@ -37,19 +42,7 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: ProductsListService, private router: Router) {}
 
   ngOnInit(): void {
-    // this.productService.getProductsList().subscribe(
-    //   (response) => {
-    //     if (response && response.data && Array.isArray(response.data)) {
-    //       const dataArray = response.data.map(item => item.table_name);
-    //       console.log(dataArray); // This will log an array of table_name values
-    //     } else {
-    //       console.log('Data format is incorrect or data array is missing');
-    //     }
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching products', error);
-    //   }
-    // );
+
     
     this.productService.getProductsList().subscribe(
       (res) => {
@@ -67,7 +60,28 @@ export class ProductListComponent implements OnInit {
   booleanValueFormatter(params: any): string {
     return params.value ? 'Yes' : 'No';
   }
+  
+  onGridReady(params: any) {
+    this.gridApi = params;
+   
+    console.log(this.gridApi);
+    console.log( "parmas",params);
+    
 
+  }
+
+ onSearchData(){
+    console.log("search data", this.gridApi); 
+    this.gridApi?.setQuickFilter(this.searchValue)
+    
+  }
+
+
+  toggleColumnListVisibility(): void {
+    this.showColumnList = !this.showColumnList;
+    console.log("tooglrr");
+  }
+  
   addToList(): void {
     const selectedNodes =
      this.gridOptions.api?.getSelectedNodes();

@@ -34,7 +34,7 @@ export class ContactComponent implements OnInit {
   totalContacts!: number;
   form!: FormGroup;
   submittedData: any;
-
+heading='All Contact List'
   activeOrganization: string = '';
 
   showViewDetails: boolean = false;

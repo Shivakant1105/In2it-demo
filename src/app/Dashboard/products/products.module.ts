@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/Shared/shared.module';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { ProductTableListComponent } from './product-table-list/product-table-list.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,7 @@ import { ProductTableListComponent } from './product-table-list/product-table-li
   ],
   imports: [
     CommonModule,
-    ProductsRoutingModule, SharedModule,    FeatherModule.pick(allIcons),
+    ProductsRoutingModule, SharedModule,  FormsModule,  FeatherModule.pick(allIcons),
   ]
 })
 export class ProductsModule { }

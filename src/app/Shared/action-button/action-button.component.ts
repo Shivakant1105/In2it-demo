@@ -36,7 +36,7 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
   console.log("dtaa",this.params.data);
   this.params.data.edit_mode = true;
     let updatedData = JSON.parse(JSON.stringify(this.params.data));
-    console.log(updatedData);
+    // console.log(updatedData);
     
     updatedData.edit_mode=false
     this.params.data.updateData=updatedData
@@ -50,9 +50,11 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     if(this.params.context.parentComponent==='task'){
     this.params.context.parentComponent.onDelete(this.params.data);}
     else{
-      this.params.context.parentComponent.deleteRow(this.params.node.rowIndex);
-
-      delete this.params.data.updateData
+      // this.params.context.parentComponent.delete(this.params.node.rowIndex);
+      this.params.api.applyTransaction({
+        remove: [this.params.node.data]
+      });
+      // delete this.params.data.updateData
     
 
     }
@@ -67,18 +69,46 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
   //     console.log(this.params.data);
       
   // }
-  this.params.data.edit_mode = false; 
+  if(this.params.data.addMode){
+    // delete this.params.data.addMode;
+    this.params.data.table_name.value=this.params.data.updateData.table_name.value;
+    this.params.data.description.value=this.params.data.updateData.description.value;
+    delete this.params.data.updatedData;
+    console.log('formUpdatecheck',this.params)
+  }else{
+    this.params.data.edit_mode = false; 
  this.params.data.table_name.value=this.params.data.updateData.table_name.value
  this.params.data.description.value=this.params.data.updateData.description.value
  console.log(this.params.data);
  
    delete this.params.data.updateData
+
+    // this.productService.fireLocalListSubject(this.params)
+    }
+
+ 
   }
 
   cancelEdit() {
-    this.params.data.edit_mode = false;
+
+
+    if(this.params.data.addMode){
+      this.params.api.applyTransaction({
+        remove: [this.params.node.data]
+      });
+ 
+      // this.params.context.parentComponent.rowData.splice(this.params.rowIndex,1)
+      console.log('cancel',this.params)
+    }else{
+ 
+      this.params.data.edit_mode = false;
     
-    delete this.params.data.updateData
+      delete this.params.data.updateData
+      console.log(this.params)
+ 
+    }
+
+  
 
     // this.params.api.stopEditing(true);
     // this.params.api.refreshCells({ rowNodes: [this.params.node], force: true });

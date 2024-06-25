@@ -1,19 +1,65 @@
 <!-- 
 <div class="col-3 pb-3"><input id="table-filtering-search" placeholder="Search" class="form-control bg-light rounded rounded-pill"
   type="text"   [(ngModel)]="searchValue"  (ngModelChange)="onFilterChange()"/></div> -->
+  <!-- <div class="d-flex justify-content-between py-2">
+    <h4>{{heading}}</h4>
+ 
+    <div class="">
+      <div class="input-group">
+        <input id="table-filtering-search" placeholder="Search" class="form-control bg-light rounded rounded-pill"
+          type="text"  [(ngModel)]="searchValue"  (ngModelChange)="onSearchData()"/>
+        <div class="input-group-append">
+          <button  class="btn btn-link text-primary">
+       
+            <i-feather name="settings"  class="mx-2" (click)="toggleColumnListVisibility()"></i-feather>
+            <i-feather name="plus-circle" (click)="addRow()"></i-feather>
+          </button>
+       
+        </div>
+      </div>
+    </div>
+
+   
+  </div> -->
+  <!-- <div class="panel">
+    <div class=" " *ngIf="showColumnList">
+      <ul class="list-unstyled">
+        <li *ngFor="let col of columnDefs">
+       
+          <i-feather *ngIf="col.field !== 'eye-off'" name="eye-off" (click)="toggleColumnVisibility(col.field)"></i-feather>
+          <i-feather *ngIf="col.field === 'eye-off'" name="eye" (click)="toggleColumnVisibility(col.field)"></i-feather>
+          {{ col.headerName }}
+        </li>
+      </ul>
+    </div>
+  </div> -->
+  
+  <div class="panel">
+  <div class=" " *ngIf="showColumnList">
+    <ul class="list-unstyled">
+      <li  *ngFor="let col of colDeflist" (click)="toggleColumnVisibility(col)">
+        <i-feather [name]="!col.hide?'eye':'eye-off'"></i-feather>
+    
+        {{ col.headerName }}
+      </li>
+    </ul>
+  </div>
+
+</div>
+
 
 <ag-grid-angular
-  style=" height: 500px;"
+  style="height: 500px"
   class="ag-theme-alpine"
   [rowData]="rowData"
   [columnDefs]="columnDefs"
   [pagination]="true"
   [defaultColDef]="defaultColumnDefs"
- (selectionChanged)="onCheckBoxChange()"
- (gridReady)="onGridReady($event)"
- [editType]="editType"
+  (selectionChanged)="onCheckBoxChange()"
+  (gridReady)="onGridReady($event)"
+  [editType]="editType"
   [rowSelection]="rowSelection"
   [gridOptions]="gridOptions"
-  [paginationPageSize]="10">
- 
+  [paginationPageSize]="10"
+>
 </ag-grid-angular>

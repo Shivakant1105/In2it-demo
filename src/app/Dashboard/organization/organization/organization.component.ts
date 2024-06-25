@@ -31,6 +31,7 @@ export class OrganizationComponent implements OnInit {
   active!: number;
   showTable!: any;
   flag!: boolean;
+  heading="Organization"
   gridOptions!:GridOptions
   columnDefs: ColDef[] = [
     {

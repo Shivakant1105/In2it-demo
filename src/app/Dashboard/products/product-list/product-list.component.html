@@ -1,28 +1,58 @@
 
 <div class="col">
-    <div class="d-flex justify-content-between">
+    <!-- <div class="d-flex justify-content-between">
       <h4>Product Table Lists</h4>
-      <div class="p-1 bg-light  shadow-sm mb-4">
+      <div class="py-3" >
         <div class="input-group">
-          <input id="table-filtering-search" placeholder="Search" class="form-control bg-light rounded rounded-pill"
-            type="text"  />
+          <input
+          id="table-filtering-search"
+          placeholder="Search"
+          class="form-control bg-light rounded rounded-pill"
+          type="text"
+        
+        /> -->
           <!-- <div class="input-group-append"> -->
             <!-- <button id="button-addon1" type="submit" class="btn btn-link text-primary"> -->
-              <i-feather name="search" class="text-primary mr-3"></i-feather>
+              <!-- <i-feather name="search" class="text-primary mr-3"></i-feather> -->
             <!-- </button> -->
           <!-- </div> -->
-          <i-feather name="settings" class="text-primary"></i-feather>
-        </div>
+          <!-- <i-feather name="settings" class="text-primary mx-2" (click)="toggleColumnListVisibility()"></i-feather> -->
+      
+        <!-- </div> -->
 
         
-      </div>
-   
+      <!-- </div> -->
+   <!--  -->
       <!-- </div><input type="search" placeholder="search"> -->
-    </div>
+    <!-- </div> -->
     <!-- <app-ag-grid rowSelection="multiple" [rowData]="rowData" [columnDefs]="columnDefs" 
     [gridOptions]="gridOptions"></app-ag-grid> -->
-    <app-ag-grid rowSelection="multiple" [rowData]="rowData" [columnDefs]="columnDefs" 
-    [gridOptions]="gridOptions"  ></app-ag-grid>
+
+
+
+    <div class="d-flex justify-content-between py-2">
+      <h4>{{heading}}</h4>
+    
+      <div class="">
+        <div class="input-group">
+          <input id="table-filtering-search" placeholder="Search" class="form-control bg-light rounded rounded-pill"
+            type="text"  [(ngModel)]="searchValue"  (ngModelChange)="onSearchData()"/>
+          <div class="input-group-append">
+            <button  class="btn btn-link text-primary">
+         
+              <i-feather name="settings"  class="mx-2" (click)="toggleColumnListVisibility()" ></i-feather>
+              <!-- <i-feather name="plus-circle" "></i-feather> -->
+            </button>
+         
+          </div>
+        </div>
+      </div>
+    
+     
+    </div>
+    <app-ag-grid rowSelection="multiple" [rowData]="rowData" (GridReady)="onGridReady($event)"[columnDefs]="columnDefs"  [showColumnList]="showColumnList"
+    [gridOptions]="gridOptions" 
+   ></app-ag-grid>
 
   
   </div>
