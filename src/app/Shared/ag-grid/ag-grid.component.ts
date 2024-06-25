@@ -65,9 +65,9 @@ this.colDeflist.map((item)=>{
   onGridReady(params: any) {
     // this.gridApiActive = params.api
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
+    // this.gridColumnApi = params.columnApi;
     this.GridReady.emit(this.gridApi)
-    this.GridReady.emit(this.gridColumnApi)
+    // this.GridReady.emit(this.gridColumnApi)
     // this.rowData
     // console.log("search data" ,this.rowData);
     // console.log("grid ready");

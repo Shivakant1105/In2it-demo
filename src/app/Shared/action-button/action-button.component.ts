@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from "@angular/core";
 import { ICellRendererAngularComp } from "ag-grid-angular";
 import { ICellRendererParams } from "ag-grid-community";
@@ -55,26 +56,19 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
         remove: [this.params.node.data]
       });
       // delete this.params.data.updateData
-    
+ 
 
     }
 
   }
 
   confirmEdit() {
-
-  //   if (this.params.data.updateData) {
-  //     Object.assign(this.params.data, this.params.data.updateData);
-  //     // delete this.params.data.updateData; 
-  //     console.log(this.params.data);
-      
-  // }
   if(this.params.data.addMode){
-    // delete this.params.data.addMode;
+    delete this.params.data.addMode;
     this.params.data.table_name.value=this.params.data.updateData.table_name.value;
     this.params.data.description.value=this.params.data.updateData.description.value;
     delete this.params.data.updatedData;
-    console.log('formUpdatecheck',this.params)
+    // console.log('formUpdatecheck',this.params)
   }else{
     this.params.data.edit_mode = false; 
  this.params.data.table_name.value=this.params.data.updateData.table_name.value

@@ -29,8 +29,8 @@ export class ProductListComponent implements OnInit {
 
   rowData!: any[] ;
   columnDefs: ColDef[] = [
-    { headerCheckboxSelection: true, checkboxSelection: true, showDisabledCheckboxes: true },
-    { headerName: 'Table Name', field: 'table_name.value' },
+    // {  },
+    { headerCheckboxSelection: true, checkboxSelection: true, showDisabledCheckboxes: true, headerName: 'Table Name', field: 'table_name.value' },
     { headerName: 'Table Description', field: 'description.value' },
     {
       headerName: 'Existing in Products List',

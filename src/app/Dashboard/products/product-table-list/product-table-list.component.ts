@@ -86,7 +86,7 @@ export class ProductTableListComponent implements OnInit {
   }
   onSearchData() {
     console.log("search data", this.gridApi);
-    this.gridApi?.setQuickFilter(this.searchValue)
+    this.gridApi.setQuickFilter(this.searchValue)
 
   }
   delete(rowIndex: number) {
@@ -139,7 +139,7 @@ export class ProductTableListComponent implements OnInit {
       let updated_data=JSON.parse(JSON.stringify(addProductList));
       addProductList.updateData=updated_data;
       this.gridOptions.context.parentComponent.rowData.push(addProductList)
-    
+  
       console.log("Add row", this.gridOptions.context.parentComponent.rowData);
       
     }
