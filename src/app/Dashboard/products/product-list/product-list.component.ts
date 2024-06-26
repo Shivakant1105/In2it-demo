@@ -71,7 +71,7 @@ export class ProductListComponent implements OnInit {
   }
 
  onSearchData(){
-    console.log("search data", this.gridApi); 
+    // console.log("search data", this.gridApi); 
     this.gridApi?.setQuickFilter(this.searchValue)
     
   }

@@ -33,11 +33,8 @@ export class ProductTableListComponent implements OnInit {
       headerName: 'Action',
       field: 'actions',
       cellRenderer: ActionButtonComponent,
-      // editable: false,
-      colId: 'actions',
-      // cellRendererParams: {
-      //   context: { isEditing: false, parentComponent: this }
-      // }
+   
+     
     },
   ];
 
@@ -89,10 +86,10 @@ export class ProductTableListComponent implements OnInit {
     this.gridApi.setQuickFilter(this.searchValue)
 
   }
-  delete(rowIndex: number) {
-    this.rowData.splice(rowIndex, 1);
-    this.rowData = [...this.rowData]; // Refresh the grid
-  }
+  // delete(rowIndex: number) {
+  //   this.rowData.splice(rowIndex, 1);
+  //   this.rowData = [...this.rowData]; // Refresh the grid
+  // }
   toggleColumnListVisibility(): void {
     this.showColumnList = !this.showColumnList;
     console.log("tooglrr");
