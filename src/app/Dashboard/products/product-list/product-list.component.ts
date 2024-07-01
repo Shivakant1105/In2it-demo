@@ -43,18 +43,16 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
-    this.productService.getProductsList().subscribe(
-      (res) => {
-        this.rowData =res.data;
+    this.productService.getProductsList().subscribe({
+      next: (res) => {
+        this.rowData = res.data;
         console.log(res);
-  //  console.log(JSON.parse(data));
-
+        // console.log(JSON.parse(data));
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching products', error);
       }
-    );
+    });
   }
 
   booleanValueFormatter(params: any): string {

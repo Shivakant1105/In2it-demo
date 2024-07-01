@@ -36,7 +36,13 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
   else{
   console.log("dtaa",this.params.data);
   this.params.data.edit_mode = true;
+  // create Deep copy of
+  // let updatedData = Object.assign({}, this.params.data);
+
     let updatedData = JSON.parse(JSON.stringify(this.params.data));
+    // shallow copy
+    // let updatedData = { ...this.params.data };
+
     // console.log(updatedData);
     
     updatedData.edit_mode=false

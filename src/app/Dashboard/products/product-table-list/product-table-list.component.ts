@@ -44,18 +44,20 @@ export class ProductTableListComponent implements OnInit {
     this.rowData = window.history.state.tables;
     const stateData = window.history.state.tables;
     if (!stateData) {
-      this.productService.getProductsList().subscribe(
-        (res) => {
-          this.rowData = res.data.filter((row:any) => row.is_table_exist);
-         
-           this.rowData=this.rowData.map(item => {
-            return { ...item, edit_mode: false };})
-            console.log(this.rowData);
+      this.productService.getProductsList().subscribe({
+        next: (res) => {
+          this.rowData = res.data
+            .filter((row: any) => row.is_table_exist)
+            .map((item:any) => ({ ...item, edit_mode: false }));
+      
+          console.log(this.rowData);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error fetching products', error);
         }
-      );
+      });
+      
+    
     }
  
 
@@ -76,9 +78,7 @@ export class ProductTableListComponent implements OnInit {
   onGridReady(params: any) {
     this.gridApi = params;
     this.gridColumnApi = params;
-    // console.log(this.gridApi);
-    // console.log( "parmas",params);
-    
+
 
   }
   onSearchData() {
@@ -86,10 +86,7 @@ export class ProductTableListComponent implements OnInit {
     this.gridApi.setQuickFilter(this.searchValue)
 
   }
-  // delete(rowIndex: number) {
-  //   this.rowData.splice(rowIndex, 1);
-  //   this.rowData = [...this.rowData]; // Refresh the grid
-  // }
+ 
   toggleColumnListVisibility(): void {
     this.showColumnList = !this.showColumnList;
     console.log("tooglrr");
