@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { ProductListComponent } from './product-list.component';
 import { ProductsListService } from '../../service/products-list.service';
-
+import { Router } from '@angular/router';
+import { RowNode } from 'ag-grid-community';
 describe('ProductListComponent', () => {
   let component: ProductListComponent;
   let fixture: ComponentFixture<ProductListComponent>;
   let productService: ProductsListService;
-  
+  let router: Router;
+  let mockGridApi: any;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, FormsModule],
@@ -18,13 +20,17 @@ describe('ProductListComponent', () => {
       providers: [ProductsListService],
     }).compileComponents();
 
-    productService = TestBed.inject(ProductsListService); // Inject the ProductsListService
+    productService = TestBed.inject(ProductsListService); 
+    router = TestBed.inject(Router);
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    mockGridApi = jasmine.createSpyObj('gridApi', ['getSelectedNodes']);
+    component.gridApi = mockGridApi;
   });
 
   it('should create', () => {
@@ -51,13 +57,17 @@ describe('ProductListComponent', () => {
     expect(component.booleanValueFormatter(paramsFalse)).toBe('No');
   });
   
-
-  // it('should set gridApi on grid ready', () => {
-  //   const mockParams = { api: gridApi };
-  //   component.onGridReady(mockParams);
-
-  //   expect(component.gridApi).toBe(mockParams.api);
-  // });
+  it('should set gridApi on grid ready', () => {
+    const mockParams = { api: {} as any };
+    component.onGridReady(mockParams);
+  
+    // Ensure component.gridApi.api exists and is defined
+    expect(component.gridApi).toBeDefined();
+    expect(component.gridApi).toBeDefined();
+    expect(typeof component.gridApi).toBe('object');
+  });
+  
+ 
   it('should set quick filter on search', () => {
     component.searchValue = 'search text';
     component.gridApi = jasmine.createSpyObj('gridApi', ['setQuickFilter']);
@@ -74,38 +84,51 @@ describe('ProductListComponent', () => {
 
     expect(component.showColumnList).toBeTrue();
   });
+ 
+  
+it('should navigate to product table with selected data', () => {
+  spyOn(router, 'navigate');
 
-  // it('should navigate to product table with selected data', () => {
-  //   spyOn(router, 'navigate');
+  const mockSelectedNodes: RowNode[] = [
+    { data: { table_name: { value: 'Table1' }, is_table_exist: true } } as RowNode,
+    { data: { table_name: { value: 'Table2' }, is_table_exist: true } } as RowNode,
+  ];
 
-  //   const mockSelectedNodes: RowNode[] = [
-  //     { data: { table_name: { value: 'Table1' }, is_table_exist: false } } as RowNode,
-  //   ];
-  //   gridApi.getSelectedNodes.and.returnValue(mockSelectedNodes);
+  // Mock gridApi.getSelectedNodes to return mockSelectedNodes
+  mockGridApi.getSelectedNodes.and.returnValue(mockSelectedNodes);
 
-  //   component.rowData = [
-  //     { table_name: { value: 'Table1' }, is_table_exist: true },
-  //     { table_name: { value: 'Table2' }, is_table_exist: false },
-  //   ];
+  // Set up component.rowData with mock data
+  component.rowData = [
+    { table_name: { value: 'Table1' }, is_table_exist: true },
+    { table_name: { value: 'Table2' }, is_table_exist: true },
+  ];
 
-  //   component.addToList();
+  // Call addToList method which triggers navigation
+  component.addToList();
+
+  // Verify that allTables contains the expected tables with additional properties
+  expect(component.allTables.length).toBe(2); // Ensure allTables has two tables
+
+  // Verify router.navigate was called with expected route and state
+  expect(router.navigate).toHaveBeenCalledWith(['/products/product-table'], {
+    state: {
+      tables: [
+        { table_name: { value: 'Table1' }, is_table_exist: true },
+        { table_name: { value: 'Table2' }, is_table_exist: true, table_id: jasmine.any(Object), created_on: jasmine.any(Object), created_by: jasmine.any(Object) }
+      ]
+    },
+  });
+});
+
+  
+  
 
 
-  //   expect(router.navigate).toHaveBeenCalledWith(['/products/product-table'], {
-  //     state: {
-  //       tables: [
-  //         { table_name: { value: 'Table1' }, is_table_exist: true },
-  //         { table_name: { value: 'Table2' }, is_table_exist: true, table_id: jasmine.any(Object), created_on: jasmine.any(Object), created_by: jasmine.any(Object) },
-  //       ],
-  //     },
-  //   });
-  // });
+  it('should navigate to home on cancel', () => {
+    spyOn(router, 'navigate');
 
-  // it('should navigate to home on cancel', () => {
-  //   spyOn(router, 'navigate');
+    component.onCancel();
 
-  //   component.onCancel();
-
-  //   expect(router.navigate).toHaveBeenCalledWith(['/']);
-  // });
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
+  });
 });

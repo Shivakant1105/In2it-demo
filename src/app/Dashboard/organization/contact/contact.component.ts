@@ -28,47 +28,40 @@ export class ContactComponent implements OnInit {
   }
   organizations: any;
   contactData!: any[];
-
   addData: boolean = false;
   searchValue: any;
   totalContacts!: number;
   form!: FormGroup;
   submittedData: any;
-heading='All Contact List'
+  heading = 'All Contact List';
   activeOrganization: string = '';
-
   showViewDetails: boolean = false;
   showEditForm: boolean = false;
   selectedRowsData: any[] = [];
   formHeading!: string;
-
   checkedCount: number = 0;
-
   checkBoxData: any;
   selectAll = false;
-
   uniqueOrgs!: string[];
   activeOrg: string | null = null;
   filterdata: any;
+  viewData: any;
   columnDefs: ColDef[] = [
     {
       headerCheckboxSelection: true,
       checkboxSelection: true,
-
     },
     {
       headerName: 'Org Name',
       field: 'orgName',
       cellStyle: { color: 'blue' },
       cellRenderer: CustomCellComponent,
-
     },
     {
       headerName: 'Name',
       field: 'name',
-      // cellStyle: { color: 'blue' },
+
       cellRenderer: CustomCellComponent,
-     
     },
     { headerName: 'Role', field: 'role' },
     { headerName: 'Email', field: 'email' },
@@ -76,12 +69,12 @@ heading='All Contact List'
   ];
   rowData: any[] = [];
   gridOptions!: GridOptions;
-  gridApiActive:any
+  gridApiActive: any;
   filter = new FormControl('');
   constructor(
     public dataService: DataService,
     public router: Router,
-    private fb: FormBuilder // pipe: DecimalPipe
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -103,7 +96,7 @@ heading='All Contact List'
         ],
       ],
       another: this.fb.array([
-        // this.createPhoneFormGroup()
+      
       ]),
       role: ['', Validators.required],
       additionalRoles: ['', Validators.required],
@@ -112,8 +105,6 @@ heading='All Contact List'
 
     this.dataService.allData.subscribe((data: any) => {
       this.contactData = data;
-      // this.organizations = data;
-      console.log('service data', data);
       this.rowData = this.contactData.flatMap((org: any) =>
         org.contact.map((contact: any) => ({
           orgID: org.id,
@@ -135,47 +126,25 @@ heading='All Contact List'
     this.getAllData();
   }
 
-  // editGrid(params:any){
-  //   console.log(params);
-  //   this.openForm(params.data, "checkBox")
-  //   this.viewDetails(params.data.id)
 
-  // }
-
-  onGridReady(params:any){
-    this.gridApiActive=params
-console.log("grid ready" , params);
-
-console.log("search data", this.contactData);
+  onGridReady(params: any) {
+    this.gridApiActive = params;
   }
 
-  onSearchData(){
-    console.log("search data", this.gridApiActive); 
-    this.gridApiActive?.setQuickFilter(this.searchValue)
-    
+  onSearchData() {
+    this.gridApiActive?.setQuickFilter(this.searchValue);
   }
 
   totalCount = 0;
-  
+
   getAllData() {
-    this.totalCount=this.rowData.length
-    // this.contactData.forEach((org: any) => {
-    //   if (org.contact) {
-    //     this.totalCount += org.contact.length;
-    //   }
-    // });
+    this.totalCount = this.rowData.length;
     this.activeOrganization = 'All Contacts';
     this.totalContacts = this.totalCount;
     this.rowData = this.filterdata;
   }
 
   openTab(data: any, id: any) {
-    console.log('logg===>', this.contactData, id);
-    // const nextData=this.contactData.filter((data:any)=>{
-    //   return data.id===id
-    //   })
-    // console.log(nextData)
-    // console.log(data)
     this.router.navigate(['/org/organization'], { state: { data, id } });
   }
 
@@ -193,9 +162,6 @@ console.log("search data", this.contactData);
   isActive(orgName: string): boolean {
     return this.activeOrg === orgName;
   }
-
-  // filteredOrg: any;
-
   createFormGroup(): FormGroup {
     return this.fb.group({
       type: [''],
@@ -230,8 +196,7 @@ console.log("search data", this.contactData);
 
     this.form.reset();
   }
-  // selectedContactIndex: number = -1;
-  viewData: any;
+
 
   openForm(data: any, boxData: any) {
     this.addData = true;
@@ -242,15 +207,7 @@ console.log("search data", this.contactData);
       this.showViewDetails = true;
       this.showEditForm = false;
     }
-    // this.rowData = data;
-
-    console.log('viewdata==>', data);
-
-    // this.selectedContactIndex = id;
-
     const idData = this.rowData?.find((c: any) => c.id === data.id);
-    console.log('id dataa', idData);
-
     if (idData) {
       this.form.patchValue({
         name: {
@@ -275,9 +232,6 @@ console.log("search data", this.contactData);
     this.submittedData = this.form.value;
     this.submittedData.name =
       form.value.name.firstName + ' ' + form.value.name.lastName;
-    console.log('Form data:', this.submittedData);
-
-
     const abcOrganization = this.contactData.find(
       (org: any) => org.orgName === this.submittedData.orgName
     );
@@ -291,9 +245,8 @@ console.log("search data", this.contactData);
     );
 
     this.showEditForm = false;
-    this.totalCount=this.rowData.length
+    this.totalCount = this.rowData.length;
   }
-
   viewDetails(id: any) {
     console.log(id);
     const idData = this.rowData?.find((c: any) => c.id === id);
@@ -303,48 +256,34 @@ console.log("search data", this.contactData);
     this.viewData = idData;
     console.log('dsasda', idData);
   }
-
   editContact() {
     this.formHeading = 'EDIT DETAILS';
     this.addData = true;
     this.showViewDetails = false;
     this.showEditForm = true;
   }
-
   editContact1(data: any) {
     this.formHeading = 'EDIT DETAILS';
     this.addData = true;
     this.showViewDetails = false;
     this.showEditForm = true;
-    // this.contacts = checkBox;
-    // this.selectedContactIndex = index;
-    console.log('checkbox', data);
     this.viewData = data;
     this.openForm(data, 'boxData');
   }
 
   updataData(form: FormGroup) {
-    console.log('checkbox', this.checkBoxData);
-
-    // Update this.viewData with form values
+    
     this.viewData.name =
       form.value.name.firstName + ' ' + form.value.name.lastName;
     this.viewData.email = form.get('email')?.value;
     this.viewData.number = form.get('phone')?.value;
     this.viewData.role = form.get('role')?.value;
-
-    // Update the rowData with the modified viewData
     const index = this.rowData.findIndex((row) => row.id === this.viewData.id);
     if (index !== -1) {
       this.rowData[index] = { ...this.rowData[index], ...this.viewData };
     }
 
-    // Log the updated row
-    console.log('Updataed data', this.rowData[index]);
-
-    // Reassign the updated rowData to trigger change detection
-    // this.rowData[index] = [...this.rowData];
-    // console.log(this.rowData);
+  
     this.rowData = this.contactData.flatMap((org: any) =>
       org.contact.map((contact: any, id: any) => {
         if (id == index) {
@@ -355,36 +294,32 @@ console.log("search data", this.contactData);
       })
     );
 
-    console.log('ihdfsajkf', this.contactData);
     this.showEditForm = false;
   }
 
   handleEditClick() {
-    // this.contacts = false;
+    
     if (this.checkedCount !== 1) {
-      // alert("Cannot edit. Please select exactly one contact.")
-      console.log('Cannot edit. Please select exactly one contact.');
     } else {
       this.editContact1(this.checkBoxData[0]);
     }
   }
 
   checkBox(event: any) {
-    console.log('dfgsg6853g', event);
+
     this.checkBoxData = event;
     this.selectedRowsData = event;
     if (event.length == 1) {
       this.checkedCount = event.length;
-      console.log('lerth', event.length);
-      console.log('lerth', this.checkedCount);
+     
     } else {
       this.checkedCount = event.length;
-      console.log('checkbox length', event.length);
+  
     }
   }
 
   deleteContact() {
-    console.log('delete data');
+   
     this.showViewDetails = false;
 
     // Filter out rows from rowData based on viewData (which contains the selected checkboxes)
@@ -396,13 +331,9 @@ console.log("search data", this.contactData);
       this.selectedRowsData = [];
       this.checkedCount = 0;
       this.totalContacts = this.rowData.length;
-
-      console.log('Selected rows deleted successfully.');
     } else {
-      console.log('No rows selected for deletion.');
     }
-  this.totalCount=this.rowData.length
-  
+    this.totalCount = this.rowData.length;
   }
 
   onClear() {
@@ -410,7 +341,7 @@ console.log("search data", this.contactData);
     this.form.patchValue({
       orgName: this.rowData,
     });
-    console.log('sjsdhkasda', this.organizations);
+
   }
   cancel() {
     this.form.reset();

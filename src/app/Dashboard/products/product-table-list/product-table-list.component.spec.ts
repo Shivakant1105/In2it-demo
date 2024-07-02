@@ -113,13 +113,13 @@ describe('ProductTableListComponent', () => {
     expect(datePattern.test(currentDate)).toBeTrue();
   });
 
-  // it('should add a new row', () => {
-  //   const initialRowCount = component.rowData.length;
+  it('should add a new row', () => {
+    const initialRowCount = component.rowData.length;
 
-  //   component.addRow();
+    component.addRow();
 
-  //   expect(gridApi.applyTransaction).toHaveBeenCalled();
-  //   expect(component.rowData.length).toBe(initialRowCount + 1);
-  //   expect(component.rowData[component.rowData.length - 1].addMode).toBeTrue();
-  // });
+    expect(gridApi.applyTransaction).toHaveBeenCalled();
+    expect(component.rowData.length).toBe(initialRowCount + 1);
+    expect(component.rowData[component.rowData.length - 1].addMode).toBeTrue();
+  });
 });

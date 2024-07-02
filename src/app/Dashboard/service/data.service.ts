@@ -242,12 +242,24 @@ export class DataService {
     localData.push(data);
     localStorage.setItem('data', JSON.stringify(localData));
   }
+  // deleteTask(id: any) {
+  //   const localData = JSON.parse(localStorage.getItem('data')!) || [];
+  //   localData.splice(id, 1);
+  //   localStorage.setItem('data', JSON.stringify(localData));
+  // }
   deleteTask(id: any) {
     const localData = JSON.parse(localStorage.getItem('data')!) || [];
-    localData.splice(id, 1);
-    localStorage.setItem('data', JSON.stringify(localData));
+    
+    // Find the index of the task with the given id
+    const index = localData.findIndex((task:any) => task.id === id);
+    
+    if (index !== -1) {
+      // Remove the task at the found index
+      localData.splice(index, 1);
+      localStorage.setItem('data', JSON.stringify(localData));
+    }
   }
-
+  
   public tableDataSubject = new Subject<any>();
   tableData$ = this.tableDataSubject.asObservable();
   setTableData(data: any) {
@@ -260,24 +272,11 @@ export class DataService {
   updateContactData(data: any[]) {
     this.contactDataSubject.next(data);
 
-    // console.log(  " Recive service data==>",data);
+  
   }
   getAllContactData(): any[] {
     return this.contactDataSubject.getValue();
   }
 }
 
-// updateContactData(data: any[]) {
-//     this.contactDataSubject.next(data);
-//  console.log(  " Recive service data==>",data);
 
-//   }
-
-//   getAllContactData(): any[] {
-//     return this.contactDataSubject.getValue();
-//   }
-//  private baseUrl
-//   getWorkflowData(id: number): Observable<any> {
-//     const url = `${this.}/workflows/${id}`;
-//     return this.http.get<any>(url);
-//   }
