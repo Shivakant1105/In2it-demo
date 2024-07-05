@@ -9,11 +9,10 @@ describe('MyTaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MyTaskComponent ],
+      declarations: [MyTaskComponent],
       imports: [ReactiveFormsModule],
-      providers: [FormBuilder]
-    })
-    .compileComponents();
+      providers: [FormBuilder],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -27,7 +26,9 @@ describe('MyTaskComponent', () => {
   });
 
   it('should initialize the form and load data from localStorage on ngOnInit', () => {
-    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify([{ id: '1', solutionArea: 'Area1' }]));
+    spyOn(localStorage, 'getItem').and.returnValue(
+      JSON.stringify([{ id: '1', solutionArea: 'Area1' }])
+    );
 
     component.ngOnInit();
 

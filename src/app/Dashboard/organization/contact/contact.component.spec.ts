@@ -1,5 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormsModule,
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  FormControl,
+} from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DecimalPipe } from '@angular/common';
@@ -11,8 +18,6 @@ import { Router } from '@angular/router';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { AgGridModule } from 'ag-grid-angular';
-
-
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -27,17 +32,29 @@ describe('ContactComponent', () => {
         id: 1,
         orgName: 'Org1',
         contact: [
-          { id: 1, name: 'John Doe', role: 'Manager', email: 'john@example.com', number: '1234567890' }
-        ]
+          {
+            id: 1,
+            name: 'John Doe',
+            role: 'Manager',
+            email: 'john@example.com',
+            number: '1234567890',
+          },
+        ],
       },
       {
         id: 2,
         orgName: 'Org2',
         contact: [
-          { id: 2, name: 'Jane Smith', role: 'Developer', email: 'jane@example.com', number: '0987654321' }
-        ]
-      }
-    ])
+          {
+            id: 2,
+            name: 'Jane Smith',
+            role: 'Developer',
+            email: 'jane@example.com',
+            number: '0987654321',
+          },
+        ],
+      },
+    ]),
   };
 
   beforeEach(async () => {
@@ -49,21 +66,23 @@ describe('ContactComponent', () => {
         FormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        FeatherModule.pick(allIcons),AgGridModule
+        FeatherModule.pick(allIcons),
+        AgGridModule,
       ],
-      providers: [ FormBuilder,
+      providers: [
+        FormBuilder,
         { provide: DataService, useValue: mockDataService },
-        DecimalPipe
-      ]
+        DecimalPipe,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactComponent);
     component = fixture.componentInstance;
     // dataService = TestBed.inject(DataService);
     router = TestBed.inject(Router);
-    navigateSpy = spyOn(router, 'navigate'); 
+    navigateSpy = spyOn(router, 'navigate');
     component.form = new FormGroup({
-      another: new FormArray([])
+      another: new FormArray([]),
     });
     fixture.detectChanges();
   });
@@ -87,7 +106,6 @@ describe('ContactComponent', () => {
     expect(component.rowData[1].name).toBe('Jane Smith');
   });
 
-
   it('should set gridApi on onGridReady', () => {
     const params = { api: mockGridApi }; // Mock params with the correct GridApi type
     component.onGridReady(params);
@@ -105,10 +123,10 @@ describe('ContactComponent', () => {
     const data = { key: 'value' };
     const id = 123;
     component.openTab(data, id);
-    expect(navigateSpy).toHaveBeenCalledWith(['/org/organization'], { state: { data, id } });
+    expect(navigateSpy).toHaveBeenCalledWith(['/org/organization'], {
+      state: { data, id },
+    });
   });
-
-
 
   it('should return the FormArray from the form', () => {
     expect(component.mediumFormArray).toBeInstanceOf(FormArray);
@@ -133,8 +151,6 @@ describe('ContactComponent', () => {
     component.removePhone(0);
     expect(component.mediumFormArray.length).toBe(initialLength - 1);
   });
-
-
 
   it('should view details of the selected id', () => {
     const id = 1;
@@ -167,11 +183,6 @@ describe('ContactComponent', () => {
     expect(component.openForm).toHaveBeenCalledWith(data, 'boxData');
   });
 
-
-
-
-
-
   it('should open form to add new contact', () => {
     component.addContact();
     expect(component.formHeading).toBe('ADD CONTACT');
@@ -181,7 +192,14 @@ describe('ContactComponent', () => {
   });
 
   it('should open form to edit existing contact', () => {
-    const contact = { id: 1, orgName: 'Org1', name: 'John Doe', email: 'john@example.com', number: '1234567890', role: 'Manager' };
+    const contact = {
+      id: 1,
+      orgName: 'Org1',
+      name: 'John Doe',
+      email: 'john@example.com',
+      number: '1234567890',
+      role: 'Manager',
+    };
     component.openForm(contact, 'boxData');
     expect(component.formHeading).toBe('EDIT DETAILS');
     expect(component.addData).toBeTrue();
@@ -189,14 +207,29 @@ describe('ContactComponent', () => {
     expect(component.form.get('name.firstName')?.value).toBe('John');
     expect(component.form.get('name.lastName')?.value).toBe('Doe');
   });
-  
 
   it('should update contact data on submit', () => {
     component.contactData = [
-      { id: 1, orgName: 'Org1', contact: [{ id: 1, name: 'John Doe', role: 'Manager', email: 'john@example.com', number: '1234567890' }] }
+      {
+        id: 1,
+        orgName: 'Org1',
+        contact: [
+          {
+            id: 1,
+            name: 'John Doe',
+            role: 'Manager',
+            email: 'john@example.com',
+            number: '1234567890',
+          },
+        ],
+      },
     ];
     component.rowData = component.contactData.flatMap((org: any) =>
-      org.contact.map((contact: any) => ({ orgID: org.id, ...contact, orgName: org.orgName }))
+      org.contact.map((contact: any) => ({
+        orgID: org.id,
+        ...contact,
+        orgName: org.orgName,
+      }))
     );
 
     const formValue = {
@@ -205,7 +238,7 @@ describe('ContactComponent', () => {
       email: 'john@example.com',
       phone: '1234567890',
       role: 'Manager',
-      another: []
+      another: [],
     };
 
     component.form.patchValue(formValue);
@@ -220,6 +253,4 @@ describe('ContactComponent', () => {
     expect(component.filteredRowData.length).toBe(1);
     expect(component.filteredRowData[0].orgName).toBe('Org1');
   });
-
- 
 });

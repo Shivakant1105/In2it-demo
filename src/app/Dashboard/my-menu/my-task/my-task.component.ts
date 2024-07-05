@@ -4,7 +4,6 @@ import { DataService } from '../../service/data.service';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { ActionButtonComponent } from 'src/app/Shared/action-button/action-button.component';
 
-
 @Component({
   selector: 'app-my-task',
   templateUrl: './my-task.component.html',
@@ -33,7 +32,7 @@ export class MyTaskComponent implements OnInit {
       count: '46',
     },
   ];
- 
+
   formData: any[] = [];
   addForm!: FormGroup;
   addData: boolean = false;
@@ -42,15 +41,15 @@ export class MyTaskComponent implements OnInit {
 
   gridOptions!: GridOptions;
   columnDefs: ColDef[] = [
-    {headerCheckboxSelection: true, checkboxSelection: true},
+    { headerCheckboxSelection: true, checkboxSelection: true },
     { headerName: 'Solution Area', field: 'solutionArea' },
     { headerName: 'Workflow', field: 'workflow' },
     { headerName: 'TaskId', field: 'taskId' },
     { headerName: 'Task Name', field: 'taskName' },
-    { 
-      headerName: 'Status', 
+    {
+      headerName: 'Status',
       field: 'status',
-      cellStyle: params => {
+      cellStyle: (params) => {
         let style = { backgroundColor: '', color: '' };
         switch (params.value) {
           case 'Active':
@@ -65,14 +64,14 @@ export class MyTaskComponent implements OnInit {
             break;
         }
         return style;
-      }
+      },
     },
     { headerName: 'StartDate', field: 'startDue' },
     { headerName: 'DueDate', field: 'dueDate' },
     {
-      headerName: 'Priority', 
+      headerName: 'Priority',
       field: 'priority',
-      cellStyle: params => {
+      cellStyle: (params) => {
         let style = { backgroundColor: '', color: '' };
         switch (params.value) {
           case 'High':
@@ -91,9 +90,13 @@ export class MyTaskComponent implements OnInit {
             break;
         }
         return style;
-      }
+      },
     },
-    { headerName: 'Action', field: 'action', cellRenderer: ActionButtonComponent }
+    {
+      headerName: 'Action',
+      field: 'action',
+      cellRenderer: ActionButtonComponent,
+    },
   ];
 
   constructor(public fb: FormBuilder, private service: DataService) {}
@@ -101,21 +104,19 @@ export class MyTaskComponent implements OnInit {
   ngOnInit(): void {
     this.addFormInit();
     this.formData = JSON.parse(localStorage.getItem('data') || '[]');
-  
-    
   }
 
   addFormInit() {
     this.addForm = this.fb.group({
-      id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],  
-      solutionArea: ['', Validators.required], 
-      workflow: ['', Validators.required], 
-      taskId: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
-      taskName: ['', Validators.required], 
-      status: ['', Validators.required], 
-      startDue: ['', Validators.required], 
-      dueDate: ['', Validators.required], 
-      priority: ['', Validators.required], 
+      id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      solutionArea: ['', Validators.required],
+      workflow: ['', Validators.required],
+      taskId: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      taskName: ['', Validators.required],
+      status: ['', Validators.required],
+      startDue: ['', Validators.required],
+      dueDate: ['', Validators.required],
+      priority: ['', Validators.required],
     });
 
     this.gridOptions = {
@@ -139,8 +140,8 @@ export class MyTaskComponent implements OnInit {
       this.formData = JSON.parse(localStorage.getItem('data') || '[]');
       this.addForm.reset();
     } else {
-      console.log("Form is invalid");
-      Object.keys(this.addForm.controls).forEach(field => {
+      console.log('Form is invalid');
+      Object.keys(this.addForm.controls).forEach((field) => {
         const control = this.addForm.get(field);
         if (control) {
           control.markAsTouched({ onlySelf: true });
@@ -157,11 +158,11 @@ export class MyTaskComponent implements OnInit {
   }
 
   onDelete(index: any) {
-    const msg = confirm("Are you sure you want to delete this item?");
+    const msg = confirm('Are you sure you want to delete this item?');
     if (msg) {
-      const taskId = this.formData[index].taskId; 
-      this.service.deleteTask(taskId);  
-      this.formData.splice(index, 1); 
+      const taskId = this.formData[index].taskId;
+      this.service.deleteTask(taskId);
+      this.formData.splice(index, 1);
       localStorage.setItem('data', JSON.stringify(this.formData));
     }
   }

@@ -68,7 +68,7 @@ export class ContactComponent implements OnInit {
   rowData: any[] = [];
   gridOptions!: GridOptions;
 
-  gridApi!:GridApi
+  gridApi!: GridApi;
   filter = new FormControl('');
   constructor(
     public dataService: DataService,
@@ -85,7 +85,7 @@ export class ContactComponent implements OnInit {
 
       orgName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-     
+
       phone: [
         '',
         [
@@ -94,9 +94,7 @@ export class ContactComponent implements OnInit {
           Validators.maxLength(10),
         ],
       ],
-      another: this.fb.array([
-      
-      ]),
+      another: this.fb.array([]),
       role: ['', Validators.required],
       additionalRoles: ['', Validators.required],
       remark: [''],
@@ -124,7 +122,6 @@ export class ContactComponent implements OnInit {
     this.getAllData();
     this.formHeading = 'All Contact List';
   }
-
 
   onGridReady(params: any) {
     this.gridApi = params;
@@ -181,7 +178,7 @@ export class ContactComponent implements OnInit {
   removePhone(index: number): void {
     this.mediumFormArray.removeAt(index);
   }
-  
+
   addContact() {
     this.formHeading = 'ADD CONTACT';
     this.form.enable();
@@ -191,7 +188,6 @@ export class ContactComponent implements OnInit {
 
     this.form.reset();
   }
-
 
   openForm(data: any, boxData: any) {
     this.addData = true;
@@ -216,7 +212,7 @@ export class ContactComponent implements OnInit {
         phone: idData.number,
         role: idData.role,
       });
-  
+
       const organizationControl = this.form.get('orgName');
       if (organizationControl) {
         organizationControl.disable();
@@ -249,7 +245,6 @@ export class ContactComponent implements OnInit {
     this.showViewDetails = true;
     this.showEditForm = false;
     this.viewData = idData;
-  
   }
   editContact() {
     this.formHeading = 'EDIT DETAILS';
@@ -257,7 +252,7 @@ export class ContactComponent implements OnInit {
     this.showViewDetails = false;
     this.showEditForm = true;
   }
-  
+
   editContact1(data: any) {
     this.formHeading = 'EDIT DETAILS';
     this.addData = true;
@@ -268,7 +263,6 @@ export class ContactComponent implements OnInit {
   }
 
   updateData(form: FormGroup) {
-    
     this.viewData.name =
       form.value.name.firstName + ' ' + form.value.name.lastName;
     this.viewData.email = form.get('email')?.value;
@@ -279,7 +273,6 @@ export class ContactComponent implements OnInit {
       this.rowData[index] = { ...this.rowData[index], ...this.viewData };
     }
 
-  
     this.rowData = this.contactData.flatMap((org: any) =>
       org.contact.map((contact: any, id: any) => {
         if (id == index) {
@@ -294,7 +287,6 @@ export class ContactComponent implements OnInit {
   }
 
   handleEditClick() {
-    
     if (this.checkedCount !== 1) {
     } else {
       this.editContact1(this.checkBoxData[0]);
@@ -302,20 +294,16 @@ export class ContactComponent implements OnInit {
   }
 
   checkBox(event: any) {
-
     this.checkBoxData = event;
     this.selectedRowsData = event;
     if (event.length == 1) {
       this.checkedCount = event.length;
-     
     } else {
       this.checkedCount = event.length;
-  
     }
   }
 
   deleteContact() {
-   
     this.showViewDetails = false;
 
     // Filter out rows from rowData based on viewData (which contains the selected checkboxes)
@@ -337,7 +325,6 @@ export class ContactComponent implements OnInit {
     this.form.patchValue({
       orgName: this.rowData,
     });
-
   }
   cancel() {
     this.form.reset();

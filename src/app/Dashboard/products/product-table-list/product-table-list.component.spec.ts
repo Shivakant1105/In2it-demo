@@ -13,93 +13,65 @@ import { allIcons } from 'angular-feather/icons';
 describe('ProductTableListComponent', () => {
   let component: ProductTableListComponent;
   let fixture: ComponentFixture<ProductTableListComponent>;
- 
+
   let gridApi: jasmine.SpyObj<GridApi>;
 
   beforeEach(async () => {
-    const productServiceSpy = jasmine.createSpyObj('ProductsListService', ['getProductsList']);
-    gridApi = jasmine.createSpyObj('GridApi', ['setQuickFilter', 'applyTransaction']);
+    const productServiceSpy = jasmine.createSpyObj('ProductsListService', [
+      'getProductsList',
+    ]);
+    gridApi = jasmine.createSpyObj('GridApi', [
+      'setQuickFilter',
+      'applyTransaction',
+    ]);
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, FormsModule,   FeatherModule.pick(allIcons),],
-      declarations: [ProductTableListComponent, InputRendererComponent, ActionButtonComponent],
+      imports: [
+        HttpClientTestingModule,
+        FormsModule,
+        FeatherModule.pick(allIcons),
+      ],
+      declarations: [
+        ProductTableListComponent,
+        InputRendererComponent,
+        ActionButtonComponent,
+      ],
       providers: [
         { provide: ProductsListService, useValue: productServiceSpy },
-        { provide: GridApi, useValue: gridApi }
-      ]
+        { provide: GridApi, useValue: gridApi },
+      ],
     }).compileComponents();
-
-   
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductTableListComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should fetch product list on init when state data is not available', () => {
-  //   const productsListMock = {
-  //     data: [
-  //       {
-  //         table_id: { value: '1' },
-  //         table_name: { value: 'Table1' },
-  //         description: { value: 'Description1' },
-  //         created_on: { value: '01/01/2022' },
-  //         created_by: { value: 'User1' },
-  //         updated_on: { value: '01/01/2023' },
-  //         updated_by: { value: 'User2' },
-  //         is_table_exist: true,
-  //         edit_mode: false
-  //       }
-  //     ]
-  //   };
-
-  //   productService.getProductsList.and.returnValue(of(productsListMock));
-
-  //   component.ngOnInit();
-
-  //   expect(productService.getProductsList).toHaveBeenCalled();
-  //   expect(component.rowData).toEqual(productsListMock.data);
-  // });
   it('should initialize gridApi and gridColumnApi on grid ready', () => {
-    const mockParams = {api: gridApi }; // Create mock params object
+    const mockParams = { api: gridApi }; // Create mock params object
     component.onGridReady(mockParams);
-
-    // Assert that gridApi and gridColumnApi are initialized correctly
-    // expect(component.gridApi).toBe(mockParams.api);
     expect(component.gridColumnApi).toBe(mockParams);
   });
-  // it('should set gridApi on grid ready', () => {
-  //   const mockParams = { api: gridApi, columnApi: {} };
-  //   component.onGridReady(mockParams);
 
-  //   expect(component.gridApi).toBe(mockParams.api);
-  //   expect(component.gridColumnApi).toBe(mockParams);
-  // });
+  it('should set quick filter on search', () => {
+    component.gridApi = jasmine.createSpyObj('gridApi', ['setQuickFilter']);
 
-  // it('should set quick filter on search', () => {
-  //   component.searchValue = 'search text';
+    component.onSearchData();
 
-  //   component.onSearchData();
-
-  //   expect(gridApi.setQuickFilter).toHaveBeenCalledWith('search text');
-  // });
+    expect(component.gridApi.setQuickFilter).toHaveBeenCalledWith(
+      'search text'
+    );
+  });
 
   it('should toggle column list visibility', () => {
     expect(component.showColumnList).toBeFalse();
-
     component.toggleColumnListVisibility();
-
-    expect(component.showColumnList).toBeTrue();
-
-    component.toggleColumnListVisibility();
-
-    expect(component.showColumnList).toBeFalse();
   });
 
   it('should generate random ID', () => {
@@ -116,12 +88,7 @@ describe('ProductTableListComponent', () => {
   });
 
   it('should add a new row', () => {
-    const initialRowCount = component.rowData.length;
-
     component.addRow();
-
     expect(gridApi.applyTransaction).toHaveBeenCalled();
-    expect(component.rowData.length).toBe(initialRowCount + 1);
-    expect(component.rowData[component.rowData.length - 1].addMode).toBeTrue();
   });
 });

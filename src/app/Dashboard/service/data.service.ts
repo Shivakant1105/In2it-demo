@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject,  Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -233,33 +233,28 @@ export class DataService {
     this.headerSub.next(data);
   }
 
-
   getTableData() {
     return JSON.parse(localStorage.getItem('data')!);
   }
   addTask(data: any) {
-    const localData = JSON.parse(localStorage.getItem('data')!) || [];
+    const localData = JSON.parse(localStorage.getItem('data')!);
     localData.push(data);
     localStorage.setItem('data', JSON.stringify(localData));
   }
-  // deleteTask(id: any) {
-  //   const localData = JSON.parse(localStorage.getItem('data')!) || [];
-  //   localData.splice(id, 1);
-  //   localStorage.setItem('data', JSON.stringify(localData));
-  // }
+  
   deleteTask(id: any) {
-    const localData = JSON.parse(localStorage.getItem('data')!) || [];
-    
+    const localData = JSON.parse(localStorage.getItem('data')!);
+
     // Find the index of the task with the given id
-    const index = localData.findIndex((task:any) => task.id === id);
-    
+    const index = localData.findIndex((task: any) => task.id === id);
+
     if (index !== -1) {
       // Remove the task at the found index
       localData.splice(index, 1);
       localStorage.setItem('data', JSON.stringify(localData));
     }
   }
-  
+
   public tableDataSubject = new Subject<any>();
   tableData$ = this.tableDataSubject.asObservable();
   setTableData(data: any) {
@@ -271,12 +266,8 @@ export class DataService {
 
   updateContactData(data: any[]) {
     this.contactDataSubject.next(data);
-
-  
   }
   getAllContactData(): any[] {
     return this.contactDataSubject.getValue();
   }
 }
-
-

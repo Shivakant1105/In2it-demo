@@ -1,28 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import { ICellRendererAngularComp } from "ag-grid-angular";
-import { ICellRendererParams } from "ag-grid-community";
-
-
+import { Component, OnInit } from '@angular/core';
+import { ICellRendererAngularComp } from 'ag-grid-angular';
+import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
-  selector: "app-input-renderer",
-  templateUrl: "./input-renderer.component.html",
-  styleUrls: ["./input-renderer.component.css"],
+  selector: 'app-input-renderer',
+  templateUrl: './input-renderer.component.html',
+  styleUrls: ['./input-renderer.component.css'],
 })
 export class InputRendererComponent
-  implements OnInit, ICellRendererAngularComp {
+  implements OnInit, ICellRendererAngularComp
+{
   params: any;
 
-  fieldName: string = "";
+  fieldName: string | any;
 
-  constructor() { }
+  constructor() {}
 
   agInit(params: ICellRendererParams): void {
     this.params = params;
-    // this.value = params.value;
-    this.fieldName = params.colDef?.field || "";
-    // console.log("para", params);
-    
+    this.fieldName = params.colDef!.field;
   }
 
   refresh(params: ICellRendererParams) {
@@ -30,9 +26,5 @@ export class InputRendererComponent
     return true;
   }
 
-  ngOnInit(): void {
-  
-  }
-
- 
+  ngOnInit(): void {}
 }

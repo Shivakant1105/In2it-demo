@@ -7,23 +7,17 @@ describe('ActionButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ActionButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [ActionButtonComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ActionButtonComponent);
-  
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-
- 
-  
-
 });
