@@ -15,7 +15,7 @@ describe('ActionButtonComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ActionButtonComponent);
   
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

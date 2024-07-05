@@ -233,7 +233,7 @@ export class DataService {
     this.headerSub.next(data);
   }
 
-  setNav() {}
+
   getTableData() {
     return JSON.parse(localStorage.getItem('data')!);
   }

@@ -10,10 +10,7 @@ describe('DataService', () => {
     service = TestBed.inject(DataService);
     // service = new DataService();
   });
-  afterEach(() => {
-    // Clear localStorage after each test
-    localStorage.removeItem('data');
-  });
+ 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

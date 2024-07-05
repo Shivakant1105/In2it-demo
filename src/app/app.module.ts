@@ -30,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
   HttpClientModule,
     ReactiveFormsModule,
-    NgbModule,
+
     FeatherModule.pick( allIcons), 
    
   ],

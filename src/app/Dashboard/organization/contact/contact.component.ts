@@ -11,7 +11,7 @@ import {
 
 // import { Observable, map, of, startWith } from 'rxjs';
 import { DecimalPipe } from '@angular/common';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { Router } from '@angular/router';
 import { CustomCellComponent } from 'src/app/Shared/custom-cell/custom-cell.component';
 
@@ -23,9 +23,7 @@ import { CustomCellComponent } from 'src/app/Shared/custom-cell/custom-cell.comp
 })
 export class ContactComponent implements OnInit {
   filteredRowData!: any[];
-  toggleForm() {
-    throw new Error('Method not implemented.');
-  }
+
   organizations: any;
   contactData!: any[];
   addData: boolean = false;
@@ -69,7 +67,8 @@ export class ContactComponent implements OnInit {
   ];
   rowData: any[] = [];
   gridOptions!: GridOptions;
-  gridApiActive: any;
+
+  gridApi!:GridApi
   filter = new FormControl('');
   constructor(
     public dataService: DataService,
@@ -86,7 +85,7 @@ export class ContactComponent implements OnInit {
 
       orgName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      // phone: [null, [Validators.required,Validators.maxLength(10) ]],
+     
       phone: [
         '',
         [
@@ -121,18 +120,18 @@ export class ContactComponent implements OnInit {
       },
     };
 
-    console.log('rowdatasfsa', this.rowData);
     this.filterdata = this.rowData;
     this.getAllData();
+    this.formHeading = 'All Contact List';
   }
 
 
   onGridReady(params: any) {
-    this.gridApiActive = params;
+    this.gridApi = params;
   }
 
   onSearchData() {
-    this.gridApiActive?.setQuickFilter(this.searchValue);
+    this.gridApi?.setQuickFilter(this.searchValue);
   }
 
   totalCount = 0;
@@ -182,11 +181,7 @@ export class ContactComponent implements OnInit {
   removePhone(index: number): void {
     this.mediumFormArray.removeAt(index);
   }
-  onDelete() {
-    const msg = confirm('Are you sure you. want to delete this item?');
-    if (msg) {
-    }
-  }
+  
   addContact() {
     this.formHeading = 'ADD CONTACT';
     this.form.enable();
@@ -203,9 +198,11 @@ export class ContactComponent implements OnInit {
     if (boxData == 'boxData') {
       this.showViewDetails = false;
       this.showEditForm = true;
+      this.formHeading = 'EDIT DETAILS';
     } else {
       this.showViewDetails = true;
       this.showEditForm = false;
+      this.formHeading = 'VIEW DETAILS';
     }
     const idData = this.rowData?.find((c: any) => c.id === data.id);
     if (idData) {
@@ -214,20 +211,18 @@ export class ContactComponent implements OnInit {
           firstName: idData.name.split(' ')[0],
           lastName: idData.name.split(' ')[1],
         },
-
         orgName: idData.orgName,
         email: idData.email,
         phone: idData.number,
         role: idData.role,
       });
-
+  
       const organizationControl = this.form.get('orgName');
       if (organizationControl) {
         organizationControl.disable();
       }
     }
   }
-
   onSubmit(form: FormGroup): void {
     this.submittedData = this.form.value;
     this.submittedData.name =
@@ -254,7 +249,7 @@ export class ContactComponent implements OnInit {
     this.showViewDetails = true;
     this.showEditForm = false;
     this.viewData = idData;
-    console.log('dsasda', idData);
+  
   }
   editContact() {
     this.formHeading = 'EDIT DETAILS';
@@ -262,6 +257,7 @@ export class ContactComponent implements OnInit {
     this.showViewDetails = false;
     this.showEditForm = true;
   }
+  
   editContact1(data: any) {
     this.formHeading = 'EDIT DETAILS';
     this.addData = true;
@@ -271,7 +267,7 @@ export class ContactComponent implements OnInit {
     this.openForm(data, 'boxData');
   }
 
-  updataData(form: FormGroup) {
+  updateData(form: FormGroup) {
     
     this.viewData.name =
       form.value.name.firstName + ' ' + form.value.name.lastName;

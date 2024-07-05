@@ -61,10 +61,6 @@ export class ProductListComponent implements OnInit {
   
   onGridReady(params: any) {
     this.gridApi = params;
-   
-    console.log(this.gridApi);
-    console.log( "parmas",params);
-    
 
   }
 
@@ -77,7 +73,6 @@ export class ProductListComponent implements OnInit {
 
   toggleColumnListVisibility(): void {
     this.showColumnList = !this.showColumnList;
-    console.log("tooglrr");
   }
 
   randomId(){
@@ -111,17 +106,17 @@ export class ProductListComponent implements OnInit {
     nonExistingTables.forEach(table => {
       table.table_id = { value:this.randomId(), is_edit: false, type: 'integer' };
       table.is_table_exist = true;
-      table.created_on = { value: this.currentDate(), is_edit: false, type: 'datetime' };
-    // Assigns current date in dd/mm/yyyy format
+      table.created_on = { value: this.currentDate(), is_edit: false, type: 'string' };
+ 
       table.created_by = { value: createdBy, is_edit: false, type: 'many2one' };
     });
     
 
      this.allTables = [...existingTables, ...nonExistingTables];
-    console.log('Existing tables:', existingTables);
-    console.log('All tables:', this.allTables);
+    
 
-    this.router.navigate(['/products/product-table'], { state: { tables: this.allTables } });
+    this.router.navigate(['/products/product-table'],
+       { state: { tables: this.allTables } });
   }
   
   

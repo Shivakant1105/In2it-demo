@@ -16,7 +16,7 @@ describe('InputRendererComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InputRendererComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

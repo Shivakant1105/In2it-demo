@@ -7,6 +7,8 @@ import { ProductListComponent } from './product-list.component';
 import { ProductsListService } from '../../service/products-list.service';
 import { Router } from '@angular/router';
 import { RowNode } from 'ag-grid-community';
+import { FeatherModule } from 'angular-feather';
+import { allIcons } from 'angular-feather/icons';
 describe('ProductListComponent', () => {
   let component: ProductListComponent;
   let fixture: ComponentFixture<ProductListComponent>;
@@ -15,7 +17,7 @@ describe('ProductListComponent', () => {
   let mockGridApi: any;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule,   FeatherModule.pick(allIcons),],
       declarations: [ProductListComponent],
       providers: [ProductsListService],
     }).compileComponents();
@@ -47,7 +49,25 @@ describe('ProductListComponent', () => {
   });
 
 
+  it('generates an ID within the range 0 to 999', () => {
+    const id = component.randomId();
+    expect(id).toBeGreaterThanOrEqual(0); // Check if id is greater than or equal to 0
+    expect(id).toBeLessThan(1000);        // Check if id is less than 1000
+  });
 
+
+
+
+//  Check if currentDate() returns the current date
+  it('returns the current date', () => {
+    const result = component.currentDate();
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const year = today.getFullYear();
+    const expectedDate = `${day}/${month}/${year}`;
+    expect(result).toBe(expectedDate);
+  });
 
   it('should format boolean values correctly', () => {
     const paramsTrue = { value: true };

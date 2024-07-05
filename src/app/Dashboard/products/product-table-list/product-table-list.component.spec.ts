@@ -7,6 +7,8 @@ import { GridApi } from 'ag-grid-community';
 import { FormsModule } from '@angular/forms';
 import { InputRendererComponent } from 'src/app/Shared/input-renderer/input-renderer.component';
 import { ActionButtonComponent } from 'src/app/Shared/action-button/action-button.component';
+import { FeatherModule } from 'angular-feather';
+import { allIcons } from 'angular-feather/icons';
 
 describe('ProductTableListComponent', () => {
   let component: ProductTableListComponent;
@@ -19,7 +21,7 @@ describe('ProductTableListComponent', () => {
     gridApi = jasmine.createSpyObj('GridApi', ['setQuickFilter', 'applyTransaction']);
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, FormsModule],
+      imports: [HttpClientTestingModule, FormsModule,   FeatherModule.pick(allIcons),],
       declarations: [ProductTableListComponent, InputRendererComponent, ActionButtonComponent],
       providers: [
         { provide: ProductsListService, useValue: productServiceSpy },
