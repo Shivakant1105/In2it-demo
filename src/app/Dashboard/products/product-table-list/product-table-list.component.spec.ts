@@ -46,7 +46,7 @@ describe('ProductTableListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductTableListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -60,15 +60,13 @@ describe('ProductTableListComponent', () => {
   });
 
   it('should set quick filter on search', () => {
+    component.searchValue = 'search text';
     component.gridApi = jasmine.createSpyObj('gridApi', ['setQuickFilter']);
 
     component.onSearchData();
 
-    expect(component.gridApi.setQuickFilter).toHaveBeenCalledWith(
-      'search text'
-    );
+    expect(component.gridApi.setQuickFilter).toHaveBeenCalledWith('search text');
   });
-
   it('should toggle column list visibility', () => {
     expect(component.showColumnList).toBeFalse();
     component.toggleColumnListVisibility();

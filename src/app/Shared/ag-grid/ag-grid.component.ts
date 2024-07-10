@@ -62,11 +62,11 @@ export class AgGridComponent implements OnInit {
 
   toggleColumnVisibility(col: any) {
     if (!col.hide) {
-      col.hide = true;
       this.gridOptions.columnApi!.setColumnVisible(col.field, false);
+      col.hide = true;
     } else {
-      col.hide = false;
       this.gridOptions.columnApi!.setColumnVisible(col.field, true);
+      col.hide = false;
     }
   }
 }

@@ -128,7 +128,7 @@ export class ContactComponent implements OnInit {
   }
 
   onSearchData() {
-    this.gridApi?.setQuickFilter(this.searchValue);
+    this.gridApi.setQuickFilter(this.searchValue);
   }
 
   totalCount = 0;
@@ -152,7 +152,6 @@ export class ContactComponent implements OnInit {
       (item: any) => item.orgName === orgName
     );
     this.rowData = this.filteredRowData;
-    console.log(this.filteredRowData);
   }
 
   isActive(orgName: string): boolean {
@@ -200,7 +199,7 @@ export class ContactComponent implements OnInit {
       this.showEditForm = false;
       this.formHeading = 'VIEW DETAILS';
     }
-    const idData = this.rowData?.find((c: any) => c.id === data.id);
+    const idData = this.rowData.find((c: any) => c.id === data.id);
     if (idData) {
       this.form.patchValue({
         name: {
@@ -239,8 +238,7 @@ export class ContactComponent implements OnInit {
     this.totalCount = this.rowData.length;
   }
   viewDetails(id: any) {
-    console.log(id);
-    const idData = this.rowData?.find((c: any) => c.id === id);
+    const idData = this.rowData.find((c: any) => c.id === id);
     this.addData = true;
     this.showViewDetails = true;
     this.showEditForm = false;
@@ -265,9 +263,9 @@ export class ContactComponent implements OnInit {
   updateData(form: FormGroup) {
     this.viewData.name =
       form.value.name.firstName + ' ' + form.value.name.lastName;
-    this.viewData.email = form.get('email')?.value;
-    this.viewData.number = form.get('phone')?.value;
-    this.viewData.role = form.get('role')?.value;
+    this.viewData.email = form.get('email')!.value;
+    this.viewData.number = form.get('phone')!.value;
+    this.viewData.role = form.get('role')!.value;
     const index = this.rowData.findIndex((row) => row.id === this.viewData.id);
     if (index !== -1) {
       this.rowData[index] = { ...this.rowData[index], ...this.viewData };

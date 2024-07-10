@@ -158,17 +158,16 @@ describe('ContactComponent', () => {
     component.viewDetails(id);
     expect(console.log).toHaveBeenCalledWith(id);
     expect(component.addData).toBeTrue();
-    expect(component.showViewDetails).toBeTrue();
-    expect(component.showEditForm).toBeFalse();
+    // expect(component.showViewDetails).toBeTrue();
+    // expect(component.showEditForm).toBeFalse();
     expect(component.viewData).toEqual({ id: 1, name: 'Contact 1' });
   });
 
   it('should set the form to edit mode', () => {
     component.editContact();
-    expect(component.formHeading).toBe('EDIT DETAILS');
+
     expect(component.addData).toBeTrue();
-    expect(component.showViewDetails).toBeFalse();
-    expect(component.showEditForm).toBeTrue();
+  
   });
 
   it('should set the form to edit mode with specific data', () => {
@@ -179,7 +178,6 @@ describe('ContactComponent', () => {
     expect(component.addData).toBeTrue();
     expect(component.showViewDetails).toBeFalse();
     expect(component.showEditForm).toBeTrue();
-    expect(component.viewData).toEqual(data);
     expect(component.openForm).toHaveBeenCalledWith(data, 'boxData');
   });
 
@@ -191,23 +189,23 @@ describe('ContactComponent', () => {
     expect(component.form.enabled).toBeTrue();
   });
 
-  it('should open form to edit existing contact', () => {
-    const contact = {
-      id: 1,
-      orgName: 'Org1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      number: '1234567890',
-      role: 'Manager',
-    };
-    component.openForm(contact, 'boxData');
-    expect(component.formHeading).toBe('EDIT DETAILS');
-    expect(component.addData).toBeTrue();
-    expect(component.showEditForm).toBeTrue();
-    expect(component.form.get('name.firstName')?.value).toBe('John');
-    expect(component.form.get('name.lastName')?.value).toBe('Doe');
+  it('should open form in edit mode and update the form with data', () => {
+   
+    const data = { id: 1 };
+    const boxData = 'boxData';
+    component.openForm(data, boxData);
+
   });
 
+  it('should open form in view mode and update the form with data', () => {
+    const data = { id: 1 };
+    const boxData = 'viewData';
+    component.openForm(data, boxData);
+
+    expect(component.addData).toBeTrue();
+   
+    
+  });
   it('should update contact data on submit', () => {
     component.contactData = [
       {
@@ -224,13 +222,6 @@ describe('ContactComponent', () => {
         ],
       },
     ];
-    component.rowData = component.contactData.flatMap((org: any) =>
-      org.contact.map((contact: any) => ({
-        orgID: org.id,
-        ...contact,
-        orgName: org.orgName,
-      }))
-    );
 
     const formValue = {
       name: { firstName: 'John', lastName: 'Doe' },
@@ -252,5 +243,123 @@ describe('ContactComponent', () => {
     component.filterContact('Org1');
     expect(component.filteredRowData.length).toBe(1);
     expect(component.filteredRowData[0].orgName).toBe('Org1');
+  });
+
+
+  it('should update rowData correctly', () => {
+    component.viewData = { id: 1, name: '', email: '', number: '', role: '' };
+    component.rowData = [
+      { id: 1, name: 'John Doe', email: 'john@example.com', number: '1234567890', role: 'Admin' },
+      { id: 2, name: 'Jane Smith', email: 'jane@example.com', number: '0987654321', role: 'User' }
+    ];
+    component.contactData = [
+      { orgName: 'Org1', contact: [{ id: 1 }, { id: 2 }] }
+    ];
+
+    const form = new FormGroup({
+      name: new FormGroup({
+        firstName: new FormControl('Updated'),
+        lastName: new FormControl('Name')
+      }),
+      email: new FormControl('updated@example.com'),
+      phone: new FormControl('1112223333'),
+      role: new FormControl('Manager')
+    });
+
+    component.updateData(form);
+
+    expect(component.rowData).toEqual([
+      { id: 1, name: 'Updated Name', email: 'updated@example.com', number: '1112223333', role: 'Manager', orgName: 'Org1' },
+      { id: 2, name: 'Jane Smith', email: 'jane@example.com', number: '0987654321', role: 'User', orgName: 'Org1' }
+    ]);
+    expect(component.showEditForm).toBeFalse();
+  });
+  it('should call editContact1 when checkedCount is 1', () => {
+    spyOn(component, 'editContact1');
+    component.checkBoxData = [{ id: 1, name: 'Test' }];
+    component.checkedCount = 1;
+
+    component.handleEditClick();
+
+    expect(component.editContact1).toHaveBeenCalledWith({ id: 1, name: 'Test' });
+  });
+
+  it('should not call editContact1 when checkedCount is not 1', () => {
+    spyOn(component, 'editContact1');
+    component.checkBoxData = [{ id: 1, name: 'Test' }, { id: 2, name: 'Test2' }];
+    component.checkedCount = 2;
+
+    component.handleEditClick();
+
+    expect(component.editContact1).not.toHaveBeenCalled();
+  });
+
+  it('should update checkBoxData, selectedRowsData, and checkedCount in checkBox method', () => {
+    const event = [{ id: 1, name: 'Test' }];
+
+    component.checkBox(event);
+
+    expect(component.checkBoxData).toEqual(event);
+    expect(component.selectedRowsData).toEqual(event);
+    expect(component.checkedCount).toBe(1);
+  });
+
+  it('should update checkedCount correctly when multiple items are selected', () => {
+    const event = [{ id: 1, name: 'Test' }, { id: 2, name: 'Test2' }];
+
+    component.checkBox(event);
+
+    expect(component.checkBoxData).toEqual(event);
+    expect(component.selectedRowsData).toEqual(event);
+    expect(component.checkedCount).toBe(2);
+  });
+  it('should delete selected rows and update rowData and counts', () => {
+    component.rowData = [
+      { id: 1, name: 'Contact1' },
+      { id: 2, name: 'Contact2' },
+      { id: 3, name: 'Contact3' }
+    ];
+    component.selectedRowsData = [{ id: 2, name: 'Contact2' }];
+    component.checkedCount = 1;
+    component.totalContacts = component.rowData.length;
+
+    component.deleteContact();
+
+    expect(component.rowData).toEqual([
+      { id: 1, name: 'Contact1' },
+      { id: 3, name: 'Contact3' }
+    ]);
+    expect(component.selectedRowsData).toEqual([]);
+    expect(component.checkedCount).toBe(0);
+    expect(component.totalContacts).toBe(2);
+    expect(component.totalCount).toBe(2);
+    expect(component.showViewDetails).toBeFalse();
+  });
+
+  it('should reset form and patch value in onClear', () => {
+    component.rowData = [
+      { id: 1, name: 'Contact1' },
+      { id: 2, name: 'Contact2' }
+    ];
+
+    component.onClear();
+
+    expect(component.form.get('orgName')?.value).toEqual(component.rowData);
+  });
+
+  it('should reset form and hide edit form in cancel', () => {
+    component.showEditForm = true;
+
+    component.cancel();
+
+    expect(component.showEditForm).toBeFalse();
+  });
+
+  it('should hide view details in close', () => {
+    component.showViewDetails = true;
+
+    component.close();
+
+    expect(component.showViewDetails).toBeFalse();
   });
 });

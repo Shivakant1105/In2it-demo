@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsListService } from '../../service/products-list.service';
-
 import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { ActionButtonComponent } from 'src/app/Shared/action-button/action-button.component';
 import { InputRendererComponent } from 'src/app/Shared/input-renderer/input-renderer.component';
 import { TableData } from '../../Models/products-list';
-// import { TableData } from '../../Models/products-list';
 
 @Component({
   selector: 'app-product-table-list',
@@ -14,7 +12,6 @@ import { TableData } from '../../Models/products-list';
 })
 export class ProductTableListComponent implements OnInit {
   gridOptions!: GridOptions;
-
   searchValue: any;
   rowData: any[] = [];
   gridApi!: GridApi;
@@ -69,7 +66,6 @@ export class ProductTableListComponent implements OnInit {
         parentComponent: this,
         parent: 'Products list',
       },
-
       suppressCellFocus: true,
       suppressClickEdit: true,
       stopEditingWhenCellsLoseFocus: true,
@@ -80,6 +76,7 @@ export class ProductTableListComponent implements OnInit {
     this.gridApi = params;
     this.gridColumnApi = params;
   }
+
   onSearchData() {
     this.gridApi.setQuickFilter(this.searchValue);
   }
@@ -87,10 +84,12 @@ export class ProductTableListComponent implements OnInit {
   toggleColumnListVisibility(): void {
     this.showColumnList = !this.showColumnList;
   }
+
   randomId() {
     const id = Math.floor(Math.random() * 1000);
     return id;
   }
+
   currentDate() {
     let date = new Date();
     const day = String(date.getDate()).padStart(2, '0');
@@ -99,6 +98,7 @@ export class ProductTableListComponent implements OnInit {
 
     return `${day}/${month}/${year}`;
   }
+
   addRow() {
     let addProductList: TableData = {
       addMode: true,

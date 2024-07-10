@@ -103,7 +103,7 @@ export class MyTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.addFormInit();
-    this.formData = JSON.parse(localStorage.getItem('data') || '[]');
+    this.formData = JSON.parse(localStorage.getItem('data') || '');
   }
 
   addFormInit() {

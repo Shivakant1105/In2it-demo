@@ -245,11 +245,9 @@ export class DataService {
   deleteTask(id: any) {
     const localData = JSON.parse(localStorage.getItem('data')!);
 
-    // Find the index of the task with the given id
     const index = localData.findIndex((task: any) => task.id === id);
 
     if (index !== -1) {
-      // Remove the task at the found index
       localData.splice(index, 1);
       localStorage.setItem('data', JSON.stringify(localData));
     }
@@ -259,7 +257,6 @@ export class DataService {
   tableData$ = this.tableDataSubject.asObservable();
   setTableData(data: any) {
     this.tableDataSubject.next(data);
-    // console.log("data service",data);
   }
   private contactDataSubject = new BehaviorSubject<any>(this.organizations);
   allData = this.contactDataSubject.asObservable();

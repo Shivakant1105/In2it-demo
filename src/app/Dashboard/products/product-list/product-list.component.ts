@@ -113,9 +113,7 @@ export class ProductListComponent implements OnInit {
 
       table.created_by = { value: createdBy, is_edit: false, type: 'many2one' };
     });
-
     this.allTables = [...existingTables, ...nonExistingTables];
-
     this.router.navigate(['/products/product-table'], {
       state: { tables: this.allTables },
     });

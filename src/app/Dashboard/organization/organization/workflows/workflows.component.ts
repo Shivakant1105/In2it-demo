@@ -10,7 +10,7 @@ export class WorkflowsComponent implements OnInit {
   active = 1;
   organizations: any;
   addCard: boolean = false;
-  
+
   showSideCard: boolean = false;
   selectedRowData: any;
 
@@ -38,6 +38,7 @@ export class WorkflowsComponent implements OnInit {
     { headerName: 'Email', field: 'email' },
     { headerName: 'Phone Number', field: 'number' },
   ];
+  gridOptions: any;
   constructor() {}
 
   ngOnInit() {

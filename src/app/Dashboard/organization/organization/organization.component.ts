@@ -78,9 +78,7 @@ export class OrganizationComponent implements OnInit {
 
   close(event: MouseEvent, toRemove: number) {
     this.navs.splice(toRemove, 1);
-   
     this.active = 0;
-   
     event.preventDefault();
     event.stopImmediatePropagation();
   }
@@ -100,18 +98,15 @@ export class OrganizationComponent implements OnInit {
       this.navs.push(org);
     }
     this.navsData.emit(org);
-
   }
   filterData(filterName: any) {
     const filteredOrganizations = this.organizations.filter(
       (data: any) => data.type === filterName
     );
     this.rowData = filteredOrganizations;
-
   }
 
   getAllTable() {
     this.rowData = this.organizations;
-  
   }
 }

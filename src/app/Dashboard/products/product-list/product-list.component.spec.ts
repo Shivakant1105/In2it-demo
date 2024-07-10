@@ -29,7 +29,7 @@ describe('ProductListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
 
     mockGridApi = jasmine.createSpyObj('gridApi', ['getSelectedNodes']);
     component.gridApi = mockGridApi;

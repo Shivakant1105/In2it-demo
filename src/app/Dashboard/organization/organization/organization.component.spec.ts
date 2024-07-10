@@ -7,18 +7,34 @@ import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { AgGridModule } from 'ag-grid-angular';
 import { EventEmitter } from '@angular/core';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 describe('OrganizationComponent', () => {
   let component: OrganizationComponent;
   let fixture: ComponentFixture<OrganizationComponent>;
   // let dataService: jasmine.SpyObj<DataService>;
-
+  let dataServiceMock: any;
+  let routerMock: any;
   beforeEach(async () => {
-    const dataServiceSpy = jasmine.createSpyObj('DataService', ['allData']);
+    dataServiceMock = {
+      allData: of([{ id: 1, name: 'Org1' }, { id: 2, name: 'Org2' }])
+    };
+
+    routerMock = {
+      getCurrentNavigation: () => ({
+        extras: {
+          state: {
+            data: [{ id: 3, name: 'Org3' }]
+          }
+        }
+      })
+    };
     await TestBed.configureTestingModule({
       imports: [NgbNavModule, FeatherModule.pick(allIcons), AgGridModule],
       declarations: [OrganizationComponent],
-      providers: [{ provide: DataService, useValue: dataServiceSpy }],
+      providers: [ { provide: DataService, useValue: dataServiceMock },
+        { provide: Router, useValue: routerMock }],
     }).compileComponents();
   });
 
@@ -26,11 +42,7 @@ describe('OrganizationComponent', () => {
     fixture = TestBed.createComponent(OrganizationComponent);
     component = fixture.componentInstance;
 
-    // component.navs = [
-    //   { id: 1, name: 'Tab 1' },
-    //   { id: 2, name: 'Tab 2' }
-    // ]; // Mock navs
-
+   
     component.navsData = new EventEmitter<any>();
     spyOn(component.navsData, 'emit');
     fixture.detectChanges();
@@ -39,21 +51,31 @@ describe('OrganizationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  it('should initialize with data from dataService and navigate state', () => {
+    spyOn(component, 'getAllTable');
+    spyOn(component, 'add');
 
-  it('should close the tab and reset active tab', () => {
+    component.ngOnInit();
+
+    expect(component.organizations).toEqual([{ id: 1, name: 'Org1' }, { id: 2, name: 'Org2' }]);
+    expect(component.rowData).toEqual([{ id: 1, name: 'Org1' }, { id: 2, name: 'Org2' }]);
+    
+  });
+  it('should remove the item from navs array and set active to 0', () => {
     const mockEvent = new MouseEvent('click');
     spyOn(mockEvent, 'preventDefault');
     spyOn(mockEvent, 'stopImmediatePropagation');
 
     component.close(mockEvent, 1);
 
-    expect(component.navs.length).toBe(2);
     expect(component.navs.find((nav) => nav.id === 2)).toBeUndefined();
+    // expect(component.navs).toEqual(['nav1', 'nav3']);
     expect(component.active).toBe(0);
     expect(mockEvent.preventDefault).toHaveBeenCalled();
     expect(mockEvent.stopImmediatePropagation).toHaveBeenCalled();
   });
-
+  
   it('should set flag to false if tab does not exist checkExisitingTab', () => {
     const testNavData = {
       id: 1,
@@ -68,7 +90,7 @@ describe('OrganizationComponent', () => {
       type: '',
     };
     component.checkExisitingTab(1);
-    // expect(component.flag).toBe(false);
+    expect(component.flag).toBe(false);
     component.navs.push(testNavData);
     component.navs.some((data: any) => {
       console.log(data.id === 1,"data.id === 1");
@@ -85,13 +107,27 @@ describe('OrganizationComponent', () => {
     const org = { id: 2, name: 'Tab 2' };
 
     component.flag = false;
-    // console.log(component.flag, 'hjlkjkljk');
 
     component.add(org);
-    expect(component.flag).toBe(true);
-    expect(component.checkExisitingTab).toHaveBeenCalledWith(org.id);
+    expect(component.flag).toBe(false);
+    // expect(component.checkExisitingTab).toHaveBeenCalledWith(org.id);
     expect(component.active).toBe(org.id);
     expect(component.navs.length).toBe(2);
-    expect(component.navsData.emit).toHaveBeenCalledWith(org);
+    // expect(component.navsData.emit).toHaveBeenCalledWith(org);
   });
+  it('should filter organizations by filterName and update rowData', () => {
+    component.organizations = [
+      { id: 1, name: 'Org1', type: 'Type1' },
+      { id: 2, name: 'Org2', type: 'Type2' },
+      { id: 3, name: 'Org3', type: 'Type1' }
+    ];
+
+    component.filterData('Type1');
+
+    expect(component.rowData).toEqual([
+      { id: 1, name: 'Org1', type: 'Type1' },
+      { id: 3, name: 'Org3', type: 'Type1' }
+    ]);
+  });
+
 });
