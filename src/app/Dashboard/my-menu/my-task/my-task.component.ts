@@ -158,6 +158,8 @@ export class MyTaskComponent implements OnInit {
   }
 
   onDelete(index: any) {
+    console.log("delelel");
+    
     const msg = confirm('Are you sure you want to delete this item?');
     if (msg) {
       const taskId = this.formData[index].taskId;

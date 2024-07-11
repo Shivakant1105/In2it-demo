@@ -54,9 +54,9 @@ export class ProductListComponent implements OnInit {
       next: (res) => {
         this.rowData = res.data;
       },
-      error: (error) => {
-        console.error('Error fetching products', error);
-      },
+      // error: (error) => {
+      //   console.error('Error fetching products', error);
+      // },
     });
   }
 

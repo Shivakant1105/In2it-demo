@@ -39,8 +39,6 @@ export class ContactComponent implements OnInit {
   formHeading!: string;
   checkedCount: number = 0;
   checkBoxData: any;
-  selectAll = false;
-  uniqueOrgs!: string[];
   activeOrg: string | null = null;
   filterdata: any;
   viewData: any;
@@ -313,7 +311,6 @@ export class ContactComponent implements OnInit {
       this.selectedRowsData = [];
       this.checkedCount = 0;
       this.totalContacts = this.rowData.length;
-    } else {
     }
     this.totalCount = this.rowData.length;
   }

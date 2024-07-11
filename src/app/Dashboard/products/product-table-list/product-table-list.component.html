@@ -16,20 +16,15 @@
       </div>
     </div>
   </div>
-
- 
 </div>
 <app-ag-grid rowSelection="multiple"
  [rowData]="rowData" 
  [columnDefs]="columnDefs" 
 [gridOptions]="gridOptions" 
 [columnDefs]="columnDefs"
-
 [showColumnList]="showColumnList"
 (GridReady)="onGridReady($event)"
  ></app-ag-grid>
-
-
 <div class="d-flex justify-content-between pt-4">
     <button routerLink="/products/products"type="button" class="btn btn-outline-primary">
     Back

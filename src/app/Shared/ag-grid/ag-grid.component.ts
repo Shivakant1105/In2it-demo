@@ -36,10 +36,6 @@ export class AgGridComponent implements OnInit {
 
   @Input() gridOptions!: GridOptions;
   colDeflist!: ColDef[];
-  //   onCellClicked(event: any) {
-
-  // ;
-  //   }
   ngOnInit() {
     this.colDeflist = this.columnDefs;
     this.colDeflist.map((item) => {

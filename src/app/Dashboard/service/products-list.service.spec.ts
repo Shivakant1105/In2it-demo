@@ -16,9 +16,6 @@ describe('ProductsListService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  // afterEach(() => {
-  //   httpMock.verify();
-  // });
 
   it('should retrieve products from the API via GET', () => {
     const mockProducts = [

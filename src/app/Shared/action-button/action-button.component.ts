@@ -12,11 +12,10 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
   params: any;
   fieldName: string | undefined = '';
   editStateSubscription!: Subscription;
-
   constructor() {}
   agInit(params: ICellRendererParams): void {
     this.params = params;
-    this.fieldName = params.colDef?.field;
+    this.fieldName = params.colDef!.field;
   }
   refresh(params: ICellRendererParams) {
     this.params = params;
@@ -40,7 +39,7 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
 
   deleteRow() {
     if (this.params.context.parentComponent === 'task') {
-      this.params.context.parentComponent.onDelete(this.params.data);
+      this.params.context.parentComponent.onDelete(this.params.index);
     } else {
       this.params.api.applyTransaction({
         remove: [this.params.node.data],

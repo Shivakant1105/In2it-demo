@@ -8,7 +8,8 @@ describe('DesignerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DesignerComponent ]
+      declarations: [ DesignerComponent ],
+      imports:[]
     })
     .compileComponents();
   });
@@ -22,4 +23,5 @@ describe('DesignerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+ 
 });

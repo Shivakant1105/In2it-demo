@@ -35,7 +35,7 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
   salesBarChart() {
     this.root = am5.Root.new('bardiv');
 
-    this.root._logo?.dispose();
+    this.root._logo.dispose();
 
     let chart = this.root.container.children.push(
       am5xy.XYChart.new(this.root, {
@@ -140,12 +140,12 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
     let addButton = document.getElementById('addButton');
     addButton!.addEventListener('click', () => {
       // Add data from JSON
-
-      if (add<gap && add>=0) {
-       let myobject={
+      let myobject={
         user_name:sales_ticket_per_owner[add+filteredData.length].user_name,
         total_ticket:sales_ticket_per_owner[add+filteredData.length].total_ticket
        }
+      if (add<gap && add>=0) {
+      
 
         filteredData.push(myobject);
         filteredData.shift();
@@ -154,13 +154,10 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
         add=add+1
         remove=remove+1
         
-      console.log("ADD the data",filteredData);
        
       }
       
-      else{
-        console.log("no data")
-      }
+    
     });
 
     let removeButton = document.getElementById('removeButton');
@@ -188,7 +185,6 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
         remove=remove-1
         add=add-1
       }
-      console.log("Remove the data",filteredData);
       
     });
   }
@@ -196,7 +192,7 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
   sourcePieChart() {
     // Create root for pie chart
     this.root = Root.new('piediv');
-    this.root._logo?.dispose();
+    this.root._logo.dispose();
     // Create pie chart
     this.pieChart = this.root.container.children.push(
       PieChart.new(this.root, {
@@ -245,17 +241,10 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
         centerX: percent(35),
         x: percent(40),
         layout: this.root.horizontalLayout,
-        // layout: am5.GridLayout.new(this.root, {
-        //   maxColumns: 3,
-        //   fixedWidthGrid: false
-        // })
+       
       })
     );
-    // var marker = this.pieChart.legend.markers.template.children.getIndex(0);
-    // marker.cornerRadius(12, 12, 12, 12);
     pieLegend.labels.template.setAll({
-      // marginLeft:0,
-      
       marginRight:-50 
     })
     pieLegend.data.setAll(pieSeries.dataItems);
@@ -286,7 +275,7 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
 
     // Create root for legend pie chart
     this.root2 = Root.new('variantDiv');
-    this.root2._logo?.dispose();
+    this.root2._logo.dispose();
     // Create pie chart for legend
     this.pieChart2 = this.root2.container.children.push(
       PieChart.new(this.root2, {
@@ -425,211 +414,9 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
     });
     legend3.labels.template.set('paddingBottom', 40);
     legend.labels.template.set('paddingBottom', 40);
-    // this.funnelChart.legend.itemContainers.template.padding(3,  3, );
-    // this.funnelChart.legend.itemContainers.template.margin( 5,  5);
     legend3.data.setAll(funnelSeries.dataItems);
     legend.data.setAll(funnelSeries.dataItems);
-    // Disabling labels for funnel chart
-    // funnelSeries.labels.template.set('visible', false);
   }
-
-  // funnelChartSeries(){
-  //   let sales_funnel = [
-  //     {
-  //         "name": "Lead",
-  //         "count": 413,
-  //         "percentage": "27%"
-  //     },
-  //     {
-  //         "name": "Opportunity",
-  //         "count": 113,
-  //         "percentage": "76%"
-  //     },
-  //     {
-  //         "name": "Quotation",
-  //         "count": 86,
-  //         "percentage": "58%"
-  //     },
-  //     {
-  //         "name": "Order",
-  //         "count": 50,
-  //         "percentage": "0%"
-  //     },
-
-  //   ]
-  // let funnel = am5.Root.new("funnelChartDiv");
-
-  // // Create chart
-
-  // let chart = funnel.container.children.push(
-  // SlicedChart.new(funnel, {
-  //   layout: funnel.verticalLayout
-  // })
-  // );
-
-  // // Create series
-
-  // let series = chart.series.push(
-  // FunnelSeries.new(funnel, {
-  //   alignLabels:false,
-  //   orientation: "vertical",
-  //   valueField: "count",
-  //   categoryField: "name",
-  //   width:200,
-  //   x:150,
-  //   legendLabelText: '[]{percentage}[/]',
-  //   legendValueText: '[ {}][/]',
-  // })
-  // );
-  // series.labels.template.set("text", " [bold]{count}");
-  // console.log(series)
-
-  // series.data.setAll(sales_funnel);
-
-  // let legend2 = chart.children.push(
-  // am5.Legend.new(funnel, {
-  //   centerX: am5.p50,
-  //   width:100,
-  //   height:100,
-  //   x:50,
-  //   y:20,
-  //   marginTop: 15,
-  //   marginBottom: 15,
-  //   nameField:"category"
-  // })
-  // );
-  // legend2.markers.template.setAll({
-  // width:0,
-  // height:0
-  // })
-  // let legend = chart.children.push(
-  // am5.Legend.new(funnel, {
-
-  //   centerX: am5.p50,
-  //   width:100,
-  //   height:100,
-  //   x:450,
-  //   y:20,
-  //   marginTop: 15,
-  //   marginBottom: 15,
-
-  // })
-  // );
-  // funnel._logo?.dispose()
-  // legend.markers.template.setAll({
-  // width:0,
-  // height:0
-  // })
-  // legend2.data.setAll(series.dataItems);
-
-  // legend.data.setAll(series.dataItems);
-
-  // }
-
-  //   certaintyChart() {
-  //     // certainity chart
-
-  // this.root4 = am5.Root.new('chartDiv');
-  //     this.root4._logo?.dispose();
-
-  //  // Set data
-  //  let certainity = [
-  //   {
-  //     name: 'High',
-  //     value: 32,
-  //   },
-  //   {
-  //     name: 'Moderate',
-  //     value: 47,
-  //   },
-  //   {
-  //     name: 'Low',
-  //     value: 28,
-  //   },
-  //   {
-  //     name: 'Extremly High',
-  //     value: 10,
-  //   },
-  //   {
-  //     name: 'Almost Lost',
-  //     value: 2,
-  //   },
-  // ];
-
-  //     let chart = this.root4.container.children.push(
-  //       am5xy.XYChart.new(this.root4, {
-  //         panX: false,
-  //         panY: false,
-  //         wheelX: 'none',
-  //         wheelY: 'none',
-  //         paddingLeft: 0,
-  //       })
-  //     );
-  //     const certainityData = certainity.map((item) => ({
-  //       category: item.name,
-  //       value: item.value,
-  //     }));
-  //     // Create axes
-
-  //     let yRenderer = am5xy.AxisRendererY.new(this.root4, {
-  //       minGridDistance: 30,
-  //       minorGridEnabled: true,
-  //     });
-
-  //     let yAxis = chart.yAxes.push(
-  //       am5xy.CategoryAxis.new(this.root4, {
-  //         maxDeviation: 0,
-  //         categoryField: 'name',
-  //         renderer: yRenderer,
-  //         visible:false})
-  //     );
-
-  //     let xAxis = chart.xAxes.push(
-  //       am5xy.ValueAxis.new(this.root4, {
-  //         maxDeviation: 0,
-  //         min: 0,
-  //         renderer: am5xy.AxisRendererX.new(this.root4, {
-  //           visible: true,
-  //           strokeOpacity: 0.1,
-  //           minGridDistance: 80,
-  //         }),
-  //       visible:false}
-  //     )
-  //     );
-  //     yAxis.get('renderer').grid.template.setAll({
-  //       visible: false,
-  //     });
-  //     xAxis.get('renderer').grid.template.setAll({
-  //       visible: false,
-  //     });
-
-  //     // Create series
-  //     // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-  //     let series = chart.series.push(
-  //       am5xy.ColumnSeries.new(this.root4, {
-  //         name: 'Series 1',
-  //         xAxis: xAxis,
-  //         yAxis: yAxis,
-  //         valueXField: 'value',
-  //         sequencedInterpolation: true,
-  //         categoryYField: 'name',
-  //       })
-  //     );
-  //     series.bullets.push( () => {
-  //       return am5.Bullet.new(this.root4, {
-  //         locationX: 1,
-  //         locationY: 0.5,
-  //         sprite: am5.Label.new(this.root4, {
-  //           centerY: am5.p50,
-  //           text: '{valueX}',
-  //           populateText: true,
-  //         }),
-  //       });
-  //     });
-
-  //     yAxis.data.setAll(certainity);
-  //     series.data.setAll(certainity);
-  //   }
 
   certaintyChart() {
     let ygraph = am5.Root.new('chartDiv');
@@ -718,9 +505,6 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
       })
     );
 
-    // yseries.columns.template.adapters.add('fill', function (fill, target) {
-    //   return ychart.get('colors')?.getIndex(yseries.columns.indexOf(target));
-    // });
 
     yseries.columns.template.setAll({
       height: 20,

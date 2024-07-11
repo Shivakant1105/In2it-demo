@@ -124,7 +124,7 @@ export class ProductTableListComponent implements OnInit {
     };
 
     let updated_data = JSON.parse(JSON.stringify(addProductList));
-    this.gridOptions.api?.applyTransaction({ add: [addProductList] });
+    this.gridOptions.api!.applyTransaction({ add: [addProductList] });
     addProductList.updateData = updated_data;
     this.gridOptions.context.parentComponent.rowData.push(addProductList);
   }
