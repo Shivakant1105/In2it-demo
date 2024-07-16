@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { DataService } from 'src/app/Dashboard/service/data.service';
 
@@ -8,7 +8,7 @@ import { DataService } from 'src/app/Dashboard/service/data.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
 
   constructor(private dataService: DataService) {  
@@ -24,9 +24,7 @@ export class HeaderComponent implements OnInit {
   unsubSubject = new Subject();
   
  
-  ngOnInit(): void {
-  }
- 
+
   ngOnDestroy(): void {
     this.unsubSubject.next(null);
     this.unsubSubject.complete();

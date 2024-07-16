@@ -3,13 +3,14 @@ import { ProductsListService } from '../../service/products-list.service';
 import { ProductTableListComponent } from './product-table-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 // import { of } from 'rxjs';
-import { GridApi } from 'ag-grid-community';
+import { GridApi, GridOptions } from 'ag-grid-community';
 import { FormsModule } from '@angular/forms';
 import { InputRendererComponent } from 'src/app/Shared/input-renderer/input-renderer.component';
 import { ActionButtonComponent } from 'src/app/Shared/action-button/action-button.component';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { of, throwError } from 'rxjs';
+import { AgGridModule } from 'ag-grid-angular';
 
 describe('ProductTableListComponent', () => {
   let component: ProductTableListComponent;
@@ -31,6 +32,8 @@ describe('ProductTableListComponent', () => {
       imports: [
         HttpClientTestingModule,
         FormsModule,
+        AgGridModule,
+        
         FeatherModule.pick(allIcons),
       ],
       declarations: [
@@ -48,8 +51,11 @@ describe('ProductTableListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductTableListComponent);
     component = fixture.componentInstance;
+    component.gridOptions = <GridOptions>{
+      api: jasmine.createSpyObj('GridApi', ['applyTransaction']),
+      context: { parentComponent: { rowData: [] } }
+    };
     productService = TestBed.inject(ProductsListService) as jasmine.SpyObj<ProductsListService>;
-    // fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -121,9 +127,34 @@ describe('ProductTableListComponent', () => {
     expect(datePattern.test(currentDate)).toBeTrue();
   });
 
-  // it('should add a new row', () => {
-  //   component.addRow();
-  //   expect(gridApi.applyTransaction).toHaveBeenCalled();
+  it('should add a new row with the correct data', () => {
+    component.addRow();
+
+    const expectedRow = {
+      addMode: true,
+      table_id: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      table_type: jasmine.objectContaining({ is_edit: true, type: 'string' }),
+      table_name: jasmine.objectContaining({ is_edit: true, type: 'string' }),
+      description: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      attribute_count: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      rows_count: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      created_on: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      created_by: jasmine.objectContaining({ value: 'Shiva Kant', is_edit: false, type: 'string' }),
+      updated_on: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      updated_by: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      is_standard: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      is_active: jasmine.objectContaining({ is_edit: false, type: 'string' }),
+      property: jasmine.objectContaining({ is_edit: false, is_delete: false }),
+      is_table_exist: undefined,
+      related_table: [],
+      total_record: 0,
+      status: false,
+      message: '',
+      updateData: jasmine.anything(),
+    };
+
     
-  // });
+    expect(component.gridOptions.context.parentComponent.rowData).toContain(jasmine.objectContaining(expectedRow));
+  });
+
 });

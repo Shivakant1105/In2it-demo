@@ -60,8 +60,7 @@ export class MyTaskComponent implements OnInit {
             style.backgroundColor = 'pink';
             style.color = 'black';
             break;
-          default:
-            break;
+        
         }
         return style;
       },
@@ -86,8 +85,7 @@ export class MyTaskComponent implements OnInit {
             style.backgroundColor = 'yellow';
             style.color = 'black';
             break;
-          default:
-            break;
+       
         }
         return style;
       },
@@ -103,7 +101,7 @@ export class MyTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.addFormInit();
-    this.formData = JSON.parse(localStorage.getItem('data') || '');
+    this.formData = JSON.parse(localStorage.getItem('data') || '[]');
   }
 
   addFormInit() {
@@ -137,10 +135,9 @@ export class MyTaskComponent implements OnInit {
         this.formData.push(this.addForm.value);
       }
       localStorage.setItem('data', JSON.stringify(this.formData));
-      this.formData = JSON.parse(localStorage.getItem('data') || '[]');
+      this.formData = JSON.parse(localStorage.getItem('data')!);
       this.addForm.reset();
     } else {
-      console.log('Form is invalid');
       Object.keys(this.addForm.controls).forEach((field) => {
         const control = this.addForm.get(field);
         if (control) {
@@ -157,23 +154,22 @@ export class MyTaskComponent implements OnInit {
     this.editIndex = -1;
   }
 
-  onDelete(index: any) {
-    console.log("delelel");
-    
+  onDelete(data: any) {
     const msg = confirm('Are you sure you want to delete this item?');
     if (msg) {
-      const taskId = this.formData[index].taskId;
-      this.service.deleteTask(taskId);
+      const index = this.formData.findIndex((task: any) => task.taskId == data.taskId);
       this.formData.splice(index, 1);
       localStorage.setItem('data', JSON.stringify(this.formData));
+      
     }
+    this.formData = JSON.parse(localStorage.getItem('data') as string);
   }
 
   onEdit(index: any) {
     this.addData = true;
     this.editIndex = index;
     this.editMode = true;
-    // this.addForm.patchValue(this.formData[index]);
+    this.addForm.patchValue(this.formData[index]);
     this.addForm.patchValue(index);
   }
 

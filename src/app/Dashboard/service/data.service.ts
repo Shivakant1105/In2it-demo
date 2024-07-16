@@ -236,22 +236,23 @@ export class DataService {
   getTableData() {
     return JSON.parse(localStorage.getItem('data')!);
   }
+
   addTask(data: any) {
-    const localData = JSON.parse(localStorage.getItem('data')!);
+    const localData = JSON.parse(localStorage.getItem('data') as string) ||[]
     localData.push(data);
     localStorage.setItem('data', JSON.stringify(localData));
   }
   
-  deleteTask(id: any) {
-    const localData = JSON.parse(localStorage.getItem('data')!);
-
-    const index = localData.findIndex((task: any) => task.id === id);
-
-    if (index !== -1) {
-      localData.splice(index, 1);
-      localStorage.setItem('data', JSON.stringify(localData));
-    }
-  }
+  // deleteTask(id: any) {
+    
+    
+  //   const localData = JSON.parse(localStorage.getItem('data')!);
+  //   const index = localData.findIndex((task: any) => task.id === id);
+  //   if (index !== -1) {
+  //     localData.splice(index, 1);
+  //     localStorage.setItem('data', JSON.stringify(localData));
+  //   }
+  // }
 
   public tableDataSubject = new Subject<any>();
   tableData$ = this.tableDataSubject.asObservable();

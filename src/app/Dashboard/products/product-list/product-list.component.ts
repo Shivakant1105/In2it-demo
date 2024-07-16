@@ -54,9 +54,7 @@ export class ProductListComponent implements OnInit {
       next: (res) => {
         this.rowData = res.data;
       },
-      // error: (error) => {
-      //   console.error('Error fetching products', error);
-      // },
+    
     });
   }
 
@@ -93,10 +91,10 @@ export class ProductListComponent implements OnInit {
     const selectedNodes = this.gridOptions.api?.getSelectedNodes();
     const selectedData = selectedNodes?.map((node) => node.data);
     const existingTables =
-      this.rowData?.filter((data) => data.is_table_exist) || [];
+      this.rowData.filter((data) => data.is_table_exist)
     const nonExistingTables =
       selectedData?.filter((data) => !data.is_table_exist) || [];
-    const createdBy = 'Shiva Kant'; // Assuming 'created_by' is a string
+    // const createdBy = 'Shiva Kant'; // Assuming 'created_by' is a string
 
     nonExistingTables.forEach((table) => {
       table.table_id = {
@@ -111,7 +109,7 @@ export class ProductListComponent implements OnInit {
         type: 'string',
       };
 
-      table.created_by = { value: createdBy, is_edit: false, type: 'many2one' };
+      table.created_by = { value:'Shiva Kant' , is_edit: false, type: 'many2one' };
     });
     this.allTables = [...existingTables, ...nonExistingTables];
     this.router.navigate(['/products/product-table'], {

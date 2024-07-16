@@ -9,22 +9,21 @@ describe('WorkflowsComponent', () => {
   let component: WorkflowsComponent;
   let fixture: ComponentFixture<WorkflowsComponent>;
   const mockWorkflowData = {
-    contact: [{ id: 1, name: 'John Doe' }, { id: 2, name: 'Jane Smith' }]
+    contact: [
+      { id: 1, name: 'John Doe' },
+      { id: 2, name: 'Jane Smith' },
+    ],
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WorkflowsComponent ],imports:[
-    FeatherModule.pick(allIcons), NgbNavModule
-
-      ]
-    })
-    .compileComponents();
+      declarations: [WorkflowsComponent],
+      imports: [FeatherModule.pick(allIcons), NgbNavModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkflowsComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
     component.workflowData = mockWorkflowData;
     component.ngOnInit();
   });
@@ -33,8 +32,23 @@ describe('WorkflowsComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('cell renderr ', () => {
+    const { cellRenderer }: any = component.columnDefs[1];
+    cellRenderer({ value: 'Active' });
+  });
 
-  
+  it('should create a link with correct text and call getDataCard on click', () => {
+    const params = {
+      value: 'Click Me',
+      data: { id: 1, name: 'Test Data' },
+    };
+
+    const linkElement = component.columnDefs[1].cellRenderer.call(
+      component,
+      params
+    );
+    linkElement.click();
+  });
   it('should initialize organizations and contactTable in ngOnInit', () => {
     expect(component.organizations).toBe(mockWorkflowData);
     expect(component.contactTable).toBe(mockWorkflowData.contact);

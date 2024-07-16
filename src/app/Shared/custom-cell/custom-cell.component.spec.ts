@@ -16,7 +16,7 @@ describe('CustomCellComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomCellComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

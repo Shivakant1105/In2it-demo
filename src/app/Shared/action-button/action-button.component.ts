@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './action-button.component.html',
   styleUrls: ['./action-button.component.css'],
 })
-export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
+export class ActionButtonComponent implements  ICellRendererAngularComp {
   params: any;
   fieldName: string | undefined = '';
   editStateSubscription!: Subscription;
@@ -22,29 +22,33 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     return true;
   }
 
-  ngOnInit(): void {}
 
-  //   My Task component
+    //   My Task component
+  editTask () {
+    this.params.context.parentComponent.onEdit(this.params.data)
+    this.params.context.parentComponent.addTask()
+
+
+  }
+
+  deleteTask(){
+    this.params.context.parentComponent.onDelete(this.params.data)
+  }
+
   onEditClick() {
-    if (this.params.context.parentComponent === 'task') {
-      this.params.context.parentComponent.onEdit(this.params.data);
-      this.params.context.parentComponent.addTask();
-    } else {
       this.params.data.edit_mode = true;
       let updatedData = JSON.parse(JSON.stringify(this.params.data));
       updatedData.edit_mode = false;
       this.params.data.updateData = updatedData;
-    }
+    
   }
 
   deleteRow() {
-    if (this.params.context.parentComponent === 'task') {
-      this.params.context.parentComponent.onDelete(this.params.index);
-    } else {
+   
       this.params.api.applyTransaction({
         remove: [this.params.node.data],
       });
-    }
+    
   }
 
   confirmEdit() {

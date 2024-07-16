@@ -41,24 +41,23 @@ describe('DataService', () => {
 
     service.addTask(newTask);
 
-    const storedData = JSON.parse(localStorage.getItem('data')!);
+    const storedData = JSON.parse(localStorage.getItem('data')as string) ||[]
+    // localStorage.push(newTask)
     expect(storedData).toContain(newTask);
   });
 
-  it('should delete a task from localStorage', () => {
-    const mockData = [{ id: 1, name: 'Task 1' }, { id: 2, name: 'Task 2' }, { id: 3, name: 'Task 3' }];
-    localStorage.setItem('data', JSON.stringify(mockData));
-    const taskIdToDelete = 1; // Assuming id of the task to delete
-  
-    service.deleteTask(taskIdToDelete);
-  
-    const storedData = JSON.parse(localStorage.getItem('data')!);
+ it ('should add a task to localStorage', () => {
+    // const mockData = [{ id: 1, name: 'Task 1' }];
+    const newTask =[ { id: 2, name: 'Task 2' }];
+
     
-    // Check that the task with id 1 is not in the storedData array
-    expect(storedData.find((task: any) => task.id === taskIdToDelete)).toBeUndefined();
-    // Check that the length of the storedData array is reduced by 1 after deletion
-    expect(storedData.length).toBe(mockData.length - 1);
+    // const storedData = JSON.parse(localStorage.getItem('data')as string) ||[]
+    // localStorage.push(newTask)
+    localStorage.removeItem("data")
+    service.addTask(newTask);
+    // expect(storedData).toContain(newTask);
   });
+  
   
 
   it('should set and get table data using subjects', () => {

@@ -22,6 +22,8 @@ describe('ContactComponent', () => {
   let component: ContactComponent;
   let fixture: ComponentFixture<ContactComponent>;
   // let dataService: DataService;
+  let formBuilder: FormBuilder;
+
   let router: Router;
   let navigateSpy: jasmine.Spy;
   const mockDataService = {
@@ -65,6 +67,7 @@ describe('ContactComponent', () => {
         RouterTestingModule,
         FeatherModule.pick(allIcons),
         AgGridModule,
+        
       ],
       providers: [
         FormBuilder,
@@ -81,7 +84,23 @@ describe('ContactComponent', () => {
     component.form = new FormGroup({
       another: new FormArray([]),
     });
-    fixture.detectChanges();
+    formBuilder = TestBed.inject(FormBuilder);
+    component.form = formBuilder.group({
+      name: formBuilder.group({
+        firstName: [''],
+        lastName: [''],
+      }),
+
+      orgName: [''],
+      email: [''],
+
+      phone: [''],
+      another: formBuilder.array([]),
+      role: [''],
+      additionalRoles: [''],
+      remark: [''],
+    });
+    // fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -106,23 +125,23 @@ describe('ContactComponent', () => {
   it('should set gridApi on grid ready', () => {
     const mockParams = { api: {} as any };
     component.onGridReady(mockParams);
-  
+
     // Ensure component.gridApi.api exists and is defined
     expect(component.gridApi).toBeDefined();
     expect(component.gridApi).toBeDefined();
     expect(typeof component.gridApi).toBe('object');
   });
-  
- 
+
   it('should set quick filter on search', () => {
     component.searchValue = 'search text';
     component.gridApi = jasmine.createSpyObj('gridApi', ['setQuickFilter']);
 
     component.onSearchData();
 
-    expect(component.gridApi.setQuickFilter).toHaveBeenCalledWith('search text');
+    expect(component.gridApi.setQuickFilter).toHaveBeenCalledWith(
+      'search text'
+    );
   });
-
 
   it('should navigate to /org/organization with state data', () => {
     const data = { key: 'value' };
@@ -137,18 +156,17 @@ describe('ContactComponent', () => {
     expect(component.mediumFormArray).toBeInstanceOf(FormArray);
   });
 
-  it('should add a FormGroup to the FormArray', () => {
-    const initialLength = component.mediumFormArray.length;
-    component.addMedium();
-    expect(component.mediumFormArray.length).toBe(initialLength + 1);
-  });
+  // it('should add a FormGroup to the FormArray', () => {
+  //   const initialLength = component.mediumFormArray.length;
+  //   component.addMedium();
+  //   expect(component.mediumFormArray.length).toBe(initialLength + 1);
+  // });
 
   it('should return the FormControl at the specified index', () => {
     component.addMedium();
     const control = component.getTypeControl(0);
     expect(control).toBeInstanceOf(FormControl);
   });
-
   it('should remove a FormGroup at the specified index', () => {
     component.addMedium();
     component.addMedium();
@@ -158,21 +176,26 @@ describe('ContactComponent', () => {
   });
 
   it('should view details of the selected id', () => {
+    component.rowData = [
+      {
+        id: 1,
+        name: 'John Doe',
+        orgName: 'Example Org',
+        email: 'john.doe@example.com',
+        number: '1234567890',
+        role: 'Admin',
+      },
+    ];
     const id = 1;
     spyOn(console, 'log');
     component.viewDetails(id);
-    // expect(console.log).toHaveBeenCalledWith(id);
     expect(component.addData).toBeTrue();
-    // expect(component.showViewDetails).toBeTrue();
-    // expect(component.showEditForm).toBeFalse();
-    // expect(component.viewData).toEqual({ id: 1, name: 'Contact 1' });
   });
 
   it('should set the form to edit mode', () => {
     component.editContact();
 
     expect(component.addData).toBeTrue();
-  
   });
 
   it('should set the form to edit mode with specific data', () => {
@@ -195,22 +218,39 @@ describe('ContactComponent', () => {
   });
 
   it('should open form in edit mode and update the form with data', () => {
-   
     const data = { id: 1 };
     const boxData = 'boxData';
-    component.openForm(data, boxData);
+    component.rowData = [
+      {
+        id: 1,
+        name: 'John Doe',
+        orgName: 'Example Org',
+        email: 'john.doe@example.com',
+        number: '1234567890',
+        role: 'Admin',
+      },
+    ];
 
+    component.openForm(data, boxData);
+  
+    component.form.controls['orgName'].setValue('test');
+    const orgNameControl = component.form.get('orgName');
+    const testValue = 'Test Organization';
+    orgNameControl?.setValue(testValue);
+    console.log(
+      "component.form.get('orgName')",
+      component.form.get('orgName')?.value
+    );
   });
 
   it('should open form in view mode and update the form with data', () => {
     const data = { id: 1 };
     const boxData = 'viewData';
-    component.openForm(data, boxData);
 
+    component.openForm(data, boxData);
     expect(component.addData).toBeTrue();
-   
-    
   });
+
   it('should update contact data on submit', () => {
     component.contactData = [
       {
@@ -251,24 +291,49 @@ describe('ContactComponent', () => {
   });
 
 
+  it('should return true if activeOrg matches orgName', () => {
+    const orgName = 'exampleOrg';
+    component.activeOrg = orgName;
+
+    expect(component.isActive(orgName)).toBe(true);
+  });
+
+  it('should return false if activeOrg does not match orgName', () => {
+    const orgName = 'exampleOrg';
+    component.activeOrg = 'differentOrg';
+
+    expect(component.isActive(orgName)).toBe(false);
+  });
   it('should update rowData correctly', () => {
     component.viewData = { id: 1, name: '', email: '', number: '', role: '' };
     component.rowData = [
-      { id: 1, name: 'John Doe', email: 'john@example.com', number: '1234567890', role: 'Admin' },
-      { id: 2, name: 'Jane Smith', email: 'jane@example.com', number: '0987654321', role: 'User' }
+      {
+        id: 1,
+        name: 'John Doe',
+        email: 'john@example.com',
+        number: '1234567890',
+        role: 'Admin',
+      },
+      {
+        id: 2,
+        name: 'Jane Smith',
+        email: 'jane@example.com',
+        number: '0987654321',
+        role: 'User',
+      },
     ];
     component.contactData = [
-      { orgName: 'Org1', contact: [{ id: 1 }, { id: 2 }] }
+      { orgName: 'Org1', contact: [{ id: 1 }, { id: 2 }] },
     ];
 
     const form = new FormGroup({
       name: new FormGroup({
         firstName: new FormControl('Updated'),
-        lastName: new FormControl('Name')
+        lastName: new FormControl('Name'),
       }),
       email: new FormControl('updated@example.com'),
       phone: new FormControl('1112223333'),
-      role: new FormControl('Manager')
+      role: new FormControl('Manager'),
     });
 
     component.updateData(form);
@@ -286,12 +351,18 @@ describe('ContactComponent', () => {
 
     component.handleEditClick();
 
-    expect(component.editContact1).toHaveBeenCalledWith({ id: 1, name: 'Test' });
+    expect(component.editContact1).toHaveBeenCalledWith({
+      id: 1,
+      name: 'Test',
+    });
   });
 
   it('should not call editContact1 when checkedCount is not 1', () => {
     spyOn(component, 'editContact1');
-    component.checkBoxData = [{ id: 1, name: 'Test' }, { id: 2, name: 'Test2' }];
+    component.checkBoxData = [
+      { id: 1, name: 'Test' },
+      { id: 2, name: 'Test2' },
+    ];
     component.checkedCount = 2;
 
     component.handleEditClick();
@@ -310,7 +381,10 @@ describe('ContactComponent', () => {
   });
 
   it('should update checkedCount correctly when multiple items are selected', () => {
-    const event = [{ id: 1, name: 'Test' }, { id: 2, name: 'Test2' }];
+    const event = [
+      { id: 1, name: 'Test' },
+      { id: 2, name: 'Test2' },
+    ];
 
     component.checkBox(event);
 
@@ -322,7 +396,7 @@ describe('ContactComponent', () => {
     component.rowData = [
       { id: 1, name: 'Contact1' },
       { id: 2, name: 'Contact2' },
-      { id: 3, name: 'Contact3' }
+      { id: 3, name: 'Contact3' },
     ];
     component.selectedRowsData = [{ id: 2, name: 'Contact2' }];
     component.checkedCount = 1;

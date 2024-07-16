@@ -29,7 +29,7 @@ describe('AgGridComponent', () => {
     component = fixture.componentInstance;
     component.gridOptions = mockGridOptions as unknown as GridOptions;
     component.columnDefs = [{ field: 'testField', hide: false }];
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

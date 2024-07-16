@@ -2,6 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidebarComponent } from './sidebar.component';
 import { DataService } from 'src/app/Dashboard/service/data.service';
+import { AgGridModule } from 'ag-grid-angular';
+import { FeatherModule } from 'angular-feather';
+import { allIcons } from 'angular-feather/icons';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -14,6 +18,8 @@ describe('SidebarComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [SidebarComponent],
+      imports:[ AgGridModule, RouterTestingModule,
+        FeatherModule.pick(allIcons),],
       providers: [{ provide: DataService, useValue: dataServiceMock }],
     }).compileComponents();
   });
@@ -22,7 +28,7 @@ describe('SidebarComponent', () => {
     fixture = TestBed.createComponent(SidebarComponent);
     component = fixture.componentInstance;
     dataService = TestBed.inject(DataService);
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

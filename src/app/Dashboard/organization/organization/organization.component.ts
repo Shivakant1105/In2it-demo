@@ -62,6 +62,7 @@ export class OrganizationComponent implements OnInit {
       this.rowData = this.organizations;
     });
     this.getAllTable();
+
     const navigation = history.state;
 
     if (navigation && navigation.data) {

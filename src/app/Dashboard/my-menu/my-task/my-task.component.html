@@ -116,19 +116,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="solutionArea">Solution Area</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="solutionArea"
-                  formControlName="solutionArea"
-                /> <div *ngIf="addForm.get('solutionArea')?.invalid && (addForm.get('solutionArea')?.dirty || addForm.get('solutionArea')?.touched)">
-                  <div *ngIf="addForm.get('solutionArea')?.errors?.['required']" class="text-danger">
-                    Solution Area is required.
-                  </div>
-                </div>
-              </div>
+            
               <div class="form-group">
                 <label for="workflow">Workflow</label>
                 <input
