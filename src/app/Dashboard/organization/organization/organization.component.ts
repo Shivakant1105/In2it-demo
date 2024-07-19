@@ -80,7 +80,7 @@ export class OrganizationComponent implements OnInit {
   close(event: MouseEvent, toRemove: number) {
     this.navs.splice(toRemove, 1);
     this.active = 0;
-    event.preventDefault();
+    // event.preventDefault();
     event.stopImmediatePropagation();
   }
   checkExisitingTab(id: number) {

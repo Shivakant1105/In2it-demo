@@ -140,8 +140,10 @@ describe('ProductListComponent', () => {
     component.onCancel();
     expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
-  it('addToList', () => {
+  it('should add poduct', () => {
     spyOn(router, 'navigate');
+    // spyOn(component.gridOptions.api!, 'getSelectedNodes');
+    // spyOn(api.getSelectedNodes, 'gridOptions.api?.getSelectedNodes.');
 
     const gridOptions: any = {
       api: {
@@ -154,6 +156,10 @@ describe('ProductListComponent', () => {
     component.gridOptions = gridOptions;
     component.rowData = [{ is_table_exist: true }];
     component.addToList();
+    expect(router.navigate).toHaveBeenCalledWith(['/products/product-table'], {
+      state: { tables: component.allTables },
+    });
+    
   });
   it('addToList', () => {
     spyOn(router, 'navigate');
@@ -165,5 +171,8 @@ describe('ProductListComponent', () => {
     component.rowData=[];
 
     component.addToList();
+    expect(router.navigate).toHaveBeenCalledWith(['/products/product-table'], {
+      state: { tables: component.allTables },
+    });
   });
 });

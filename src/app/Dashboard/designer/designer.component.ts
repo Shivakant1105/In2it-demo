@@ -153,13 +153,9 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
         series1.data.setAll(filteredData);
         add=add+1
         remove=remove+1
-        
        
       }
-      
-    
     });
-
     let removeButton = document.getElementById('removeButton');
     removeButton!.addEventListener('click', () => {
       // Remove the last added data point
@@ -190,10 +186,8 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
   }
 
   sourcePieChart() {
-    // Create root for pie chart
     this.root = Root.new('piediv');
     this.root._logo.dispose();
-    // Create pie chart
     this.pieChart = this.root.container.children.push(
       PieChart.new(this.root, {
         radius: percent(60),
@@ -202,7 +196,6 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
       })
     );
 
-    // Define data for pie chart
     const pieChartData = [
       {
         sourceName: 'Direct',
@@ -323,7 +316,7 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
   funnelChartSeries() {
     // Create root for funnel chart
     this.root3 = Root.new('funnelChartDiv');
-    this.root3._logo?.dispose();
+    this.root3._logo.dispose();
     // Create funnel chart
 
     this.funnelChart = this.root3.container.children.push(
@@ -432,7 +425,7 @@ export class DesignerComponent implements AfterViewInit, OnDestroy {
         layout: ygraph.verticalLayout,
       })
     );
-    ygraph._logo?.dispose();
+    ygraph._logo!.dispose();
 
     let certainity = [
       {
